@@ -30,6 +30,34 @@
 }
 
 //Other
+//Flex mixins
+@mixin center-flex($gap: 0px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: $gap;
+}
+
+@mixin center-flex-column($gap: 0px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: $gap;
+}
+
+
+//Grid mixins
+@mixin grid($rows: auto-fill, $columns: auto-fill, $gap: 0px) {
+    display: grid;
+    grid-template-rows: repeat($rows, 1fr);
+    grid-template-columns: repeat($columns, 1fr);
+    gap: $gap;
+}
+
+
+
 @mixin text-ellipsis-effect {
     white-space: nowrap;
     text-overflow: ellipsis;

@@ -33,8 +33,8 @@ export const dataMock = [
     zipCode: 42069,
   },
   {
-    firstName: "Saul (Jimmy)",
-    lastName: "Goodman (McGill)",
+    firstName: "Saul",
+    lastName: "Goodman",
     startDate: "08/02/2015",
     department: "Legal",
     dateOfBirth: "12/11/1960",

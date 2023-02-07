@@ -38,10 +38,10 @@ export default function DataTable({ title, data, pagination = false }) {
     <table className="DataTable">
       <caption className="DataTable__caption">
         {title}
-        <div>
+        <section className="DataTable__entries-query-container">
           <ShowEntries />
           <QuerySearch />
-        </div>
+        </section>
       </caption>
       <thead className="DataTable__head">
         <tr className="DataTable__row DataTable__head-row">
@@ -67,18 +67,21 @@ export default function DataTable({ title, data, pagination = false }) {
       </thead>
       <tfoot className="DataTable__foot">
         <tr className="DataTable__row DataTable__foot-row">
-          <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell--entries">
+          <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-entries">
             <EntriesIndex />
           </td>
-          <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell--pagination">
+          <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-pagination">
             <PaginationIndex />
           </td>
         </tr>
       </tfoot>
       <tbody className="DataTable__body">
-        {values.map((valueArray) => {
+        {values.map((valueArray, index) => {
           return (
-            <tr className="DataTable__row DataTable__body-row">
+            <tr
+              className="DataTable__row DataTable__body-row"
+              key={valueArray.toString() + index}
+            >
               {valueArray.map((value, index) => {
                 return (
                   <td
