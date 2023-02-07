@@ -10,6 +10,11 @@ import {
   log,
 } from "../../utils/functions/helper-functions";
 
+//Components
+import EntriesIndex from "../EntriesIndex/EntriesIndex";
+import QuerySearch from "../QuerySearch/QuerySearch";
+import ShowEntries from "../ShowEntries/ShowEntries";
+import PaginationIndex from "../PaginationIndex/PaginationIndex";
 /**
  * Data table with all the features from the jQuery counter part
  *
@@ -42,14 +47,18 @@ import {
 export default function DataTable({ title, data, pagination = false }) {
   //We get the properties of the object inside the data
   let properties = getObjectProperties(data[0]);
-  //We create the proerties for the head
+  //We create the properties for the head
   properties = splitArrayStringOnUpperCase(properties, "titlecase", " ");
   log(properties);
 
   return (
-    <table className="data-table-component">
+    <table className="DT">
       <caption>
-        {title} <div></div>
+        {title}
+        <div>
+          <ShowEntries />
+          <QuerySearch />
+        </div>
       </caption>
       <thead>
         <tr>
@@ -66,8 +75,19 @@ export default function DataTable({ title, data, pagination = false }) {
           })}
         </tr>
       </thead>
-      <tfoot></tfoot>
-      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td>
+            <EntriesIndex />
+          </td>
+          <td>
+            <PaginationIndex />
+          </td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr></tr>
+      </tbody>
     </table>
   );
 }

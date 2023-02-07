@@ -111,15 +111,15 @@ export function splitOnUpperCase(
 /**
  * Function that applies formatting to an array of strings
  *
- * @param {string[]} array
- * @param {string} formatting
- * @param {string} characterToJoinBack
+ * @param {string[]} array Array of string that you want to format
+ * @param {"lowercase"|"uppercase"|"titlecase"} formatting Formatting for the string
+ * @param {string} characterToJoinBack Character to join the split back to, empty by default
  * @returns {string[]} A new formatted array of string
  */
 export function splitArrayStringOnUpperCase(
   array,
   formatting = "lowercase",
-  characterToJoinBack
+  characterToJoinBack = ""
 ) {
   let newArray = [];
   for (let i = 0; i < array.length; i++) {
