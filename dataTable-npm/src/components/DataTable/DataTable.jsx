@@ -35,45 +35,59 @@ export default function DataTable({ title, data, pagination = false }) {
   log(totalEntries);
 
   return (
-    <table className="DT">
-      <caption>
+    <table className="DataTable">
+      <caption className="DataTable__caption">
         {title}
         <div>
           <ShowEntries />
           <QuerySearch />
         </div>
       </caption>
-      <thead>
-        <tr>
+      <thead className="DataTable__head">
+        <tr className="DataTable__row DataTable__head-row">
           {properties.map((property, index) => {
             return (
-              <td key={properties + index}>
+              <td
+                key={properties + index}
+                className="DataTable__cell DataTable__head-cell"
+              >
                 {property}
                 <div>
-                  <button type="button">↑</button>
-                  <button type="button">↓</button>
+                  <button type="button" className="DataTable__head-button">
+                    ↑
+                  </button>
+                  <button type="button" className="DataTable__head-button">
+                    ↓
+                  </button>
                 </div>
               </td>
             );
           })}
         </tr>
       </thead>
-      <tfoot>
-        <tr>
-          <td>
+      <tfoot className="DataTable__foot">
+        <tr className="DataTable__row DataTable__foot-row">
+          <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell--entries">
             <EntriesIndex />
           </td>
-          <td>
+          <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell--pagination">
             <PaginationIndex />
           </td>
         </tr>
       </tfoot>
-      <tbody>
+      <tbody className="DataTable__body">
         {values.map((valueArray) => {
           return (
-            <tr>
+            <tr className="DataTable__row DataTable__body-row">
               {valueArray.map((value, index) => {
-                return <td key={value + index}>{value}</td>;
+                return (
+                  <td
+                    key={value + index}
+                    className="DataTable__cell DataTable__body-cell"
+                  >
+                    {value}
+                  </td>
+                );
               })}
             </tr>
           );

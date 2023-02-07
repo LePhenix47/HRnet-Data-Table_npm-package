@@ -24,6 +24,5 @@ This table has all the features from the [jQuery plugin counter part](https://gi
 This was created with:
 - [React](https://reactjs.org/)
 - [Vite.js](https://vitejs.dev/)
-- [Storybook](https://storybook.js.org/)
 
-<a href="https://reactjs.org/" rel="nofollow"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/react-colored.svg" width="36" height="36" alt="React" style="max-width: 100%;"></a><a href="https://vitejs.dev/" ><img src="https://vitejs.dev/logo-with-shadow.png" alt="Vite logo" width="36" height="36"/></a><a href="https://storybook.js.org/"><img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/storybook/storybook-original.svg" alt="Storybook logo"  width="36" height="36"/></a>
+<a href="https://reactjs.org/" rel="nofollow"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/react-colored.svg" width="36" height="36" alt="React" style="max-width: 100%;"></a><a href="https://vitejs.dev/" ><img src="https://vitejs.dev/logo-with-shadow.png" alt="Vite logo" width="36" height="36"/></a>
