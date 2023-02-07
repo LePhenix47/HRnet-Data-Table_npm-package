@@ -1,0 +1,37 @@
+//Media queries
+@mixin mobile-only {
+    @media screen and (width <=768px) {
+        @content;
+    }
+}
+
+@mixin tablet-only {
+    @media screen and (768px <=width <=992px) {
+        @content;
+    }
+}
+
+@mixin laptop-only {
+    @media screen and (992px <=width <=1150px) {
+        @content;
+    }
+}
+
+@mixin desktop-small-only {
+    @media screen and (1150px <=width <=1475px) {
+        @content;
+    }
+}
+
+@mixin desktop-only {
+    @media screen and (width>=1475px) {
+        @content;
+    }
+}
+
+//Other
+@mixin text-ellipsis-effect {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
