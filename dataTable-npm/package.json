@@ -7,9 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "sass": "sass --watch ./src/style/sass/main.scss:./src/style/css/style.css --style compressed",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "sass": "sass --watch ./src/style/sass/main.scss:./src/style/css/style.css --style compressed"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^3.1.0",

@@ -3,7 +3,7 @@ import React from "react";
 
 //Utils
 import {
-  formatText,
+  getArrayObjectValues,
   getObjectProperties,
   getObjectValues,
   splitArrayStringOnUpperCase,
@@ -15,34 +15,9 @@ import EntriesIndex from "../EntriesIndex/EntriesIndex";
 import QuerySearch from "../QuerySearch/QuerySearch";
 import ShowEntries from "../ShowEntries/ShowEntries";
 import PaginationIndex from "../PaginationIndex/PaginationIndex";
-/**
- * Data table with all the features from the jQuery counter part
- *
- * @param {boolean} pagination Boolean to know whether to enable/disable pagination and disable/enable scrolling, set to `false` by default
- *
- * @param {string} title Title for the caption of the table
- *
- * @param {{...property: value}[]} data Array of objects containing all the properties for the `<thead>` along with their values for the `<tbody>`
- *
- * ⚠ **Must use the camelCase naming convention for the properties** ⚠
- * ex:
- * ```js
- * data = [
- * {
- *  firstName: "Younes",
- *  lastName: "Lahouiti"
- * },
- * {
- *  firstName: "Walter",
- *  lastName: "White"
- * }
- *  ]
- *  //Will have the properties "Firstname" and "Lastname" in the <thead>
- * //Will show the 2 rows with "Younes Lahouiti" and "Walter White" in the <tbody>
- * ```
- *
- * @returns The table as a JSX element
- */
+
+//Proptypes
+import * as PropTypes from "prop-types";
 
 export default function DataTable({ title, data, pagination = false }) {
   //We get the properties of the object inside the data
@@ -50,6 +25,14 @@ export default function DataTable({ title, data, pagination = false }) {
   //We create the properties for the head
   properties = splitArrayStringOnUpperCase(properties, "titlecase", " ");
   log(properties);
+
+  //We populate the body of the table
+  let values = getArrayObjectValues(data);
+  log(values);
+
+  //We get the amount of total entries
+  let totalEntries = data.length;
+  log(totalEntries);
 
   return (
     <table className="DT">
@@ -86,8 +69,23 @@ export default function DataTable({ title, data, pagination = false }) {
         </tr>
       </tfoot>
       <tbody>
-        <tr></tr>
+        {values.map((valueArray) => {
+          return (
+            <tr>
+              {valueArray.map((value, index) => {
+                return <td key={value + index}>{value}</td>;
+              })}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
 }
+
+//Adding types to the props of the JS component
+DataTable.propTypes = {
+  title: PropTypes.string,
+  pagination: PropTypes.bool,
+  data: PropTypes.arrayOf(PropTypes.object),
+};

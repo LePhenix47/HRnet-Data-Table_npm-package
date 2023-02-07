@@ -142,6 +142,25 @@ export function getObjectValues(object) {
   }
   return [];
 }
+/**
+ *Retrieves the values of an array of objects
+ *
+ * @param arrayOfObjects Array of objects
+ * @returns {array[]} Array containing the arrays with the values
+ */
+export function getArrayObjectValues(arrayOfObjects) {
+  let newArray = [];
+
+  for (let object of arrayOfObjects) {
+    const objectIsDefined = !!object;
+
+    if (objectIsDefined) {
+      newArray.push(Object.values(object));
+    }
+  }
+
+  return newArray;
+}
 
 /**
  *Retrieves the properties of an object inside an array
