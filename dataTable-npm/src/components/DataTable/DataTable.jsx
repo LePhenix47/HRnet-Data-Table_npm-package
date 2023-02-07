@@ -3,7 +3,7 @@ import React from "react";
 /**
  * Data table with all the features from the jQuery counter part
  *
- * @param {boolean} pagination Boolean to know whether to enable/disable pagination and disable/enable scrolling
+ * @param {boolean} pagination Boolean to know whether to enable/disable pagination and disable/enable scrolling, set to `false` by default
  *
  * @param {string} title Title for the caption of the table
  *
@@ -28,9 +28,9 @@ import React from "react";
  * @returns The table as a JSX element
  */
 
-export default function DataTable({ title, data, pagination }) {
+export default function DataTable({ title, data, pagination = false }) {
   return (
-    <tbody>
+    <tbody className="data-table-component">
       <caption>{title}</caption>
       <thead></thead>
       <tfoot></tfoot>
