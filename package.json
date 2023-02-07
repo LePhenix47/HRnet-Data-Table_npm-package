@@ -1,0 +1,28 @@
+{
+  "name": "hrnet-datatable",
+  "version": "1.0.0",
+  "description": "This package allows you to create a table of employees with all the features from the jQuery counter part",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "npm publish --access=public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LePhenix47/HRnet-Data-Table_npm-package.git"
+  },
+  "keywords": [
+    "Openclassrooms",
+    "p14",
+    "hrnet",
+    "HRnet",
+    "js-react",
+    "traineeship"
+  ],
+  "author": "Younes Lahouiti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LePhenix47/HRnet-Data-Table_npm-package/issues"
+  },
+  "homepage": "https://github.com/LePhenix47/HRnet-Data-Table_npm-package#readme"
+}
