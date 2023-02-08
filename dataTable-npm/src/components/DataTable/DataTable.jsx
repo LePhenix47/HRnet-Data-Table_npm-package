@@ -57,8 +57,6 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   const [entriesShow, setEntriesShown] = useState(10);
 
-  useEffect(() => {}, []);
-
   // setTotalEntries(data.length);
   log(totalEntries);
 

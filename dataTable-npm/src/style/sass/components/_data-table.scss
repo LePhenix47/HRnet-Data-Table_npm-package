@@ -25,52 +25,66 @@
 
         border: 1px solid grey;
 
-
-        //For all the <td>
-        &__cell {}
-
-
-        //For the <thead>
-        &__head {
-
-            //For all the <tr> nested inside the <thead>
-            &-row {}
-        }
-
-        //For all the <td> nested inside the <thead>
-        &-cell {}
-
-        &-button {
-            &--active {}
-        }
     }
+
+    //For all the <td>
+    &__cell {}
+
+
+    //For the <thead>
+    &__head {
+
+        //For all the <tr> nested inside the <thead>
+        &-row {}
+    }
+
+    //For all the <td> nested inside the <thead>
+    &-cell {}
+
+    &-button {
+        &--active {}
+    }
+
 
 
     //For the <tfoot>
     &__foot {
 
-        //For all the <> nested inside the <>
-        &-row {}
+        //For all the <tr> nested inside the <tfoot>
+        &-row {
+            --tr-foot-width: 100vw;
+            display: flex;
+            width: var(--tr-foot-width);
+        }
 
-        //For all the <> nested inside the <>
+        //For all the <td> nested inside the <tfoot>
         &-cell {
+            flex: 1;
+            display: flex;
+
             &-entries {
+                justify-content: flex-start;
+
                 &--active {}
             }
 
             &-pagination {
+                justify-content: flex-end;
+
                 &--active {}
             }
         }
+
+        &-components-container {}
     }
 
     //For the <tbody>
     &__body {
 
-        //For all the <> nested inside the <
+        //For all the <tr> nested inside the <tbody>
         &-row {}
 
-        //For all the <> nested inside the <>
+        //For all the <td> nested inside the <tbody>
 
         &-cell {}
     }

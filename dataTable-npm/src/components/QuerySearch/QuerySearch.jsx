@@ -7,12 +7,8 @@ export default function QuerySearch() {
     <div className="QuerySearch">
       <label htmlFor="search" className="QuerySearch__label">
         Search
-        <input type="text" className="QuerySearch__input" />
-        <button
-          type="reset"
-          htmlFor="search"
-          className="QuerySearch__reset-button"
-        >
+        <input type="text" className="QuerySearch__input" id="search" />
+        <button type="reset" className="QuerySearch__reset-button">
           (x)
         </button>
       </label>

@@ -6,7 +6,7 @@ export default function PaginationIndex() {
   return (
     <div className="PaginationIndex">
       <button type="button" className="PaginationIndex__previous">
-        Previous
+        ← Previous
       </button>
       <button className="PaginationIndex__button" type="button">
         1
@@ -30,7 +30,7 @@ export default function PaginationIndex() {
         [TotLengthPaginations-1]
       </button>
       <button type="button" className="PaginationIndex__next">
-        Next
+        Next →
       </button>
     </div>
   );
