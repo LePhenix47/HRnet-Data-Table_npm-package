@@ -1,5 +1,5 @@
 //React
-import React from "react";
+import React, { useState } from "react";
 
 //Utils
 import {
@@ -31,7 +31,14 @@ export default function DataTable({ title, data, pagination = false }) {
   log(values);
 
   //We get the amount of total entries
-  let totalEntries = data.length;
+
+  const [startIndex, setStartIndex] = useState(0);
+  const [totalEntries, setTotalEntries] = useState(0);
+  const [endIndex, setEndIndex] = useState(0);
+  const [totalPagination, setTotalPagination] = useState(0);
+  const [entriesShow, setEntriesShown] = useState(10);
+
+  // setTotalEntries(data.length);
   log(totalEntries);
 
   return (

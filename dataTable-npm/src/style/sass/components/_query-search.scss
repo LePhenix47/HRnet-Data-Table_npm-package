@@ -1,0 +1,10 @@
+@use "../utils/" as *;
+
+.QuerySearch {
+
+    &__label {}
+
+    &__input {}
+
+    &__reset-button {}
+}

@@ -3,7 +3,7 @@ import React from "react";
 import * as PropTypes from "prop-types";
 
 export default function EntriesIndex() {
-  return <div>EntriesIndex</div>;
+  return <div className="EntriesIndex">Show x to y of z</div>;
 }
 
 EntriesIndex.propTypes = {};

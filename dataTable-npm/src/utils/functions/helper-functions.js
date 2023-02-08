@@ -1,3 +1,5 @@
+import { func } from "prop-types";
+
 /**
  *
  *Function that prints out a message in the console but with a simpler syntax
@@ -205,4 +207,14 @@ export function numberSeparatorLocale(number) {
   });
 
   return formatter.format(number);
+}
+
+/**
+ * Copies an object or anrray without using their reference
+ *
+ * @param {object | array} objectOrArray Object or array to copy
+ * @returns {object | array} A deep copied object
+ */
+export function deepCopy(objectOrArray) {
+  return structuredClone(objectOrArray);
 }

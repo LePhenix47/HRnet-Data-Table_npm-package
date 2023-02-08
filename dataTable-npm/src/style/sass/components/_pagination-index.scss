@@ -1,0 +1,10 @@
+@use "../utils/" as *;
+
+.PaginationIndex {
+
+    &__previous {}
+
+    &__button {}
+
+    &__next {}
+}

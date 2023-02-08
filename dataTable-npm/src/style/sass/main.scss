@@ -4,6 +4,10 @@
 
 //Components
 @forward "./components/data-table";
+@forward "./components/entries-index";
+@forward "./components/pagination-index";
+@forward "./components/query-search";
+@forward "./components/show-entries";
 
 //Themes
 @forward "./themes/dark-theme";
