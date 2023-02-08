@@ -106,10 +106,16 @@ export function formatText(string, option) {
 
 /**
  *Funtion that replaces letters with accents by their "non-accented" counter-part
- *ex: "crème brûlée" → "creme brulee"
  *
- * @param string string to be normalized
- * @returns  {string |}
+ *ex:
+ *```js
+ *let str = "crème brûlée";
+ *str = normalizeString(str);
+ *console.log(str) → "creme brulee"
+ *```
+ *
+ * @param {string} string string to be normalized
+ * @returns  {string} Normalized string
  */
 export function normalizeString(string) {
   if (typeof string !== "string") {

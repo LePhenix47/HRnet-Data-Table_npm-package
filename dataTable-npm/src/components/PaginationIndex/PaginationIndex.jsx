@@ -24,10 +24,10 @@ export default function PaginationIndex() {
         5
       </button>
       <button className="PaginationIndex__button" type="button">
-        6
+        ...
       </button>
       <button className="PaginationIndex__button" type="button">
-        7
+        [TotLengthPaginations-1]
       </button>
       <button type="button" className="PaginationIndex__next">
         Next

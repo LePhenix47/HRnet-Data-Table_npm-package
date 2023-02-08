@@ -1,5 +1,5 @@
 //React
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 //Utils
 import {
@@ -37,7 +37,7 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   const [startIndex, setStartIndex] = useState(0);
   /**
-   * End index = ([Pagination index] - 1) × [Shown entries] + [Shown entries]
+   * End index = ([Pagination index] - 1) × [Shown entries] + [Shown entries] - 1
    */
   const [endIndex, setEndIndex] = useState(0);
   /**
@@ -49,9 +49,15 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   const [totalPagination, setTotalPagination] = useState(0);
   /**
-   * Entries shown = select.value
+   * Pagination Index set by the user, default by one, mathematical interval: [1, totalPagination]
+   */
+  const [paginationIndex, setPaginationIndex] = useState(1);
+  /**
+   * Entries shown = Number(select.value)
    */
   const [entriesShow, setEntriesShown] = useState(10);
+
+  useEffect(() => {}, []);
 
   // setTotalEntries(data.length);
   log(totalEntries);

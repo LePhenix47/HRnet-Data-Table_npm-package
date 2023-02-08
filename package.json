@@ -1,5 +1,5 @@
 {
-  "name": "hrnet-datatable",
+  "name": "@lephenix47/hrnet-datatable",
   "version": "1.0.0",
   "description": "This package allows you to create a table of employees with all the features from the jQuery counter part",
   "main": "index.js",

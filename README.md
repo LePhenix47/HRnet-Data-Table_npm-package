@@ -1,5 +1,7 @@
 # Data table for HRnet
 
+How to upload a library: https://dev.to/alexeagleson/how-to-create-and-publish-a-react-component-library-2oe
+
 ## What is this library for?
 
 This npm package allows you to create a table of data, also a requirement for the P14 of the JS-React traineeship at [OpenClassrooms.com](OpenClassrooms.com) to create a sophisticated table with all the employees by simply passing the data as a prop to the component:
