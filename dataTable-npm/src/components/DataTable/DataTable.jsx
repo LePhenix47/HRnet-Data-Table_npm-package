@@ -32,10 +32,25 @@ export default function DataTable({ title, data, pagination = false }) {
 
   //We get the amount of total entries
 
+  /**
+   * Start index = ([Pagination index] - 1) × [Shown entries]
+   */
   const [startIndex, setStartIndex] = useState(0);
-  const [totalEntries, setTotalEntries] = useState(0);
+  /**
+   * End index = ([Pagination index] - 1) × [Shown entries] + [Shown entries]
+   */
   const [endIndex, setEndIndex] = useState(0);
+  /**
+   * Total entries = data.length
+   */
+  const [totalEntries, setTotalEntries] = useState(0);
+  /**
+   * Total Pagination = [Total entries] ÷ [Entries shown]
+   */
   const [totalPagination, setTotalPagination] = useState(0);
+  /**
+   * Entries shown = select.value
+   */
   const [entriesShow, setEntriesShown] = useState(10);
 
   // setTotalEntries(data.length);

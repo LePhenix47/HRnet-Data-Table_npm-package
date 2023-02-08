@@ -10,7 +10,11 @@
 
     &__caption {}
 
-    &__entries-query-container {}
+    &__entries-query-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     //For all the <tr>
     &__row {

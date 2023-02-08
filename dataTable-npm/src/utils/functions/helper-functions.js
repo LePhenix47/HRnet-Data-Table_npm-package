@@ -1,6 +1,34 @@
 import { func } from "prop-types";
 
 /**
+ * A simplified version of `document.querySelector()` to select an element from the `document` or a container
+ *
+ * @param  query HTML Element to select
+ * @param  container HTML Element to select the query from, if no containers are entered, it will use the `document`
+ * @returns The element selected *or* `null` if the element doesn't exist
+ */
+export function selectQuery(query, container) {
+  if (container) {
+    return container.querySelector(query);
+  }
+  return document.querySelector(query);
+}
+
+/**
+ * A simplified version of `document.querySelectorAll()` to select elements from the `document` or a container
+ *
+ * @param  query HTML Element to select
+ * @param  container HTML Element to select the query from, if no containers are entered, it will use the `document`
+ * @returns An array with all the elements selected *or* `null` if the element doesn't exist
+ */
+export function selectQueryAll(query, container) {
+  if (container) {
+    return Array.from(container.querySelectorAll(query));
+  }
+  return Array.from(document.querySelectorAll(query));
+}
+
+/**
  *
  *Function that prints out a message in the console but with a simpler syntax
  * @param message
@@ -9,6 +37,31 @@ import { func } from "prop-types";
 export function log(...messages) {
   for (let message of messages) {
     console.log(message);
+  }
+}
+
+/**
+ *Function that gets the value of an `<input/>` element
+ *
+ * @param {HTMLInputElement} input
+ * @param {string} options
+ * @returns { number | Date | string} The value of the input as a string, number or date
+ */
+export function getInputValue(input, options = "") {
+  if (!input) {
+    return undefined;
+  }
+
+  switch (options) {
+    case "number": {
+      return input.valueAsNumber;
+    }
+    case "date": {
+      return input.valueAsDate;
+    }
+    default: {
+      return input.value;
+    }
   }
 }
 
