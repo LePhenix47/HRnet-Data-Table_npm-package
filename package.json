@@ -2,7 +2,7 @@
   "name": "@lephenix47/hrnet-datatable",
   "version": "1.0.0",
   "description": "This package allows you to create a table of employees with all the features from the jQuery counter part",
-  "main": "index.js",
+  "main": "dataTable-npm/src/index.jsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "npm publish --access=public"
