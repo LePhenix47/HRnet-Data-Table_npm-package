@@ -1,8 +1,11 @@
 {
-  "name": "@lephenix47/hrnet-datatable",
+  "name": "@lephenix47/react-datatable",
   "version": "1.0.0",
   "description": "This package allows you to create a table of employees with all the features from the jQuery counter part",
-  "main": "dataTable-npm/src/index.jsx",
+  "main": "dataTable-npm/src/main.jsx",
+  "files": [
+    "dataTable-npm/src/**/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "npm publish --access=public"
