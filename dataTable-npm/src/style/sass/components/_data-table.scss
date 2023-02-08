@@ -49,12 +49,13 @@
 
     //For the <tfoot>
     &__foot {
+        position: relative;
 
         //For all the <tr> nested inside the <tfoot>
         &-row {
-            --tr-foot-width: 100vw;
+            position: absolute;
             display: flex;
-            width: var(--tr-foot-width);
+            width: 100%;
         }
 
         //For all the <td> nested inside the <tfoot>
