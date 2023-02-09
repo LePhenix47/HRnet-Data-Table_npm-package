@@ -1,8 +1,31 @@
+//React
 import React from "react";
+
 //Proptypes
 import * as PropTypes from "prop-types";
 
-export default function PaginationIndex() {
+//Utils
+import {
+  log,
+  createArrayOfNumbers,
+} from "../../utils/functions/helper-functions";
+
+export default function PaginationIndex({
+  totalPaginationIndexes,
+  setCurrentPaginationIndex,
+}) {
+  /**
+   */
+  const showAllPaginationButtons = totalPaginationIndexes <= 7;
+  log({ totalPaginationIndexes, showAllPaginationButtons });
+
+  let paginationArray;
+
+  if (showAllPaginationButtons) {
+    paginationArray = createArrayOfNumbers(2, totalPaginationIndexes);
+    log({ paginationArray });
+  }
+
   return (
     <div className="PaginationIndex">
       <button type="button" className="PaginationIndex__previous">
@@ -11,6 +34,20 @@ export default function PaginationIndex() {
       <button className="PaginationIndex__button" type="button">
         1
       </button>
+
+      {showAllPaginationButtons &&
+        paginationArray.map((number) => {
+          return (
+            <button
+              className="PaginationIndex__button"
+              type="button"
+              key={number + "buttonPaginationIndex"}
+            >
+              {number}
+            </button>
+          );
+        })}
+      {/* 
       <button className="PaginationIndex__button" type="button">
         2
       </button>
@@ -22,12 +59,14 @@ export default function PaginationIndex() {
       </button>
       <button className="PaginationIndex__button" type="button">
         5
-      </button>
+      </button> */}
+      {!showAllPaginationButtons && (
+        <button className="PaginationIndex__button" type="button">
+          ...
+        </button>
+      )}
       <button className="PaginationIndex__button" type="button">
-        ...
-      </button>
-      <button className="PaginationIndex__button" type="button">
-        [TotLengthPaginations-1]
+        {totalPaginationIndexes}
       </button>
       <button type="button" className="PaginationIndex__next">
         Next →

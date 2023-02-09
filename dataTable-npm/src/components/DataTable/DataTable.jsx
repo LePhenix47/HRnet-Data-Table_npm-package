@@ -8,6 +8,7 @@ import {
   getObjectValues,
   splitArrayStringOnUpperCase,
   log,
+  deepCopy,
 } from "../../utils/functions/helper-functions";
 
 //Components
@@ -20,30 +21,8 @@ import PaginationIndex from "../PaginationIndex/PaginationIndex";
 import * as PropTypes from "prop-types";
 
 export default function DataTable({ title, data, pagination = false }) {
-  //We get the properties of the object inside the data
-  let properties = getObjectProperties(data[0]);
-  //We create the properties for the head
-  properties = splitArrayStringOnUpperCase(properties, "titlecase", " ");
-  log(properties);
-
-  //We populate the body of the table
-  let values = getArrayObjectValues(data);
-  log(values);
-
   //We get the amount of total entries
 
-  /**
-   * Start index = ([Pagination index] - 1) × [Shown entries]
-   */
-  const [startIndex, setStartIndex] = useState(0);
-  /**
-   * End index = ([Pagination index] - 1) × [Shown entries] + [Shown entries] - 1
-   */
-  const [endIndex, setEndIndex] = useState(0);
-  /**
-   * Total entries = data.length
-   */
-  const [totalEntries, setTotalEntries] = useState(0);
   /**
    * Total Pagination = [Total entries] ÷ [Entries shown]
    */
@@ -55,17 +34,94 @@ export default function DataTable({ title, data, pagination = false }) {
   /**
    * Entries shown = Number(select.value)
    */
-  const [entriesShow, setEntriesShown] = useState(10);
+  const [entriesShown, setEntriesShown] = useState(10);
 
-  // setTotalEntries(data.length);
-  log(totalEntries);
+  /**
+   * Object containing the starting index and the ending index
+   */
+  let [usefulIndexes, setUsefulIndexes] = useState({});
+
+  let [values, setValues] = useState([]);
+
+  //We get the properties of the object inside the data
+  let properties = getObjectProperties(data[0]);
+  //We create the properties for the head
+  properties = splitArrayStringOnUpperCase(properties, "titlecase", " ");
+  log(properties);
+
+  //We populate the body of the table
+  /**
+   * Amount of data
+   */
+  const totalEntries = data.length;
+  log({ totalEntries });
+
+  /**
+   * Total pagination indexes for the table
+   */
+  /**
+   * ```powershell
+   * Total Pagination = [Total entries] ÷ [Entries shown]
+   * Rounded to the ceiling
+   * ```
+   */
+  let totalPaginationIndexes = Math.ceil(totalEntries / entriesShown);
+
+  /**
+   *
+   */
+  let dataToShow = deepCopy(data);
+  let filteredDataToShow = [];
+  let startingIndex = 0;
+  let endingIndex = 0;
+
+  /**
+   * Function that gets the value of the `<select>` element inside the `<ShowEntries />` component
+   */
+  useEffect(() => {
+    /**
+     * Cases to take in account:
+     *
+     */
+    showEntriesToBody();
+  }, [entriesShown]);
+
+  function showEntriesToBody() {
+    log({ entriesShown });
+    startingIndex = (paginationIndex - 1) * entriesShown;
+    endingIndex = startingIndex + entriesShown;
+
+    const indexOverflowsArray = endingIndex > totalEntries;
+    if (indexOverflowsArray) {
+      endingIndex = totalEntries;
+    }
+    log({ startingIndex, endingIndex });
+
+    setUsefulIndexes({ startingIndex, endingIndex });
+
+    resetDataToShow();
+    for (let i = startingIndex; i < endingIndex; i++) {
+      const item = data[i];
+      dataToShow.push(item);
+    }
+    log({ dataToShow });
+
+    //We re-render the component with the new values for the body
+    setValues(getArrayObjectValues(dataToShow));
+
+    log({ values });
+  }
+
+  function resetDataToShow() {
+    dataToShow = [];
+  }
 
   return (
     <table className="DataTable">
       <caption className="DataTable__caption">
         {title}
         <section className="DataTable__entries-query-container">
-          <ShowEntries />
+          <ShowEntries setEntriesShown={setEntriesShown} />
           <QuerySearch />
         </section>
       </caption>
@@ -94,10 +150,17 @@ export default function DataTable({ title, data, pagination = false }) {
       <tfoot className="DataTable__foot">
         <tr className="DataTable__row DataTable__foot-row">
           <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-entries">
-            <EntriesIndex />
+            <EntriesIndex
+              totalAmountOfEntries={totalEntries}
+              currentStartIndex={usefulIndexes.startingIndex}
+              currentEndIndex={usefulIndexes.endingIndex}
+            />
           </td>
           <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-pagination">
-            <PaginationIndex />
+            <PaginationIndex
+              totalPaginationIndexes={totalPaginationIndexes}
+              setCurrentPaginationIndex={setPaginationIndex}
+            />
           </td>
         </tr>
       </tfoot>

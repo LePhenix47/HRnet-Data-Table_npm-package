@@ -254,6 +254,7 @@ export function toPercent(number) {
 /**
  *Formats a number by separating every thousand with a format from the user's locale
  *example:
+ *
  *The user lives in Italy and we have: const number = 1_930 → returns "1.930"
  *If they lived in the US and we have: const number = 1_930 → returns "1,930"
  *
@@ -269,11 +270,49 @@ export function numberSeparatorLocale(number) {
 }
 
 /**
- * Copies an object or anrray without using their reference
+ * Copies an object or anrray without using their reference by using the `structuredClone` function
+ *
+ * ```js
+ * const a = [];
+ * const b = a;
+ * const c = deepCopy(a);
+ *
+ * a.push(1);
+ *
+ * console.log(b);
+ * → [1]
+ *
+ * console.log(c);
+ * → []
+ *
+ * ```
  *
  * @param {object | array} objectOrArray Object or array to copy
  * @returns {object | array} A deep copied object
  */
 export function deepCopy(objectOrArray) {
   return structuredClone(objectOrArray);
+}
+
+/**
+ *
+ * @param {number} starting
+ * @param {number} ending
+ * @param {boolean} reverse
+ * @returns {number[]} An array of numbers
+
+ */
+export function createArrayOfNumbers(starting, ending, reverse) {
+  let arrayOfNumbers = [];
+  if (reverse) {
+    for (let i = ending; i > starting; i--) {
+      arrayOfNumbers.push(i);
+    }
+  } else {
+    for (let i = starting; i < ending; i++) {
+      arrayOfNumbers.push(i);
+    }
+  }
+
+  return arrayOfNumbers;
 }
