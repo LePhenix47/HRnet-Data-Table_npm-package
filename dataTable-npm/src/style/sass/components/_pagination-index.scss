@@ -4,7 +4,13 @@
 
     &__previous {}
 
-    &__button {}
+    &__button {
+        padding: 15px;
+
+        &--active {
+            outline: 1px solid red;
+        }
+    }
 
     &__next {}
 }

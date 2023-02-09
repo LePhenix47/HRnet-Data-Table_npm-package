@@ -47,7 +47,7 @@ export default function DataTable({ title, data, pagination = false }) {
   let properties = getObjectProperties(data[0]);
   //We create the properties for the head
   properties = splitArrayStringOnUpperCase(properties, "titlecase", " ");
-  log(properties);
+  // log(properties);
 
   //We populate the body of the table
   /**
@@ -84,32 +84,38 @@ export default function DataTable({ title, data, pagination = false }) {
      *
      */
     showEntriesToBody();
-  }, [entriesShown]);
+  }, [entriesShown, paginationIndex]);
 
   function showEntriesToBody() {
-    log({ entriesShown });
+    //We get the starting and ending index
     startingIndex = (paginationIndex - 1) * entriesShown;
+    const indexUnderflows = startingIndex < 0;
+    if (indexUnderflows) {
+      startingIndex = 0;
+    }
+
     endingIndex = startingIndex + entriesShown;
 
+    //We check if the end index overflows
     const indexOverflowsArray = endingIndex > totalEntries;
     if (indexOverflowsArray) {
       endingIndex = totalEntries;
     }
-    log({ startingIndex, endingIndex });
 
+    //Set the inndex to send them to the <EntriesIndex /> component
     setUsefulIndexes({ startingIndex, endingIndex });
 
+    //We reset the data inside the <tbody> to avoid pileups
     resetDataToShow();
+
+    //We create the data that must be shown
     for (let i = startingIndex; i < endingIndex; i++) {
       const item = data[i];
       dataToShow.push(item);
     }
-    log({ dataToShow });
 
     //We re-render the component with the new values for the body
     setValues(getArrayObjectValues(dataToShow));
-
-    log({ values });
   }
 
   function resetDataToShow() {
@@ -160,6 +166,7 @@ export default function DataTable({ title, data, pagination = false }) {
             <PaginationIndex
               totalPaginationIndexes={totalPaginationIndexes}
               setCurrentPaginationIndex={setPaginationIndex}
+              currentPaginationIndex={paginationIndex}
             />
           </td>
         </tr>
