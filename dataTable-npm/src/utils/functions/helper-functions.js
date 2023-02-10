@@ -327,26 +327,28 @@ export function createArrayOfNumbers(starting, ending, reverse) {
  * - Boolean
  * - Date
  *
- * @param {array} array
- * @param {"number"| "string" |"boolean" | "date" } prop
- * @param {boolean} reverse
- * @returns
+ * @param {array} array Array of objects
+ * @param {string} prop Name of the property in the array to be sorted by
+ * @param {boolean} reverse Boolean value to know if the array has to be reversed or not
+ * @returns A new sorted array
  */
 export function sortArrayOfObjects(array, prop, reverse = false) {
   //To make it easier on the developer we remove any whitespace
   prop = formatText(prop.trim(), "lowercase");
 
-  let newSortedArray = deepCopy(array); //Makes a deep copy of the array
+  //Makes a deep copy of the array
+  let newSortedArray = deepCopy(array);
 
+  //We sort the array
   newSortedArray = newSortedArray.sort((obj1, obj2) => {
     //We take the first 2 objects
     let propOfObj1 = obj1[prop];
 
     let propOfObj2 = obj2[prop];
     //We verify if the property value is a date
-    let isDate = obj1[prop] instanceof Date;
+    let isInstanceOfDate = obj1[prop] instanceof Date;
 
-    if (isDate) {
+    if (isInstanceOfDate) {
       propOfObj1 = propOfObj1.toLocaleDateString();
       propOfObj2 = propOfObj2.toLocaleDateString();
     }
@@ -371,9 +373,11 @@ export function sortArrayOfObjects(array, prop, reverse = false) {
       }
     }
 
+    //We sort by converting the property values into string and compare their locale
     return propOfObj1.localeCompare(propOfObj2);
   });
 
+  //Reverse the order of the array if the dev wants to
   if (reverse) {
     return newSortedArray.reverse();
   }
