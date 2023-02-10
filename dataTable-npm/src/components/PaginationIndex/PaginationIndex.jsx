@@ -119,7 +119,7 @@ export default function PaginationIndex({
         }}
         disabled={currentPaginationIndex === 1}
       >
-        ← Previous
+        Previous
       </button>
       <button
         className={`PaginationIndex__button ${
@@ -205,7 +205,7 @@ export default function PaginationIndex({
         }}
         disabled={currentPaginationIndex === totalPaginationIndexes}
       >
-        Next →
+        Next
       </button>
     </div>
   );

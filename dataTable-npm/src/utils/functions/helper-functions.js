@@ -141,8 +141,11 @@ export function splitString(string, character) {
 
 /**
  *Split a string into an array separating each word with an uppercase on it
- *ex: "testColor" with "-" → ["test","Color"] → ["test", "color"] → "test-color"
-
+ *ex:
+ *```js
+ *  "testColor" with "-" → ["test","Color"] → ["test", "color"] → "test-color"
+ * ```
+ *
  * @param {Array} string
  * @param {string} formatting
  * @param {string} characterToJoinBack
@@ -315,4 +318,66 @@ export function createArrayOfNumbers(starting, ending, reverse) {
   }
 
   return arrayOfNumbers;
+}
+
+/**
+ * Function that can sort an array of objects by:
+ * - Number
+ * - String
+ * - Boolean
+ * - Date
+ *
+ * @param {array} array
+ * @param {"number"| "string" |"boolean" | "date" } prop
+ * @param {boolean} reverse
+ * @returns
+ */
+export function sortArrayOfObjects(array, prop, reverse = false) {
+  //To make it easier on the developer we remove any whitespace
+  prop = formatText(prop.trim(), "lowercase");
+
+  let newSortedArray = deepCopy(array); //Makes a deep copy of the array
+
+  newSortedArray = newSortedArray.sort((obj1, obj2) => {
+    //We take the first 2 objects
+    let propOfObj1 = obj1[prop];
+
+    let propOfObj2 = obj2[prop];
+    //We verify if the property value is a date
+    let isDate = obj1[prop] instanceof Date;
+
+    if (isDate) {
+      propOfObj1 = propOfObj1.toLocaleDateString();
+      propOfObj2 = propOfObj2.toLocaleDateString();
+    }
+
+    const typeOfObjectProperty = typeof propOfObj1;
+    switch (typeOfObjectProperty) {
+      case "string": {
+        //Perfect, we do nothing
+        break;
+      }
+      case "number": {
+        //ex:  10 → "10"
+        propOfObj1 = propOfObj1.toString();
+        propOfObj2 = propOfObj2.toString();
+        break;
+      }
+      case "boolean": {
+        //If true → "a", if false → "z"
+        propOfObj1 = propOfObj1 ? "a" : "z";
+        propOfObj1 = propOfObj1 ? "a" : "z";
+        break;
+      }
+    }
+
+    return propOfObj1.localeCompare(propOfObj2);
+  });
+
+  if (reverse) {
+    return newSortedArray.reverse();
+  }
+
+  console.log("New array");
+  return newSortedArray;
 }

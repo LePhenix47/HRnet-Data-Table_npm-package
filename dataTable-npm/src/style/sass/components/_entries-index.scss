@@ -1,4 +1,6 @@
 @use "../utils/" as *;
 
 
-.EntriesIndex {}
+.EntriesIndex {
+    @include center-flex;
+}

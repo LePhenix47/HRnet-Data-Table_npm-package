@@ -54,7 +54,6 @@ export default function DataTable({ title, data, pagination = false }) {
    * Amount of data
    */
   const totalEntries = data.length;
-  log({ totalEntries });
 
   /**
    * Total pagination indexes for the table
@@ -67,9 +66,8 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   let totalPaginationIndexes = Math.ceil(totalEntries / entriesShown);
 
-  if (paginationIndex > totalEntries) {
-    log("OVERFLOW DETECTED!");
-  }
+  log({ totalEntries, paginationIndex });
+
   /**
    *
    */
@@ -92,6 +90,12 @@ export default function DataTable({ title, data, pagination = false }) {
 
   function showEntriesToBody() {
     setStartAndEndIndex();
+
+    const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
+    if (paginationIndexOverflows) {
+      //paginationIndex = totalPaginationIndex
+      setPaginationIndex(totalPaginationIndexes);
+    }
 
     //Set the inndex to send them to the <EntriesIndex /> component
     setUsefulIndexes({ startingIndex, endingIndex });
@@ -151,12 +155,26 @@ export default function DataTable({ title, data, pagination = false }) {
                 className="DataTable__cell DataTable__head-cell"
               >
                 {property}
-                <div>
-                  <button type="button" className="DataTable__head-button">
-                    ↑
+                <div className="DataTable__buttons-container">
+                  <button
+                    type="button"
+                    className="DataTable__head-button"
+                    onClick={(e) => {
+                      log(e.target.dataset.sortingProperty);
+                    }}
+                    data-sorting-property={`${property}`}
+                  >
+                    ▲
                   </button>
-                  <button type="button" className="DataTable__head-button">
-                    ↓
+                  <button
+                    type="button"
+                    className="DataTable__head-button"
+                    onClick={(e) => {
+                      log(e);
+                    }}
+                    data-sorting-property={`${property}`}
+                  >
+                    ▼
                   </button>
                 </div>
               </td>
