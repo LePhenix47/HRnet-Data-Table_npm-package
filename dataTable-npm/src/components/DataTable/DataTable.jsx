@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import {
   getArrayObjectValues,
   getObjectProperties,
-  getObjectValues,
+  sortArrayOfObjects,
   splitArrayStringOnUpperCase,
   log,
   deepCopy,
+  splitString,
+  formatText,
 } from "../../utils/functions/helper-functions";
 
 //Components
@@ -23,10 +25,6 @@ import * as PropTypes from "prop-types";
 export default function DataTable({ title, data, pagination = false }) {
   //We get the amount of total entries
 
-  /**
-   * Total Pagination = [Total entries] ÷ [Entries shown]
-   */
-  const [totalPagination, setTotalPagination] = useState(0);
   /**
    * Pagination Index set by the user, default by one, mathematical interval: [1, totalPagination]
    */
@@ -137,6 +135,12 @@ export default function DataTable({ title, data, pagination = false }) {
     dataToShow = [];
   }
 
+  function handleSortingByClick(event) {
+    const sortingProperty = event.target.dataset.dataTableSortingProperty;
+    const isSortingInReverse = event.target.dataset.dataTableSortToReverse;
+    log(sortingProperty, { "Needs to reverse?": isSortingInReverse });
+  }
+
   return (
     <table className="DataTable">
       <caption className="DataTable__caption">
@@ -149,6 +153,17 @@ export default function DataTable({ title, data, pagination = false }) {
       <thead className="DataTable__head">
         <tr className="DataTable__row DataTable__head-row">
           {properties.map((property, index) => {
+            //We set back the property
+            let unformattedProperty = splitString(property, " ");
+            unformattedProperty[0] = formatText(
+              unformattedProperty[0],
+              "lowercase"
+            );
+            unformattedProperty = unformattedProperty
+              .toString()
+              .replaceAll(",", "");
+
+            log({ unformattedProperty });
             return (
               <td
                 key={properties + index}
@@ -158,21 +173,23 @@ export default function DataTable({ title, data, pagination = false }) {
                 <div className="DataTable__buttons-container">
                   <button
                     type="button"
-                    className="DataTable__head-button"
+                    className="DataTable__head-button DataTable__head-button-normal"
                     onClick={(e) => {
-                      log(e.target.dataset.sortingProperty);
+                      handleSortingByClick(e);
                     }}
-                    data-sorting-property={`${property}`}
+                    data-data-table-sorting-property={`${unformattedProperty}`}
+                    data-data-table-sort-to-reverse={false}
                   >
                     ▲
                   </button>
                   <button
                     type="button"
-                    className="DataTable__head-button"
+                    className="DataTable__head-button DataTable__head-button-reverse"
                     onClick={(e) => {
-                      log(e);
+                      handleSortingByClick(e);
                     }}
-                    data-sorting-property={`${property}`}
+                    data-data-table-sorting-property={`${unformattedProperty}`}
+                    data-data-table-sort-to-reverse={true}
                   >
                     ▼
                   </button>
