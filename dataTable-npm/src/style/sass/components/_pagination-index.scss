@@ -1,6 +1,7 @@
 @use "../utils/" as *;
 
 .PaginationIndex {
+    @include center-flex;
 
     &__previous {}
 

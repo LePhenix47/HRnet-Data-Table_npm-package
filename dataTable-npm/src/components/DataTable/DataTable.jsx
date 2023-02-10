@@ -67,6 +67,9 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   let totalPaginationIndexes = Math.ceil(totalEntries / entriesShown);
 
+  if (paginationIndex > totalEntries) {
+    log("OVERFLOW DETECTED!");
+  }
   /**
    *
    */
@@ -83,24 +86,12 @@ export default function DataTable({ title, data, pagination = false }) {
      * Cases to take in account:
      *
      */
+
     showEntriesToBody();
   }, [entriesShown, paginationIndex]);
 
   function showEntriesToBody() {
-    //We get the starting and ending index
-    startingIndex = (paginationIndex - 1) * entriesShown;
-    const indexUnderflows = startingIndex < 0;
-    if (indexUnderflows) {
-      startingIndex = 0;
-    }
-
-    endingIndex = startingIndex + entriesShown;
-
-    //We check if the end index overflows
-    const indexOverflowsArray = endingIndex > totalEntries;
-    if (indexOverflowsArray) {
-      endingIndex = totalEntries;
-    }
+    setStartAndEndIndex();
 
     //Set the inndex to send them to the <EntriesIndex /> component
     setUsefulIndexes({ startingIndex, endingIndex });
@@ -118,6 +109,26 @@ export default function DataTable({ title, data, pagination = false }) {
     setValues(getArrayObjectValues(dataToShow));
   }
 
+  function setStartAndEndIndex() {
+    //We get the starting and ending index
+    startingIndex = (paginationIndex - 1) * entriesShown;
+    const indexUnderflows = startingIndex < 0;
+    if (indexUnderflows) {
+      startingIndex = 0;
+    }
+
+    endingIndex = startingIndex + entriesShown;
+
+    //We check if the end index overflows
+    const indexOverflowsArray = endingIndex > totalEntries;
+    if (indexOverflowsArray) {
+      endingIndex = totalEntries;
+    }
+  }
+
+  /**
+   * Function that sets the `dataToShow` variable containing the table rows to show as an empty array
+   */
   function resetDataToShow() {
     dataToShow = [];
   }

@@ -10,6 +10,11 @@ import {
   createArrayOfNumbers,
 } from "../../utils/functions/helper-functions";
 
+//Components
+import FirstRow from "../FirstRow/FirstRow";
+import MiddleRow from "../MiddleRow/MiddleRow";
+import LastRow from "../LastRow/LastRow";
+
 export default function PaginationIndex({
   totalPaginationIndexes,
   setCurrentPaginationIndex,
@@ -42,7 +47,7 @@ export default function PaginationIndex({
    */
   const showMiddle =
     currentPaginationIndex >= 5 &&
-    currentPaginationIndex < totalPaginationIndexes - 4;
+    currentPaginationIndex <= totalPaginationIndexes - 4;
 
   /**
    *  Boolean constant to check if the component should show the last 5 buttons like this:
@@ -58,7 +63,7 @@ export default function PaginationIndex({
    * Array to fill in automically all the 7 buttons
    *
    */
-  let underSevenPaginationArray = createArrayOfNumbers(
+  let underOrEqualSevenPaginationArray = createArrayOfNumbers(
     2,
     totalPaginationIndexes
   );
@@ -84,8 +89,16 @@ export default function PaginationIndex({
         ? 1
         : -1;
       log("Button is not a number:", event.target, { previousOrNextValue });
+      let newPaginationIndex = currentPaginationIndex + previousOrNextValue;
 
-      setCurrentPaginationIndex(currentPaginationIndex + previousOrNextValue);
+      const paginationIndexOverflows =
+        newPaginationIndex > totalPaginationIndexes;
+
+      if (paginationIndexOverflows) {
+        newPaginationIndex = totalPaginationIndexes;
+      }
+
+      setCurrentPaginationIndex(newPaginationIndex);
       return;
     }
 
@@ -122,7 +135,7 @@ export default function PaginationIndex({
 
       {/* If Total pagination index <= 7 */}
       {showAllPaginationButtons &&
-        underSevenPaginationArray.map((number) => {
+        underOrEqualSevenPaginationArray.map((number) => {
           return (
             <button
               className={`PaginationIndex__button ${
@@ -149,39 +162,27 @@ export default function PaginationIndex({
       3  - If PI > TPI - 4 → Should show: 1 … [TPI - 4] [TPI - 3] [TPI - 2] [TPI - 1] [TPI]
 
       */}
-      {!showAllPaginationButtons &&
-        showFirstRowThenTotal &&
-        fivePaginationPage.map((number) => {
-          return (
-            <button
-              className={`PaginationIndex__button ${
-                currentPaginationIndex === number
-                  ? "PaginationIndex__button--active"
-                  : ""
-              }`}
-              type="button"
-              key={number + "buttonPaginationIndex"}
-              onClick={(e) => {
-                handleClick(e);
-              }}
-            >
-              {number}
-            </button>
-          );
-        }) && (
-          <button
-            className={`PaginationIndex__button `}
-            type="button"
-            onClick={(e) => {
-              handleClick(e);
-            }}
-            disabled={true}
-          >
-            ...
-          </button>
-        )}
-      {!showAllPaginationButtons && showMiddle}
-      {!showAllPaginationButtons && showFirstThenLastRow}
+      {!showAllPaginationButtons && showFirstRowThenTotal && (
+        <FirstRow
+          totalPaginationIndex={totalPaginationIndexes}
+          paginationIndex={currentPaginationIndex}
+          handleClick={handleClick}
+        />
+      )}
+      {!showAllPaginationButtons && showMiddle && (
+        <MiddleRow
+          totalPaginationIndexes={totalPaginationIndexes}
+          paginationIndex={currentPaginationIndex}
+          handleClick={handleClick}
+        />
+      )}
+      {!showAllPaginationButtons && showFirstThenLastRow && (
+        <LastRow
+          totalPaginationIndexes={totalPaginationIndexes}
+          paginationIndex={currentPaginationIndex}
+          handleClick={handleClick}
+        />
+      )}
 
       <button
         className={`PaginationIndex__button ${
