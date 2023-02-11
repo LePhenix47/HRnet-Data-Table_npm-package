@@ -39,7 +39,15 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   let [usefulIndexes, setUsefulIndexes] = useState({});
 
+  /**
+   * Values inside the table
+   */
   let [values, setValues] = useState([]);
+
+  /**
+   * Tuple containing
+   */
+  let [historyPaginationsArray, setHistoryPaginationsArray] = useState([]);
 
   //We get the properties of the object inside the data
   let properties = getObjectProperties(data[0]);
@@ -64,11 +72,12 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   let totalPaginationIndexes = Math.ceil(totalEntries / entriesShown);
 
-  log({ totalEntries, paginationIndex });
+  // log({ totalEntries, paginationIndex });
 
   /**
    *
    */
+  let previousIndex = historyPaginationsArray.at(-2);
   let dataToShow = deepCopy(data);
   let filteredDataToShow = [];
   let startingIndex = 0;
@@ -77,40 +86,83 @@ export default function DataTable({ title, data, pagination = false }) {
   /**
    * Function that gets the value of the `<select>` element inside the `<ShowEntries />` component
    */
-  useEffect(() => {
+  useEffect(
+    (e) => {
+      /**
+       * Cases to take in account:
+       *
+       */
+      log({ e });
+
+      correctPaginationIndex();
+
+      setStartAndEndIndex();
+
+      const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
+      if (paginationIndexOverflows) {
+        //paginationIndex = totalPaginationIndex
+        setPaginationIndex(totalPaginationIndexes);
+      }
+
+      //Set the inndex to send them to the <EntriesIndex /> component
+      setUsefulIndexes({ startingIndex, endingIndex });
+
+      //We reset the data inside the <tbody> to avoid pileups
+      resetDataToShow();
+
+      //We create the data that must be shown
+      for (let i = startingIndex; i < endingIndex; i++) {
+        const item = data[i];
+        dataToShow.push(item);
+      }
+
+      //We re-render the component with the new values for the body
+      setValues(getArrayObjectValues(dataToShow));
+    },
+    [entriesShown, paginationIndex]
+  );
+
+  // function showEntriesToBody() {}
+
+  function correctPaginationIndex() {
+    setHistoryPaginationsArray([...historyPaginationsArray, paginationIndex]);
+
+    log({ previousIndex, historyPaginationsArray });
+    if (historyPaginationsArray.length > 2) {
+      log("HPI > 2");
+
+      setHistoryPaginationsArray([previousIndex, paginationIndex]);
+      // setHistoryPaginationsArray()
+      //We are going to use the function notation to remove the first element
+      // setHistoryPaginationsArray(historyPaginationsArray.shift());
+      // log({ historyPaginationsArray });
+    }
+
+    let HPILength = historyPaginationsArray.length;
+    log({ HPILength });
+
+    let oldTotalPaginationIndex = historyPaginationsArray?.[HPILength - 1] || 1;
+    let newTotalPaginationIndex = historyPaginationsArray?.[HPILength - 2] || 1;
+
+    log({ paginationIndex, oldTotalPaginationIndex, newTotalPaginationIndex });
+
     /**
-     * Cases to take in account:
-     *
+     * ```powershell
+     *[New PI] = [Previous PI] × [New TPI] ÷ [Old TPI]
+     * ```
      */
+    const computedPaginationArray = Math.ceil(
+      (paginationIndex * newTotalPaginationIndex) / oldTotalPaginationIndex
+    );
 
-    showEntriesToBody();
-  }, [entriesShown, paginationIndex]);
-
-  function showEntriesToBody() {
-    setStartAndEndIndex();
-
-    const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
-    if (paginationIndexOverflows) {
-      //paginationIndex = totalPaginationIndex
-      setPaginationIndex(totalPaginationIndexes);
-    }
-
-    //Set the inndex to send them to the <EntriesIndex /> component
-    setUsefulIndexes({ startingIndex, endingIndex });
-
-    //We reset the data inside the <tbody> to avoid pileups
-    resetDataToShow();
-
-    //We create the data that must be shown
-    for (let i = startingIndex; i < endingIndex; i++) {
-      const item = data[i];
-      dataToShow.push(item);
-    }
-
-    //We re-render the component with the new values for the body
-    setValues(getArrayObjectValues(dataToShow));
+    log({
+      computedPaginationArray,
+    });
   }
 
+  /**
+   * Function that settles the starting and ending indexes
+   */
   function setStartAndEndIndex() {
     //We get the starting and ending index
     startingIndex = (paginationIndex - 1) * entriesShown;
@@ -135,6 +187,12 @@ export default function DataTable({ title, data, pagination = false }) {
     dataToShow = [];
   }
 
+  /**
+   *
+   * Function that sorts the table by a property
+   *
+   * @param {React.ChangeEvent<HTMLSelectElement>} event React event
+   */
   function handleSortingByClick(event) {
     const sortingProperty = event.target.dataset.dataTableSortingProperty;
     const isSortingInReverse = event.target.dataset.dataTableSortToReverse;
@@ -163,7 +221,7 @@ export default function DataTable({ title, data, pagination = false }) {
               .toString()
               .replaceAll(",", "");
 
-            log({ unformattedProperty });
+            // log({ unformattedProperty });
             return (
               <td
                 key={properties + index}

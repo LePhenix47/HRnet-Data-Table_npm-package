@@ -88,7 +88,6 @@ export default function PaginationIndex({
       let previousOrNextValue = event.target.innerText.includes("Next")
         ? 1
         : -1;
-      log("Button is not a number:", event.target, { previousOrNextValue });
       let newPaginationIndex = currentPaginationIndex + previousOrNextValue;
 
       const paginationIndexOverflows =

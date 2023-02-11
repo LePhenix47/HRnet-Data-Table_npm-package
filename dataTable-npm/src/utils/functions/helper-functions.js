@@ -1,5 +1,3 @@
-import { func } from "prop-types";
-
 /**
  * A simplified version of `document.querySelector()` to select an element from the `document` or a container
  *
