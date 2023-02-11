@@ -77,87 +77,78 @@ export default function DataTable({ title, data, pagination = false }) {
   /**
    *
    */
-  let previousIndex = historyPaginationsArray.at(-2);
   let dataToShow = deepCopy(data);
-  let filteredDataToShow = [];
+  let filteredDataToShow = deepCopy(dataToShow);
   let startingIndex = 0;
   let endingIndex = 0;
 
   /**
    * Function that gets the value of the `<select>` element inside the `<ShowEntries />` component
    */
-  useEffect(
-    (e) => {
-      /**
-       * Cases to take in account:
-       *
-       */
-      log({ e });
+  useEffect(() => {
+    //If the old TPI is different than the new one → update the Page Index
+    log("Before correction");
+    correctPaginationIndex();
+    log("After correction");
 
-      correctPaginationIndex();
+    setStartAndEndIndex();
 
-      setStartAndEndIndex();
-
-      const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
-      if (paginationIndexOverflows) {
-        //paginationIndex = totalPaginationIndex
-        setPaginationIndex(totalPaginationIndexes);
-      }
-
-      //Set the inndex to send them to the <EntriesIndex /> component
-      setUsefulIndexes({ startingIndex, endingIndex });
-
-      //We reset the data inside the <tbody> to avoid pileups
-      resetDataToShow();
-
-      //We create the data that must be shown
-      for (let i = startingIndex; i < endingIndex; i++) {
-        const item = data[i];
-        dataToShow.push(item);
-      }
-
-      //We re-render the component with the new values for the body
-      setValues(getArrayObjectValues(dataToShow));
-    },
-    [entriesShown, paginationIndex]
-  );
-
-  // function showEntriesToBody() {}
-
-  function correctPaginationIndex() {
-    setHistoryPaginationsArray([...historyPaginationsArray, paginationIndex]);
-
-    log({ previousIndex, historyPaginationsArray });
-    if (historyPaginationsArray.length > 2) {
-      log("HPI > 2");
-
-      setHistoryPaginationsArray([previousIndex, paginationIndex]);
-      // setHistoryPaginationsArray()
-      //We are going to use the function notation to remove the first element
-      // setHistoryPaginationsArray(historyPaginationsArray.shift());
-      // log({ historyPaginationsArray });
+    const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
+    if (paginationIndexOverflows) {
+      //paginationIndex = totalPaginationIndex
+      setPaginationIndex(totalPaginationIndexes);
     }
 
-    let HPILength = historyPaginationsArray.length;
-    log({ HPILength });
+    //Set the inndex to send them to the <EntriesIndex /> component
+    setUsefulIndexes({ startingIndex, endingIndex });
 
-    let oldTotalPaginationIndex = historyPaginationsArray?.[HPILength - 1] || 1;
-    let newTotalPaginationIndex = historyPaginationsArray?.[HPILength - 2] || 1;
+    //We reset the data inside the <tbody> to avoid pileups
+    resetDataToShow();
 
-    log({ paginationIndex, oldTotalPaginationIndex, newTotalPaginationIndex });
+    //We create the data that must be shown
+    for (let i = startingIndex; i < endingIndex; i++) {
+      const item = data[i];
+      dataToShow.push(item);
+    }
 
-    /**
-     * ```powershell
-     *[New PI] = [Previous PI] × [New TPI] ÷ [Old TPI]
-     * ```
-     */
-    const computedPaginationArray = Math.ceil(
-      (paginationIndex * newTotalPaginationIndex) / oldTotalPaginationIndex
-    );
+    //We re-render the component with the new values for the body
+    setValues(getArrayObjectValues(dataToShow));
+  }, [entriesShown, paginationIndex]);
 
-    log({
-      computedPaginationArray,
-    });
+  function correctPaginationIndex() {
+    setHistoryPaginationsArray([
+      ...historyPaginationsArray,
+      totalPaginationIndexes,
+    ]);
+
+    console.log(historyPaginationsArray?.[0], historyPaginationsArray?.[1]);
+
+    const historyPaginationsExceededTwo =
+      historyPaginationsArray.length + 1 > 2;
+    if (historyPaginationsExceededTwo) {
+      /**
+       * ```powershell
+       *[New PI] = [Previous PI] × [New TPI] ÷ [Old TPI]
+       * ```
+       */
+      log("HPI > 2");
+      setHistoryPaginationsArray((values) => {
+        return values.slice(1);
+      });
+    }
+    let oldTotalPaginationIndex = historyPaginationsArray?.[0];
+    let newTotalPaginationIndex = totalPaginationIndexes;
+
+    log({ oldTotalPaginationIndex }, { newTotalPaginationIndex });
+
+    if (oldTotalPaginationIndex !== newTotalPaginationIndex) {
+      const computedPaginationArray = Math.ceil(
+        (paginationIndex * newTotalPaginationIndex) / oldTotalPaginationIndex
+      );
+      log(
+        `bruh the user changed the amount of indexes to be shown: ${computedPaginationArray}`
+      );
+    }
   }
 
   /**
