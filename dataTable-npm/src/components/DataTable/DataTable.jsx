@@ -265,6 +265,8 @@ export default function DataTable({ title, data, pagination = false }) {
    * @param {React.ChangeEvent<HTMLSelectElement>} event React event
    */
   function handleSortingByClick(event) {
+    //We select the table cell inside
+    const propertyInTableHead = event.target.closest("td");
     //We get the sorting property
     const sortingProperty = event.target.dataset.dataTableSortingProperty;
     //Look if we need to reverse it
@@ -306,7 +308,6 @@ export default function DataTable({ title, data, pagination = false }) {
               .toString()
               .replaceAll(",", "");
 
-            // log({ unformattedProperty });
             return (
               <td
                 key={properties + index}
@@ -316,7 +317,7 @@ export default function DataTable({ title, data, pagination = false }) {
                 <div className="DataTable__buttons-container">
                   <button
                     type="button"
-                    className="DataTable__head-button DataTable__head-button-normal"
+                    className={`DataTable__head-button DataTable__head-button-normal ${"DataTable__head-button--active"}`}
                     onClick={(e) => {
                       handleSortingByClick(e);
                     }}
@@ -327,7 +328,7 @@ export default function DataTable({ title, data, pagination = false }) {
                   </button>
                   <button
                     type="button"
-                    className="DataTable__head-button DataTable__head-button-reverse"
+                    className={`DataTable__head-button DataTable__head-button-reverse ${"DataTable__head-button--active"}`}
                     onClick={(e) => {
                       handleSortingByClick(e);
                     }}

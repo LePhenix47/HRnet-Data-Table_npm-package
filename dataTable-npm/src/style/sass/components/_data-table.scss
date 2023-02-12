@@ -40,6 +40,12 @@
 
         //For all the <tr> nested inside the <thead>
         &-row {}
+
+        &-button {
+            &--active {
+                color: red;
+            }
+        }
     }
 
     //For all the <td> nested inside the <thead>
