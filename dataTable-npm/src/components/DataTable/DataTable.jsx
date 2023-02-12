@@ -155,16 +155,22 @@ export default function DataTable({ title, data, pagination = false }) {
     log({ oldPaginationIndex });
 
     const userChangedShownEntries =
-      oldTotalPaginationIndex !== newTotalPaginationIndex;
+      oldTotalPaginationIndex !== newTotalPaginationIndex &&
+      newTotalPaginationIndex > 1;
 
     if (userChangedShownEntries) {
       log("The previous TPI is different than the current TPI");
-      let computedPaginationArray = Math.round(
-        (oldPaginationIndex / oldTotalPaginationIndex) * newTotalPaginationIndex
-      );
+      let computedPaginationArray =
+        (
+          (oldPaginationIndex / oldTotalPaginationIndex) *
+          newTotalPaginationIndex
+        ).toFixed(0) || 1;
 
       log(
-        `New pagination index should be (OPI ÷ OTPI × NTPI): ${paginationIndex} ÷ ${oldTotalPaginationIndex} × ${newTotalPaginationIndex} = ${computedPaginationArray}?`
+        `New pagination index should be (OPI ÷ OTPI × NTPI): ${paginationIndex} ÷ ${oldTotalPaginationIndex} × ${newTotalPaginationIndex} = ${computedPaginationArray} (exactly: ${
+          (oldPaginationIndex / oldTotalPaginationIndex) *
+          newTotalPaginationIndex
+        }?`
       );
       setPaginationIndex(computedPaginationArray);
     }
