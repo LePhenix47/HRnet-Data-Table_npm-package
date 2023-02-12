@@ -41,7 +41,7 @@ export default function DataTable({ title, data, pagination = false }) {
   let [usefulIndexes, setUsefulIndexes] = useState({});
 
   /**
-   * Values inside the table
+   * Values inside the HTML table
    */
   let [values, setValues] = useState([]);
 
@@ -51,7 +51,12 @@ export default function DataTable({ title, data, pagination = false }) {
   let [historyTotalPaginationsArray, setHistoryTotalPaginationsArray] =
     useState([]);
 
+  /**
+   * Tuple containing: [oldPI, newPI]
+   */
   let [historyPaginationsArray, setHistoryPaginationsArray] = useState([]);
+
+  let [needsSorting, setNeedsSorting] = useState(false);
 
   //We get the properties of the object inside the data
   let properties = getObjectProperties(data[0]);
@@ -91,9 +96,7 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   useEffect(() => {
     //If the old TPI is different than the new one → update the Page Index
-    log("Before correction");
-    correctPaginationIndex();
-    log("After correction");
+    // correctPaginationIndex();
 
     setStartAndEndIndex();
 
@@ -115,10 +118,17 @@ export default function DataTable({ title, data, pagination = false }) {
       dataToShow.push(item);
     }
 
-    //We re-render the component with the new values for the body
-    setValues(getArrayObjectValues(dataToShow));
+    if (needsSorting) {
+      setValues(getArrayObjectValues(dataToShow));
+    } else {
+      //We re-render the component with the new values for the body
+      setValues(getArrayObjectValues(dataToShow));
+    }
   }, [entriesShown, paginationIndex]);
 
+  /**
+   * Function that corrects the pagination index making relative to the previous percentage of the table seen
+   */
   function correctPaginationIndex() {
     setHistoryTotalPaginationsArray([
       ...historyTotalPaginationsArray,
@@ -140,7 +150,6 @@ export default function DataTable({ title, data, pagination = false }) {
        *[New PI] = [Previous PI] × [New TPI] ÷ [Old TPI]
        * ```
        */
-      log("HPI > 2");
       setHistoryTotalPaginationsArray((values) => {
         return values.slice(1);
       });
@@ -150,10 +159,13 @@ export default function DataTable({ title, data, pagination = false }) {
     }
     let oldTotalPaginationIndex = historyTotalPaginationsArray?.[0];
     let newTotalPaginationIndex = totalPaginationIndexes;
-    let oldPaginationIndex = historyPaginationsArray?.[0];
+    let oldPaginationIndex = Number(historyPaginationsArray?.[0]);
 
     log({ oldPaginationIndex });
 
+    /**
+     * Verifies that the user changed the amount of entries and that the Pagination index is over one
+     */
     const userChangedShownEntries =
       oldTotalPaginationIndex !== newTotalPaginationIndex &&
       newTotalPaginationIndex > 1;
@@ -213,6 +225,7 @@ export default function DataTable({ title, data, pagination = false }) {
     const sortingProperty = event.target.dataset.dataTableSortingProperty;
     const isSortingInReverse = event.target.dataset.dataTableSortToReverse;
     log(sortingProperty, { "Needs to reverse?": isSortingInReverse });
+    setNeedsSorting(true);
   }
 
   return (
