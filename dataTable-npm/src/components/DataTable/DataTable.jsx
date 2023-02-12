@@ -58,6 +58,8 @@ export default function DataTable({ title, data, pagination = false }) {
 
   let [needsSorting, setNeedsSorting] = useState(false);
 
+  let [sortingValue, setSortingValue] = useState("");
+
   //We get the properties of the object inside the data
   let properties = getObjectProperties(data[0]);
   //We create the properties for the head
@@ -96,14 +98,21 @@ export default function DataTable({ title, data, pagination = false }) {
    */
   useEffect(() => {
     //If the old TPI is different than the new one → update the Page Index
-    // correctPaginationIndex();
+    correctPaginationIndex();
 
     setStartAndEndIndex();
+    log({ paginationIndex });
 
     const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
     if (paginationIndexOverflows) {
       //paginationIndex = totalPaginationIndex
       setPaginationIndex(totalPaginationIndexes);
+    }
+
+    const paginationIndexUnderflows = paginationIndex < 1;
+    if (paginationIndexUnderflows) {
+      //paginationIndex = totalPaginationIndex
+      setPaginationIndex(1);
     }
 
     //Set the inndex to send them to the <EntriesIndex /> component
@@ -141,6 +150,7 @@ export default function DataTable({ title, data, pagination = false }) {
       historyTotalPaginationsArray?.[0],
       historyTotalPaginationsArray?.[1]
     );
+    log({ historyPaginationsArray });
 
     const historyPaginationsExceededTwo =
       historyTotalPaginationsArray.length + 1 > 2;
@@ -173,10 +183,12 @@ export default function DataTable({ title, data, pagination = false }) {
     if (userChangedShownEntries) {
       log("The previous TPI is different than the current TPI");
       let computedPaginationArray =
-        (
-          (oldPaginationIndex / oldTotalPaginationIndex) *
-          newTotalPaginationIndex
-        ).toFixed(0) || 1;
+        Number(
+          (
+            (oldPaginationIndex / oldTotalPaginationIndex) *
+            newTotalPaginationIndex
+          ).toFixed(0)
+        ) || 1;
 
       log(
         `New pagination index should be (OPI ÷ OTPI × NTPI): ${paginationIndex} ÷ ${oldTotalPaginationIndex} × ${newTotalPaginationIndex} = ${computedPaginationArray} (exactly: ${
@@ -226,6 +238,7 @@ export default function DataTable({ title, data, pagination = false }) {
     const isSortingInReverse = event.target.dataset.dataTableSortToReverse;
     log(sortingProperty, { "Needs to reverse?": isSortingInReverse });
     setNeedsSorting(true);
+    setSortingValue(sortingProperty);
   }
 
   return (

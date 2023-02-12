@@ -5,9 +5,6 @@ export default function MiddleRow({
   paginationIndex,
   handleClick,
 }) {
-  if (typeof paginationIndex === "string") {
-    paginationIndex = Number(paginationIndex);
-  }
   return (
     <div>
       <button
