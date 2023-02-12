@@ -60,6 +60,10 @@ export default function DataTable({ title, data, pagination = false }) {
 
   let [sortingValue, setSortingValue] = useState("");
 
+  let [isReverse, setReverse] = useState(false);
+
+  let [copiedData, setCopiedData] = useState([]);
+
   //We get the properties of the object inside the data
   let properties = getObjectProperties(data[0]);
   //We create the properties for the head
@@ -89,7 +93,7 @@ export default function DataTable({ title, data, pagination = false }) {
    *
    */
   let dataToShow = deepCopy(data);
-  let filteredDataToShow = deepCopy(dataToShow);
+  let sortedData = deepCopy(data);
   let startingIndex = 0;
   let endingIndex = 0;
 
@@ -123,17 +127,26 @@ export default function DataTable({ title, data, pagination = false }) {
 
     //We create the data that must be shown
     for (let i = startingIndex; i < endingIndex; i++) {
-      const item = data[i];
+      const item = copiedData[i] || data[i];
       dataToShow.push(item);
     }
 
     if (needsSorting) {
-      setValues(getArrayObjectValues(dataToShow));
+      log({ sortingValue });
+      sortedData = deepCopy(copiedData);
+
+      sortedData = sortArrayOfObjects(sortedData, sortingValue);
+
+      setValues(getArrayObjectValues(sortedData));
     } else {
       //We re-render the component with the new values for the body
       setValues(getArrayObjectValues(dataToShow));
     }
   }, [entriesShown, paginationIndex]);
+
+  useEffect(() => {
+    setCopiedData(deepCopy(data));
+  }, []);
 
   /**
    * Function that corrects the pagination index making relative to the previous percentage of the table seen
@@ -227,6 +240,10 @@ export default function DataTable({ title, data, pagination = false }) {
     dataToShow = [];
   }
 
+  function resetFilteredData() {
+    sortedData = deepCopy(data);
+  }
+
   /**
    *
    * Function that sorts the table by a property
@@ -239,6 +256,7 @@ export default function DataTable({ title, data, pagination = false }) {
     log(sortingProperty, { "Needs to reverse?": isSortingInReverse });
     setNeedsSorting(true);
     setSortingValue(sortingProperty);
+    setPaginationIndex(1);
   }
 
   return (

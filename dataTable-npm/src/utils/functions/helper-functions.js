@@ -303,7 +303,7 @@ export function deepCopy(objectOrArray) {
  * @returns {number[]} An array of numbers
 
  */
-export function createArrayOfNumbers(starting, ending, reverse) {
+export function createArrayOfNumbers(starting, ending, reverse = false) {
   let arrayOfNumbers = [];
   if (reverse) {
     for (let i = ending; i > starting; i--) {
@@ -316,6 +316,27 @@ export function createArrayOfNumbers(starting, ending, reverse) {
   }
 
   return arrayOfNumbers;
+}
+
+/**
+ *Function that transforms date strings in this format:
+ * - `dd/mm/yyyy`
+ *
+ *
+ * Into this format:
+ * - `mm/dd/yyyy`
+ *
+ *
+ * @param {string} dateString
+ * @returns {string} New date in the American format
+ */
+export function invertDayAndMonth(dateString) {
+  const splittedDate = splitString(dateString, "/");
+  const day = splittedDate[0];
+  const month = splittedDate[1];
+  const year = splittedDate[2];
+
+  return `${month}/${day}/${year}`;
 }
 
 /**
@@ -332,7 +353,7 @@ export function createArrayOfNumbers(starting, ending, reverse) {
  */
 export function sortArrayOfObjects(array, prop, reverse = false) {
   //To make it easier on the developer we remove any whitespace
-  prop = formatText(prop.trim(), "lowercase");
+  prop = prop.trim();
 
   //Makes a deep copy of the array
   let newSortedArray = deepCopy(array);
@@ -343,12 +364,17 @@ export function sortArrayOfObjects(array, prop, reverse = false) {
     let propOfObj1 = obj1[prop];
 
     let propOfObj2 = obj2[prop];
-    //We verify if the property value is a date
-    let isInstanceOfDate = obj1[prop] instanceof Date;
 
-    if (isInstanceOfDate) {
-      propOfObj1 = propOfObj1.toLocaleDateString();
-      propOfObj2 = propOfObj2.toLocaleDateString();
+    let dateREGEX =
+      /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+    let isDateAsString = dateREGEX.test(obj1[prop]);
+
+    if (isDateAsString) {
+      propOfObj1 = invertDayAndMonth(propOfObj1);
+      propOfObj1 = new Date(propOfObj1).toISOString();
+
+      propOfObj2 = invertDayAndMonth(propOfObj2);
+      propOfObj2 = new Date(propOfObj2).toISOString();
     }
 
     const typeOfObjectProperty = typeof propOfObj1;
@@ -367,6 +393,12 @@ export function sortArrayOfObjects(array, prop, reverse = false) {
         //If true → "a", if false → "z"
         propOfObj1 = propOfObj1 ? "a" : "z";
         propOfObj1 = propOfObj1 ? "a" : "z";
+        break;
+      }
+      default: {
+        throw console.error(
+          "An error has occured, the property is undefined or null"
+        );
         break;
       }
     }
