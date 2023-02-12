@@ -122,28 +122,29 @@ export default function DataTable({ title, data, pagination = false }) {
     //Set the inndex to send them to the <EntriesIndex /> component
     setUsefulIndexes({ startingIndex, endingIndex });
 
-    //We reset the data inside the <tbody> to avoid pileups
-    resetDataToShow();
-
-    //We create the data that must be shown
-    for (let i = startingIndex; i < endingIndex; i++) {
-      const item = copiedData[i] || data[i];
-      dataToShow.push(item);
-    }
-
     if (needsSorting) {
       log({ sortingValue });
       sortedData = deepCopy(copiedData);
 
-      sortedData = sortArrayOfObjects(sortedData, sortingValue);
+      sortedData = sortArrayOfObjects(sortedData, sortingValue, isReverse);
 
-      setValues(getArrayObjectValues(sortedData));
+      resetDataToShow();
+      fillInDataToShow(sortedData);
+
+      setValues(getArrayObjectValues(dataToShow));
     } else {
+      //We reset the data inside the <tbody> to avoid pileups
+      resetDataToShow();
+
+      //We create the data that must be shown
+      const arrayOfData = copiedData.length ? copiedData : data;
+      fillInDataToShow(arrayOfData);
       //We re-render the component with the new values for the body
       setValues(getArrayObjectValues(dataToShow));
     }
   }, [entriesShown, paginationIndex]);
 
+  //Get the data the user inputted
   useEffect(() => {
     setCopiedData(deepCopy(data));
   }, []);
@@ -240,6 +241,19 @@ export default function DataTable({ title, data, pagination = false }) {
     dataToShow = [];
   }
 
+  /**
+   * Function that fills in
+   */
+  function fillInDataToShow(array) {
+    for (let i = startingIndex; i < endingIndex; i++) {
+      const item = array[i];
+      dataToShow.push(item);
+    }
+  }
+
+  /**
+   *
+   */
   function resetFilteredData() {
     sortedData = deepCopy(data);
   }
@@ -251,12 +265,23 @@ export default function DataTable({ title, data, pagination = false }) {
    * @param {React.ChangeEvent<HTMLSelectElement>} event React event
    */
   function handleSortingByClick(event) {
+    //We get the sorting property
     const sortingProperty = event.target.dataset.dataTableSortingProperty;
+    //Look if we need to reverse it
     const isSortingInReverse = event.target.dataset.dataTableSortToReverse;
     log(sortingProperty, { "Needs to reverse?": isSortingInReverse });
-    setNeedsSorting(true);
-    setSortingValue(sortingProperty);
-    setPaginationIndex(1);
+    setNeedsSorting(() => {
+      return true;
+    });
+    setSortingValue(() => {
+      return sortingProperty;
+    });
+    setReverse(() => {
+      return isSortingInReverse;
+    });
+    setPaginationIndex(() => {
+      return 1;
+    });
   }
 
   return (
@@ -336,25 +361,26 @@ export default function DataTable({ title, data, pagination = false }) {
         </tr>
       </tfoot>
       <tbody className="DataTable__body">
-        {values.map((valueArray, index) => {
-          return (
-            <tr
-              className="DataTable__row DataTable__body-row"
-              key={valueArray.toString() + index}
-            >
-              {valueArray.map((value, index) => {
-                return (
-                  <td
-                    key={value + index}
-                    className="DataTable__cell DataTable__body-cell"
-                  >
-                    {value}
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
+        {values &&
+          values.map((valueArray, index) => {
+            return (
+              <tr
+                className="DataTable__row DataTable__body-row"
+                key={valueArray.toString() + index}
+              >
+                {valueArray.map((value, index) => {
+                  return (
+                    <td
+                      key={value + index}
+                      className="DataTable__cell DataTable__body-cell"
+                    >
+                      {value}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
       </tbody>
     </table>
   );
