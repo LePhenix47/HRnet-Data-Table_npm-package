@@ -29,6 +29,7 @@ export default function DataTable({ title, data, pagination = false }) {
    * Pagination Index set by the user, default by one, mathematical interval: [1, totalPagination]
    */
   const [paginationIndex, setPaginationIndex] = useState(1);
+
   /**
    * Entries shown = Number(select.value)
    */
@@ -45,8 +46,11 @@ export default function DataTable({ title, data, pagination = false }) {
   let [values, setValues] = useState([]);
 
   /**
-   * Tuple containing
+   * Tuple containing: [oldTPI, newTPI]
    */
+  let [historyTotalPaginationsArray, setHistoryTotalPaginationsArray] =
+    useState([]);
+
   let [historyPaginationsArray, setHistoryPaginationsArray] = useState([]);
 
   //We get the properties of the object inside the data
@@ -116,15 +120,20 @@ export default function DataTable({ title, data, pagination = false }) {
   }, [entriesShown, paginationIndex]);
 
   function correctPaginationIndex() {
-    setHistoryPaginationsArray([
-      ...historyPaginationsArray,
+    setHistoryTotalPaginationsArray([
+      ...historyTotalPaginationsArray,
       totalPaginationIndexes,
     ]);
 
-    console.log(historyPaginationsArray?.[0], historyPaginationsArray?.[1]);
+    setHistoryPaginationsArray([...historyPaginationsArray, paginationIndex]);
+
+    console.log(
+      historyTotalPaginationsArray?.[0],
+      historyTotalPaginationsArray?.[1]
+    );
 
     const historyPaginationsExceededTwo =
-      historyPaginationsArray.length + 1 > 2;
+      historyTotalPaginationsArray.length + 1 > 2;
     if (historyPaginationsExceededTwo) {
       /**
        * ```powershell
@@ -132,22 +141,32 @@ export default function DataTable({ title, data, pagination = false }) {
        * ```
        */
       log("HPI > 2");
+      setHistoryTotalPaginationsArray((values) => {
+        return values.slice(1);
+      });
       setHistoryPaginationsArray((values) => {
         return values.slice(1);
       });
     }
-    let oldTotalPaginationIndex = historyPaginationsArray?.[0];
+    let oldTotalPaginationIndex = historyTotalPaginationsArray?.[0];
     let newTotalPaginationIndex = totalPaginationIndexes;
+    let oldPaginationIndex = historyPaginationsArray?.[0];
 
-    log({ oldTotalPaginationIndex }, { newTotalPaginationIndex });
+    log({ oldPaginationIndex });
 
-    if (oldTotalPaginationIndex !== newTotalPaginationIndex) {
-      const computedPaginationArray = Math.ceil(
-        (paginationIndex * newTotalPaginationIndex) / oldTotalPaginationIndex
+    const userChangedShownEntries =
+      oldTotalPaginationIndex !== newTotalPaginationIndex;
+
+    if (userChangedShownEntries) {
+      log("The previous TPI is different than the current TPI");
+      let computedPaginationArray = Math.round(
+        (oldPaginationIndex / oldTotalPaginationIndex) * newTotalPaginationIndex
       );
+
       log(
-        `bruh the user changed the amount of indexes to be shown: ${computedPaginationArray}`
+        `New pagination index should be (OPI ÷ OTPI × NTPI): ${paginationIndex} ÷ ${oldTotalPaginationIndex} × ${newTotalPaginationIndex} = ${computedPaginationArray}?`
       );
+      setPaginationIndex(computedPaginationArray);
     }
   }
 

@@ -2,6 +2,12 @@
 
 How to upload a library: https://dev.to/alexeagleson/how-to-create-and-publish-a-react-component-library-2oe
 
+Data Table is a jQuery plugin that is now available as a React component UI library. It provides an easy way to create dynamic, interactive tables with sorting, filtering, pagination, and other features. In order to get the most out of Data Table, a complete documentation is needed.
+
+
+This documentation should include a detailed overview of the library's components, how to customize and style them, an overview of the various functionalities (sorting, filtering, pagination, etc.), and any other relevant information. Additionally, it should provide example code snippets for implementing the library into an application. Further, the documentation should include a section about supported browsers and devices and any known bugs or compatibility issues. Finally, the documentation should be updated regularly to keep pace with any new changes or updates to the library.
+The documentation should provide a thorough overview of the library's components, including names and descriptions of each
+
 ## What is this library for?
 
 This npm package allows you to create a table of data, also a requirement for the P14 of the JS-React traineeship at [OpenClassrooms.com](OpenClassrooms.com) to create a sophisticated table with all the employees by simply passing the data as a prop to the component:
