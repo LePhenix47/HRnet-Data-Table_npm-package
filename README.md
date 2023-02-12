@@ -1,5 +1,19 @@
 # Documentation for HRnet Data Table
 
+## Table of Contents
+
+- [Documentation for HRnet Data Table](#documentation-for-hrnet-data-table)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [How it was created](#how-it-was-created)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Props](#props)
+  - [Examples](#examples)
+  - [Conclusion](#conclusion)
+
+
 ## Introduction
 
 HRnet Data Table is a React NPM library that provides a simple and flexible way to display data in a table format. With its support for sorting, filtering, and searching, HRnet Data Table makes it easy to work with large amounts of data in your React projects.
