@@ -432,3 +432,44 @@ export function setTitlecaseToCamelCase(string) {
 
   return camelCasedString;
 }
+
+//Faster and more efficient
+
+/**
+ * Function that filters an array by a string
+ *
+ * @param {array} arrayToFilter
+ * @param {string} string
+ * @returns
+ */
+export function filterArrayByString(arrayToFilter, string) {
+  let newArray = [];
+  let typeofArray = typeof arrayToFilter;
+  const isArrayOfObjects = typeofArray === "object";
+
+  //To make the filtering more efficient, we're going to use sets
+  let filteredSet = new Set();
+
+  if (isArrayOfObjects) {
+    for (let object of arrayToFilter) {
+      for (let property in object) {
+        let valueOfObject = object[property].toString();
+        let includesQuery = valueOfObject.toLowerCase().includes(string);
+
+        if (includesQuery) {
+          filteredSet.add(object);
+        }
+      }
+    }
+  } else {
+    for (let word of arrayToFilter) {
+      let includesQuery = word.toString().toLowerCase().includes(string);
+      if (includesQuery) {
+        filteredSet.add(word);
+      }
+    }
+  }
+
+  newArray = Array.from(filteredSet);
+  return newArray;
+}

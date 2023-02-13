@@ -74,14 +74,44 @@ export default function DataTable({
    */
   let [historyPaginationsArray, setHistoryPaginationsArray] = useState([]);
 
+  /**
+   * Boolean state to know if the array needs sorting
+   */
   let [needsSorting, setNeedsSorting] = useState(false);
 
+  /**
+   * Boolean state to know if the array needs filtering
+   */
+  let [needsFiltering, setNeedsFiltering] = useState(false);
+
+  /**
+   * Query inputted by the user
+   */
+  let [queryInputted, setQueryInputted] = useState("");
+
+  /**
+   * Data filtered by the query inputted
+   */
+  let [filteredData, setFilteredData] = useState([]);
+
+  /**
+   * Property value to to which it needs to sort the array by
+   */
   let [sortingValue, setSortingValue] = useState("");
 
+  /**
+   * Boolean to know if the sorted array needs to be reversed
+   */
   let [isReverse, setReverse] = useState(false);
 
+  /**
+   * Array that deep copies the value inputted by the user
+   */
   let [copiedData, setCopiedData] = useState([]);
 
+  /**
+   * Data that has been sorted
+   */
   let [sortedData, setSortedData] = useState([]);
 
   //We get the properties of the object inside the data
@@ -335,7 +365,7 @@ export default function DataTable({
         {title}
         <section className="DataTable__entries-query-container">
           <ShowEntries setEntriesShown={setEntriesShown} />
-          <QuerySearch />
+          <QuerySearch setQueryInputted={setQueryInputted} />
         </section>
       </caption>
       <thead className="DataTable__head">
