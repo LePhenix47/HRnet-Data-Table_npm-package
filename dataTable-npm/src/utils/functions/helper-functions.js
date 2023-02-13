@@ -351,7 +351,8 @@ export function invertDayAndMonth(dateString) {
  * @param {boolean} reverse Boolean value to know if the array has to be reversed or not
  * @returns A new sorted array
  */
-export function sortArrayOfObjects(array, prop, reverse = false) {
+export function sortArrayOfObjects(array, prop, reverse = "asc") {
+  log({ array, prop, reverse });
   //To make it easier on the developer we remove any whitespace
   prop = prop.trim();
 
@@ -407,7 +408,7 @@ export function sortArrayOfObjects(array, prop, reverse = false) {
   });
 
   //Reverse the order of the array if the dev wants to
-  if (reverse) {
+  if (reverse === "desc") {
     return newSortedArray.reverse();
   }
 

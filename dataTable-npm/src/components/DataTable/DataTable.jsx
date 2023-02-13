@@ -73,6 +73,8 @@ export default function DataTable({
 
   let [copiedData, setCopiedData] = useState([]);
 
+  let [sortedData, setSortedData] = useState([]);
+
   //We get the properties of the object inside the data
   let properties = getObjectProperties(data[0]);
   //We create the properties for the head
@@ -102,7 +104,6 @@ export default function DataTable({
    *
    */
   let dataToShow = [...data];
-  let sortedData = [...data];
   let startingIndex = 0;
   let endingIndex = 0;
 
@@ -132,12 +133,28 @@ export default function DataTable({
     setUsefulIndexes({ startingIndex, endingIndex });
 
     if (needsSorting) {
-      log({ sortedData, sortingValue, isReverse });
       resetFilteredData();
-      let sortArrayInReverse = isReverse;
-      sortedData = sortArrayOfObjects(sortedData, sortingValue, false);
+
+      log(
+        isReverse
+          ? `${isReverse} Needs to have the array sorted in reverse`
+          : `${isReverse} Needs to be in ASCENDING order`
+      );
+
+      const newArrayOfSortedData = sortArrayOfObjects(
+        copiedData,
+        sortingValue,
+        isReverse
+      );
+
+      log({ newArrayOfSortedData });
+
+      setSortedData(newArrayOfSortedData);
+
+      log(sortedData);
+
       resetDataToShow();
-      fillInDataToShow(sortedData);
+      fillInDataToShow(newArrayOfSortedData);
 
       setValues(getArrayObjectValues(dataToShow));
     } else {
@@ -150,7 +167,7 @@ export default function DataTable({
       //We re-render the component with the new values for the body
       setValues(getArrayObjectValues(dataToShow));
     }
-  }, [entriesShown, paginationIndex]);
+  }, [entriesShown, paginationIndex, sortingValue, isReverse]);
 
   //Get the data the developer added in props
   useEffect(() => {
@@ -272,20 +289,23 @@ export default function DataTable({
    *
    * @param {React.ChangeEvent<HTMLSelectElement>} event React event
    */
-  function handleSortingByClick(event) {
+  function handleArraySortingByClick(event) {
     //We select the table cell inside
     const propertyInTableHead = event.target.closest("td");
+    let textOfProperty = propertyInTableHead.textContent;
     //We get the sorting property
     const sortingProperty = event.target.dataset.dataTableSortingProperty;
     //Look if we need to reverse it
     const isSortingInReverse = event.target.dataset.dataTableSortToReverse;
-    log(sortingProperty, { "Needs to reverse?": isSortingInReverse });
+    log(
+      sortingProperty,
+      { "Needs to reverse?": isSortingInReverse },
+      { textOfProperty, sortingProperty }
+    );
     //Enables sorting
     setNeedsSorting(true);
     //Sets the property to sort by
     setSortingValue(sortingProperty);
-    //Set the sorted array in reverse or not
-    setReverse(true);
     //Sends the user to the pagination index of 1
     setPaginationIndex(1);
   }
@@ -323,7 +343,9 @@ export default function DataTable({
                     type="button"
                     className={`DataTable__head-button DataTable__head-button-normal ${"DataTable__head-button--active"}`}
                     onClick={(e) => {
-                      handleSortingByClick(e);
+                      handleArraySortingByClick(e);
+                      //Set the sorted array in reverse or not
+                      setReverse("asc");
                     }}
                     data-data-table-sorting-property={`${unformattedProperty}`}
                     data-data-table-sort-to-reverse={false}
@@ -334,7 +356,9 @@ export default function DataTable({
                     type="button"
                     className={`DataTable__head-button DataTable__head-button-reverse ${"DataTable__head-button--active"}`}
                     onClick={(e) => {
-                      handleSortingByClick(e);
+                      handleArraySortingByClick(e);
+                      //Set the sorted array in reverse or not
+                      setReverse("desc");
                     }}
                     data-data-table-sorting-property={`${unformattedProperty}`}
                     data-data-table-sort-to-reverse={true}
