@@ -415,3 +415,20 @@ export function sortArrayOfObjects(array, prop, reverse = "asc") {
   console.log("New array");
   return newSortedArray;
 }
+
+/**
+ * Does the exact opposite of {@link splitArrayStringOnUpperCase}, instead of transforming a camelCase string into a titlecase word with spaces
+ * (like: "firstName" → "First Name")
+ *
+ * It transforms a titlecase word with spaces passed in argument as a camelCase string
+ *
+ * @param {string} string String to change the
+ * @returns A string using the camelCase naming convention
+ */
+export function setTitlecaseToCamelCase(string) {
+  let camelCasedString = splitString(string, " ");
+  camelCasedString[0] = formatText(camelCasedString[0], "lowercase");
+  camelCasedString = camelCasedString.toString().replaceAll(",", "");
+
+  return camelCasedString;
+}

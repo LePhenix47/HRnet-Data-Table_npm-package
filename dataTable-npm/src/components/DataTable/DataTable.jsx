@@ -7,6 +7,7 @@ import {
   getObjectProperties,
   sortArrayOfObjects,
   splitArrayStringOnUpperCase,
+  setTitlecaseToCamelCase,
   log,
   deepCopy,
   splitString,
@@ -43,6 +44,14 @@ export default function DataTable({
    * Entries shown = Number(select.value)
    */
   const [entriesShown, setEntriesShown] = useState(10);
+
+  /**
+   * Tuple to save the activation state of the button to sort
+   */
+  const [buttonActive, setButtonActive] = useState({
+    top: false,
+    bottom: false,
+  });
 
   /**
    * Object containing the starting index and the ending index
@@ -292,16 +301,26 @@ export default function DataTable({
   function handleArraySortingByClick(event) {
     //We select the table cell inside
     const propertyInTableHead = event.target.closest("td");
-    let textOfProperty = propertyInTableHead.innerText;
+    let textOfProperty = setTitlecaseToCamelCase(
+      propertyInTableHead.innerText.replaceAll("\n▲\n▼", "")
+    );
     //We get the sorting property
     const sortingProperty = event.target.dataset.dataTableSortingProperty;
     //Look if we need to reverse it
-    const isSortingInReverse = event.target.dataset.dataTableSortToReverse;
+    const isSortingInReverse = JSON.parse(
+      event.target.dataset.dataTableSortToReverse
+    );
     log(
       sortingProperty,
       { "Needs to reverse?": isSortingInReverse },
       { textOfProperty, sortingProperty }
     );
+    if (isSortingInReverse) {
+      setButtonActive({ top: false, bottom: true });
+    } else {
+      setButtonActive({ top: true, bottom: false });
+    }
+    log(buttonActive);
     //Enables sorting
     setNeedsSorting(true);
     //Sets the property to sort by
@@ -323,14 +342,7 @@ export default function DataTable({
         <tr className="DataTable__row DataTable__head-row">
           {properties.map((property, index) => {
             //We set back the property
-            let unformattedProperty = splitString(property, " ");
-            unformattedProperty[0] = formatText(
-              unformattedProperty[0],
-              "lowercase"
-            );
-            unformattedProperty = unformattedProperty
-              .toString()
-              .replaceAll(",", "");
+            let unformattedProperty = setTitlecaseToCamelCase(property);
 
             return (
               <td
@@ -341,7 +353,13 @@ export default function DataTable({
                 <div className="DataTable__buttons-container">
                   <button
                     type="button"
-                    className={`DataTable__head-button DataTable__head-button-normal ${"DataTable__head-button--active"}`}
+                    className={`DataTable__head-button DataTable__head-button-normal ${
+                      !!buttonActive.top &&
+                      !buttonActive.bottom &&
+                      sortingValue === unformattedProperty
+                        ? "DataTable__head-button--active"
+                        : ""
+                    }`}
                     onClick={(e) => {
                       handleArraySortingByClick(e);
                       //Set the sorted array in reverse or not
@@ -354,7 +372,13 @@ export default function DataTable({
                   </button>
                   <button
                     type="button"
-                    className={`DataTable__head-button DataTable__head-button-reverse ${"DataTable__head-button--active"}`}
+                    className={`DataTable__head-button DataTable__head-button-reverse ${
+                      !buttonActive.top &&
+                      !!buttonActive.bottom &&
+                      sortingValue === unformattedProperty
+                        ? "DataTable__head-button--active"
+                        : ""
+                    }`}
                     onClick={(e) => {
                       handleArraySortingByClick(e);
                       //Set the sorted array in reverse or not
