@@ -16,7 +16,7 @@
 
 ## Introduction
 
-HRnet Data Table is a React NPM library that provides a simple and flexible way to display data in a table format. With its support for sorting, filtering, and searching, HRnet Data Table makes it easy to work with large amounts of data in your React projects.
+HRnet Data Table is a React NPM library that provides a simple and flexible way to display data in a table format. With its support for sorting, and filtering, HRnet Data Table makes it easy to work with large amounts of data in your React projects.
 
 ## Features
 
@@ -81,7 +81,10 @@ export default ExampleComponent;
 ```
 
 In this example, the `data` prop contains the data that will be displayed in the table.
-**The heads of the table will be automatically generated based on the property names of the data prop**.
+
+ℹ **The heads of the table will be automatically generated based on the property names of the data prop**.
+
+⚠ The naming convention of the data properties **must** be set in `camelCase` ⚠ 
 
 By default, DataTable is set to not have scrolling enabled. To enable scrolling, you can pass the `scrollable` prop with a value of `true`. If you enable scrolling, you must also set a height in pixels using the `height` prop.
 
@@ -114,6 +117,6 @@ For more examples of how to use HRnet Data Table, please refer to the HRnet Data
 
 ## Conclusion
 
-In conclusion, HRnet Data Table is an effective solution for displaying data in a table format within your React projects. Its robust features, including sorting, filtering, and searching, make it easy to manage large amounts of data. Additionally, its various props offer ample customization options to fit the unique requirements of your projects. The table's support for scrolling also ensures that users can work with large data sets with ease.
+In conclusion, HRnet Data Table is an effective solution for displaying data in a table format within your React projects. Its robust features, including sorting, and filtering, make it easy to manage large amounts of data. Additionally, its various props offer ample customization options to fit the unique requirements of your projects. The table's support for scrolling also ensures that users can work with large data sets with ease.
 
 This project is open source under the ISC license and contributions are welcome. Whether you're looking to add new features, fix bugs, or simply improve the code, the HRnet Data Table community would be grateful for your help. Join the project today and help make HRnet Data Table the go-to data table solution for React developers.

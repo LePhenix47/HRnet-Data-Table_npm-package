@@ -292,7 +292,7 @@ export default function DataTable({
   function handleArraySortingByClick(event) {
     //We select the table cell inside
     const propertyInTableHead = event.target.closest("td");
-    let textOfProperty = propertyInTableHead.textContent;
+    let textOfProperty = propertyInTableHead.innerText;
     //We get the sorting property
     const sortingProperty = event.target.dataset.dataTableSortingProperty;
     //Look if we need to reverse it
