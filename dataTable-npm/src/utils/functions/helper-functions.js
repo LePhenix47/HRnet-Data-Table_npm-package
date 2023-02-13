@@ -399,7 +399,6 @@ export function sortArrayOfObjects(array, prop, reverse = false) {
         throw console.error(
           "An error has occured, the property is undefined or null"
         );
-        break;
       }
     }
 

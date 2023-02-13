@@ -22,7 +22,16 @@ import PaginationIndex from "../PaginationIndex/PaginationIndex";
 //Proptypes
 import * as PropTypes from "prop-types";
 
-export default function DataTable({ title, data, pagination = false }) {
+export default function DataTable({
+  title,
+  data,
+  pagination = false,
+  search = false,
+  sort = false,
+  filter = false,
+  scroll = false,
+  height,
+}) {
   //We get the amount of total entries
 
   /**
@@ -92,8 +101,8 @@ export default function DataTable({ title, data, pagination = false }) {
   /**
    *
    */
-  let dataToShow = deepCopy(data);
-  let sortedData = deepCopy(data);
+  let dataToShow = [...data];
+  let sortedData = [...data];
   let startingIndex = 0;
   let endingIndex = 0;
 
@@ -123,11 +132,10 @@ export default function DataTable({ title, data, pagination = false }) {
     setUsefulIndexes({ startingIndex, endingIndex });
 
     if (needsSorting) {
-      log({ sortingValue });
-      sortedData = deepCopy(copiedData);
-
-      sortedData = sortArrayOfObjects(sortedData, sortingValue, isReverse);
-
+      log({ sortedData, sortingValue, isReverse });
+      resetFilteredData();
+      let sortArrayInReverse = isReverse;
+      sortedData = sortArrayOfObjects(sortedData, sortingValue, false);
       resetDataToShow();
       fillInDataToShow(sortedData);
 
@@ -144,7 +152,7 @@ export default function DataTable({ title, data, pagination = false }) {
     }
   }, [entriesShown, paginationIndex]);
 
-  //Get the data the user inputted
+  //Get the data the developer added in props
   useEffect(() => {
     setCopiedData(deepCopy(data));
   }, []);
@@ -255,7 +263,7 @@ export default function DataTable({ title, data, pagination = false }) {
    *
    */
   function resetFilteredData() {
-    sortedData = deepCopy(data);
+    sortedData = [...copiedData];
   }
 
   /**
@@ -272,18 +280,14 @@ export default function DataTable({ title, data, pagination = false }) {
     //Look if we need to reverse it
     const isSortingInReverse = event.target.dataset.dataTableSortToReverse;
     log(sortingProperty, { "Needs to reverse?": isSortingInReverse });
-    setNeedsSorting(() => {
-      return true;
-    });
-    setSortingValue(() => {
-      return sortingProperty;
-    });
-    setReverse(() => {
-      return isSortingInReverse;
-    });
-    setPaginationIndex(() => {
-      return 1;
-    });
+    //Enables sorting
+    setNeedsSorting(true);
+    //Sets the property to sort by
+    setSortingValue(sortingProperty);
+    //Set the sorted array in reverse or not
+    setReverse(true);
+    //Sends the user to the pagination index of 1
+    setPaginationIndex(1);
   }
 
   return (
