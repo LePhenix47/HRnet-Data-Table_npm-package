@@ -85,13 +85,13 @@ function ExampleComponent () {
 export default ExampleComponent;
 ```
 
-In this example, the `data` prop contains the data that will be displayed in the table.
+In this example, the data prop holds the data that will be displayed in the table. 
 
-ℹ **The heads of the table will be automatically generated based on the property names of the data prop**.
+The headings for the table will be automatically generated based on the property names of the data objects.
 
-⚠ The naming convention of the data properties **must** be set in `camelCase` ⚠ 
+**ℹ Note:** It is important to observe that the naming convention for the data properties must be in `camelCase`.
 
-By default, DataTable is set to not have scrolling enabled. To enable scrolling, you can pass the `scrollable` prop with a value of `true`. If you enable scrolling, you must also set a height in pixels using the `height` prop.
+**⚠ Warning:** By default, the `<DataTable />` component is set to not have scrolling enabled. If you want to enable scrolling, you need to pass the scroll prop with a value of true. If you do enable scrolling, it is mandatory to also set the height of the table in pixels using the height prop.
 
 
 ## Props

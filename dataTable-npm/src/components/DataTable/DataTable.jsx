@@ -25,14 +25,15 @@ import PaginationIndex from "../PaginationIndex/PaginationIndex";
 import * as PropTypes from "prop-types";
 
 export default function DataTable({
-  title,
+  title = "",
   data,
-  pagination = false,
-  search = false,
   sort = false,
   filter = false,
   scroll = false,
-  height,
+  height = 500,
+  info = true,
+  lengthMenu = [10, 25, 50, 100],
+  paging = true,
 }) {
   //We get the amount of total entries
 
@@ -467,12 +468,13 @@ export default function DataTable({
 
 //Adding types to the props of the JS component
 DataTable.propTypes = {
-  title: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  pagination: PropTypes.bool,
-  search: PropTypes.bool,
+  title: PropTypes.string,
   sort: PropTypes.bool,
   filter: PropTypes.bool,
   scroll: PropTypes.bool,
-  height: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  info: PropTypes.bool,
+  lengthMenu: PropTypes.arrayOf(PropTypes.number),
+  paging: PropTypes.bool,
 };
