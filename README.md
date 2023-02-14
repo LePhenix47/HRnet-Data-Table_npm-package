@@ -11,12 +11,17 @@
   - [Usage](#usage)
   - [Props](#props)
   - [Examples](#examples)
+    - [Example 1: Simple Data Table](#example-1-simple-data-table)
+    - [Example 2: Data Table with Search and Sorting](#example-2-data-table-with-search-and-sorting)
+    - [Example 3: Data Table with Scrolling](#example-3-data-table-with-scrolling)
+    - [Example 4: Data Table with all the features](#example-4-data-table-with-all-the-features)
   - [Conclusion](#conclusion)
 
 
 ## Introduction
 
 React Data Table is a React NPM library that provides a simple and flexible way to display data in a table format. With its support for sorting, and filtering, Data Table makes it easy to work with large amounts of data in your React projects.
+
 
 ## Features
 
@@ -50,7 +55,6 @@ To install Data Table, run the following command in your project's root director
 ```powershell
 npm install @lephenix47/react-datatable
 ```
-
 
 
 
@@ -89,7 +93,7 @@ In this example, the data prop holds the data that will be displayed in the tabl
 
 The headings for the table will be automatically generated based on the property names of the data objects.
 
-**ℹ Note:** It is important to observe that the naming convention for the data properties must be in `camelCase`.
+**ℹ Note:** It is important to observe that the naming convention for the data properties must be in `camelCase` .
 
 **⚠ Warning:** By default, the `<DataTable />` component is set to not have scrolling enabled. If you want to enable scrolling, you need to pass the scroll prop with a value of true. If you do enable scrolling, it is mandatory to also set the height of the table in pixels using the height prop.
 
@@ -121,7 +125,103 @@ Each of these props allows you to tailor the Data Table component to your specif
 
 ## Examples
 
-For more examples of how to use Data Table, please refer to the Data Table GitHub repository: https://github.com/LePhenix47/HRnet-Data-Table_npm-package.
+Let us envision the scenario where we have this data:
+```javascript
+const data = [
+  {
+    name: 'John Doe',
+    job: 'Developer',
+    location: 'San Francisco',
+    zipCode: '00596'
+  },
+  {
+    name: 'Jane Doe',
+    job: 'Designer',
+    location: 'Los Angeles',
+    zipCode: '61482'
+  },
+  {
+    name: 'Jim Smith',
+    job: 'Tester',
+    location: 'New York',
+    zipCode: '00596'
+  }
+];
+```
+
+### Example 1: Simple Data Table
+In this example, a simple data table is created using the <DataTable /> component and data prop:
+
+```javascript
+
+import DataTable from '@lephenix47/react-datatable';
+
+
+function ExampleComponent () {
+  return (
+    <DataTable data={data} title={"US developers"}/>
+  );
+};
+
+export default ExampleComponent;
+```
+
+### Example 2: Data Table with Search and Sorting
+In this example, the <DataTable /> component is used to create a data table with search and sorting capabilities:
+
+```javascript
+
+import DataTable from '@lephenix47/react-datatable';
+
+function ExampleComponent () {
+  return (
+    <DataTable data={data} sort={true} filter={true} />
+  );
+};
+
+export default ExampleComponent;
+```
+
+### Example 3: Data Table with Scrolling
+In this example, the <DataTable /> component is used to create a data table with scrolling capabilities:
+```javascript
+
+import DataTable from '@lephenix47/react-datatable';
+
+function ExampleComponent () {
+  return (
+    <DataTable data={data} scroll height={400} />
+  );
+};
+
+export default ExampleComponent;
+```
+
+### Example 4: Data Table with all the features
+
+```javascript
+
+import DataTable from '@lephenix47/react-datatable';
+
+
+function ExampleComponent () {
+  return (
+    <DataTable 
+      data={data} 
+      title="Developers Information" 
+      filter
+      sort
+      scroll
+      height={400}
+      lengthMenu={[5, 10, 15]}
+      info
+    />
+  );
+};
+
+export default ExampleComponent;
+```
+
 
 
 
