@@ -200,6 +200,8 @@ export default ExampleComponent;
 
 ### Example 4: Data Table with all the features
 
+In this example, the <DataTable /> component contains all the features possible:
+
 ```javascript
 
 import DataTable from '@lephenix47/react-datatable';
@@ -222,7 +224,7 @@ function ExampleComponent () {
 
 export default ExampleComponent;
 ```
-
+**ℹ Note**: You can pass a boolean prop (props without a value) to make your code more concise
 
 
 
