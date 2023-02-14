@@ -214,8 +214,7 @@ function ExampleComponent () {
       title="Developers Information" 
       filter
       sort
-      scroll
-      height={400}
+      paging
       lengthMenu={[5, 10, 15]}
       info
     />
@@ -224,7 +223,7 @@ function ExampleComponent () {
 
 export default ExampleComponent;
 ```
-**ℹ Note**: You can pass a boolean prop (props without a value) to make your code more concise
+**ℹ Note**: You can pass a boolean prop (props without a value) as shown the [example 3](#example-3-data-table-with-scrolling) and [example 4](#example-4-data-table-with-all-the-features) to make your code more concise
 
 
 
