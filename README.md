@@ -16,11 +16,11 @@
 
 ## Introduction
 
-HRnet Data Table is a React NPM library that provides a simple and flexible way to display data in a table format. With its support for sorting, and filtering, HRnet Data Table makes it easy to work with large amounts of data in your React projects.
+React Data Table is a React NPM library that provides a simple and flexible way to display data in a table format. With its support for sorting, and filtering, Data Table makes it easy to work with large amounts of data in your React projects.
 
 ## Features
 
-The HRnet Data Table has the following features, matching those of its [jQuery plugin counterpart](https://github.com/DataTables/DataTablesSrc):
+The Data Table has the following features, matching those of its [jQuery plugin counterpart](https://github.com/DataTables/DataTablesSrc):
 
 * Customizable Properties: You can add as many properties to the table as you need.
  
@@ -36,7 +36,7 @@ The HRnet Data Table has the following features, matching those of its [jQuery p
 
 ## Creation
 
-This HRnet Data Table was developed using:
+This Data Table was developed using:
 - [React](https://reactjs.org/): A JavaScript library for building UIs
 - [Vite.js](https://vitejs.dev/):  A fast, modular, and efficient JavaScript development setup for building modern web applications.
 
@@ -45,7 +45,7 @@ This HRnet Data Table was developed using:
 
 ## Installation
 
-To install HRnet Data Table, run the following command in your project's root directory:
+To install Data Table, run the following command in your project's root directory:
 
 ```powershell
 npm install @lephenix47/react-datatable
@@ -56,7 +56,7 @@ npm install @lephenix47/react-datatable
 
 ## Usage
 
-Here's an example of how to use HRnet Data Table in your React components:
+Here's an example of how to use Data Table in your React components:
 
 ```javascript
 //DataTable
@@ -96,40 +96,40 @@ The headings for the table will be automatically generated based on the property
 
 ## Props
 
-HRnet Data Table supports the following props:
+Data Table supports the following props:
 
 
-* `data`: (required) An array of objects that contains the data to be displayed in the table.
+* `data`: (required) An *array of objects* that contains the data to be displayed in the table.
 
-* `title`: (optional) A string value that adds a caption to the table.
+* `title`: (optional) A *string* value that adds a caption to the table.
 
-* `sort`: (optional) A boolean value that determines whether the table should be sortable. The default value is `false`.
+* `sort`: (optional) A *boolean* value that determines whether the table should be sortable. The default value is `false`.
 
-* `filter`: (optional) A boolean value that determines whether the table should be filterable. The default value is `false`.
+* `filter`: (optional) A *boolean* value that determines whether the table should be filterable. The default value is `false`.
 
-* `scroll`: (optional) A boolean value that determines whether the table should have scrolling. The default value is `false`.
+* `scroll`: (optional) A *boolean* value that determines whether the table should have scrolling. The default value is `false`.
 
-* `height`: (required if scroll is set to true) A number value representing the height of the table in pixels.
+* `height`: (required if scroll is set to `true`) A *number* value representing the height of the table in pixels. The default value is `0`.
 
-* `info`: (optional) A boolean value that controls the display of information about the data table, * such as the current page and number of entries displayed. The default value is true.
+* `info`: (optional) A *boolean* value that controls the display of information about the data table, such as the current page and number of entries displayed. The default value is `true`.
 
-* `lengthMenu`: (optional) An array of numbers that specifies the entries to be shown in the table, for example: `[10, 25, 50, 100]`. The user can then select how many entries they want to see from a  drop-down menu. If no props were added it will use the default value which is `[10, 25, 50, 100]`.
+* `lengthMenu`: (optional) An array of numbers that specifies the entries to be shown in the table, for example: `[5, 15, 30, 45, 75]`. The user can then select how many entries they want to see from a  drop-down menu. If no props were added it will use the default value which is `[10, 25, 50, 100]`.
 
 * `paging`: (optional) A boolean value that determines whether the table should be paginated. By default, this is set to `true`, but it can be disabled by setting it to `false`. However, if scroll is enabled, paging will be automatically disabled and vice-versa.
 
-Each of these props allows you to tailor the HRnet Data Table component to your specific needs and requirements, making it a versatile and powerful tool for working with data in your React projects.
+Each of these props allows you to tailor the Data Table component to your specific needs and requirements, making it a versatile and powerful tool for working with data in your React projects.
 
 ## Examples
 
-For more examples of how to use HRnet Data Table, please refer to the HRnet Data Table GitHub repository: https://github.com/LePhenix47/HRnet-Data-Table_npm-package.
+For more examples of how to use Data Table, please refer to the Data Table GitHub repository: https://github.com/LePhenix47/HRnet-Data-Table_npm-package.
 
 
 
 ## Conclusion
 
-In conclusion, HRnet Data Table is an effective solution for displaying data in a table format within your React projects. 
+In conclusion, Data Table is an effective solution for displaying data in a table format within your React projects. 
 Its robust features, including sorting, and filtering, make it easy to manage large amounts of data.
 
  Additionally, its various props offer ample customization options to fit the unique requirements of your projects. The table's support for scrolling also ensures that users can work with large data sets with ease.
 
-This project is open source under the ISC license and contributions are welcome. Whether you're looking to add new features, fix bugs, or simply improve the code, the HRnet Data Table community would be grateful for your help. Join the project today and help make HRnet Data Table the go-to data table solution for React developers.
+This project is open source under the ISC license and contributions are welcome. Whether you're looking to add new features, fix bugs, or simply improve the code, the Data Table community would be grateful for your help. Join the project today and help make Data Table the go-to data table solution for React developers.
