@@ -235,4 +235,4 @@ Its robust features, including sorting, and filtering, make it easy to manage la
 
 
 ## License
-This project is open source under the ISC license and contributions are welcome. Whether you're looking to add new features, fix bugs, or simply improve the code, the Data Table community would be grateful for your help. Join the project today and help make Data Table the go-to data table solution for React developers.
+This project is open source under the ISC license and contributions are welcome. Whether you're looking to add new features, fix bugs, or simply improve the code, I'd would be grateful for your help. Join the project today and help make Data Table the go-to data table solution for React developers.
