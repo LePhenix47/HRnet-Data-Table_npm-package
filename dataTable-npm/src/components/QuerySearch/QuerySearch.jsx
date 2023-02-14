@@ -2,7 +2,7 @@ import React from "react";
 //Proptypes
 import * as PropTypes from "prop-types";
 
-export default function QuerySearch({ setQueryInputted }) {
+export default function QuerySearch({ setQueryInputted, setNeedsFiltering }) {
   return (
     <form className="QuerySearch">
       <label htmlFor="search" className="QuerySearch__label">
@@ -12,10 +12,29 @@ export default function QuerySearch({ setQueryInputted }) {
           className="QuerySearch__input"
           id="search"
           onInput={(e) => {
-            setQueryInputted(e.target.value);
+            //We get the value of the input without any whitespace
+            const valueOfInput = e.target.value.trim();
+
+            //We verify if the input isn't empty to avoid pointless re-renders
+            const isNotEmpty = !!valueOfInput.length;
+            if (isNotEmpty) {
+              setQueryInputted(e.target.value);
+              setNeedsFiltering(true);
+            } else {
+              setQueryInputted("");
+              setNeedsFiltering(false);
+            }
           }}
         />
-        <input type="reset" className="QuerySearch__reset-button" value="×" />
+        <input
+          type="reset"
+          className="QuerySearch__reset-button"
+          value="×"
+          onClick={() => {
+            setQueryInputted("");
+            setNeedsFiltering(false);
+          }}
+        />
       </label>
     </form>
   );

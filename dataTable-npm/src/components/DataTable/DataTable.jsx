@@ -12,6 +12,7 @@ import {
   deepCopy,
   splitString,
   formatText,
+  filterArrayByString,
 } from "../../utils/functions/helper-functions";
 
 //Components
@@ -88,6 +89,7 @@ export default function DataTable({
    * Query inputted by the user
    */
   let [queryInputted, setQueryInputted] = useState("");
+  log({ queryInputted, needsFiltering });
 
   /**
    * Data filtered by the query inputted
@@ -118,7 +120,6 @@ export default function DataTable({
   let properties = getObjectProperties(data[0]);
   //We create the properties for the head
   properties = splitArrayStringOnUpperCase(properties, "titlecase", " ");
-  // log(properties);
 
   //We populate the body of the table
   /**
@@ -137,8 +138,6 @@ export default function DataTable({
    */
   let totalPaginationIndexes = Math.ceil(totalEntries / entriesShown);
 
-  // log({ totalEntries, paginationIndex });
-
   /**
    *
    */
@@ -154,7 +153,6 @@ export default function DataTable({
     correctPaginationIndex();
 
     setStartAndEndIndex();
-    log({ paginationIndex });
 
     const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
     if (paginationIndexOverflows) {
@@ -172,41 +170,53 @@ export default function DataTable({
     setUsefulIndexes({ startingIndex, endingIndex });
 
     if (needsSorting) {
-      resetFilteredData();
+      resetSortedData();
 
-      log(
-        isReverse
-          ? `${isReverse} Needs to have the array sorted in reverse`
-          : `${isReverse} Needs to be in ASCENDING order`
-      );
-
-      const newArrayOfSortedData = sortArrayOfObjects(
+      let newArrayOfSortedData = sortArrayOfObjects(
         copiedData,
         sortingValue,
         isReverse
       );
 
-      log({ newArrayOfSortedData });
+      if (needsFiltering) {
+        newArrayOfSortedData = filterArrayByString(
+          newArrayOfSortedData,
+          queryInputted
+        );
+        // Update the total pagination indexes after filtering the data
+        totalPaginationIndexes = Math.ceil(filteredData.length / entriesShown);
+      }
 
       setSortedData(newArrayOfSortedData);
-
-      log(sortedData);
 
       resetDataToShow();
       fillInDataToShow(newArrayOfSortedData);
 
       setValues(getArrayObjectValues(dataToShow));
     } else {
-      //We reset the data inside the <tbody> to avoid pileups
+      //We reset the data inside the <tbody> to avoid pile-ups
       resetDataToShow();
 
       //We create the data that must be shown
-      const arrayOfData = copiedData.length ? copiedData : data;
+      let arrayOfData = copiedData.length ? copiedData : data;
+
+      if (needsFiltering) {
+        arrayOfData = filterArrayByString(arrayOfData, queryInputted);
+      }
+
       fillInDataToShow(arrayOfData);
       //We re-render the component with the new values for the body
       setValues(getArrayObjectValues(dataToShow));
     }
-  }, [entriesShown, paginationIndex, sortingValue, isReverse]);
+  }, [
+    entriesShown,
+    paginationIndex,
+    sortingValue,
+    isReverse,
+    queryInputted,
+    needsFiltering,
+    totalPaginationIndexes,
+  ]);
 
   //Get the data the developer added in props
   useEffect(() => {
@@ -223,12 +233,6 @@ export default function DataTable({
     ]);
 
     setHistoryPaginationsArray([...historyPaginationsArray, paginationIndex]);
-
-    console.log(
-      historyTotalPaginationsArray?.[0],
-      historyTotalPaginationsArray?.[1]
-    );
-    log({ historyPaginationsArray });
 
     const historyPaginationsExceededTwo =
       historyTotalPaginationsArray.length + 1 > 2;
@@ -249,8 +253,6 @@ export default function DataTable({
     let newTotalPaginationIndex = totalPaginationIndexes;
     let oldPaginationIndex = Number(historyPaginationsArray?.[0]);
 
-    log({ oldPaginationIndex });
-
     /**
      * Verifies that the user changed the amount of entries and that the Pagination index is over one
      */
@@ -259,7 +261,6 @@ export default function DataTable({
       newTotalPaginationIndex > 1;
 
     if (userChangedShownEntries) {
-      log("The previous TPI is different than the current TPI");
       let computedPaginationArray =
         Number(
           (
@@ -268,12 +269,6 @@ export default function DataTable({
           ).toFixed(0)
         ) || 1;
 
-      log(
-        `New pagination index should be (OPI ÷ OTPI × NTPI): ${paginationIndex} ÷ ${oldTotalPaginationIndex} × ${newTotalPaginationIndex} = ${computedPaginationArray} (exactly: ${
-          (oldPaginationIndex / oldTotalPaginationIndex) *
-          newTotalPaginationIndex
-        }?`
-      );
       setPaginationIndex(computedPaginationArray);
     }
   }
@@ -318,7 +313,7 @@ export default function DataTable({
   /**
    *
    */
-  function resetFilteredData() {
+  function resetSortedData() {
     sortedData = [...copiedData];
   }
 
@@ -340,17 +335,12 @@ export default function DataTable({
     const isSortingInReverse = JSON.parse(
       event.target.dataset.dataTableSortToReverse
     );
-    log(
-      sortingProperty,
-      { "Needs to reverse?": isSortingInReverse },
-      { textOfProperty, sortingProperty }
-    );
+
     if (isSortingInReverse) {
       setButtonActive({ top: false, bottom: true });
     } else {
       setButtonActive({ top: true, bottom: false });
     }
-    log(buttonActive);
     //Enables sorting
     setNeedsSorting(true);
     //Sets the property to sort by
@@ -365,7 +355,10 @@ export default function DataTable({
         {title}
         <section className="DataTable__entries-query-container">
           <ShowEntries setEntriesShown={setEntriesShown} />
-          <QuerySearch setQueryInputted={setQueryInputted} />
+          <QuerySearch
+            setQueryInputted={setQueryInputted}
+            setNeedsFiltering={setNeedsFiltering}
+          />
         </section>
       </caption>
       <thead className="DataTable__head">
