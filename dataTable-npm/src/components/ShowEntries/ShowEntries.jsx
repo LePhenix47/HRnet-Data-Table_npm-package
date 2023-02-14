@@ -50,4 +50,6 @@ export default function ShowEntries({ setEntriesShown }) {
   );
 }
 
-ShowEntries.propTypes = {};
+ShowEntries.propTypes = {
+  setEntriesShown: PropTypes.func.isRequired,
+};

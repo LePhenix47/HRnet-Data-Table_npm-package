@@ -210,4 +210,8 @@ export default function PaginationIndex({
   );
 }
 
-PaginationIndex.propTypes = {};
+PaginationIndex.propTypes = {
+  totalPaginationIndexes: PropTypes.number.isRequired,
+  setCurrentPaginationIndex: PropTypes.func.isRequired,
+  currentPaginationIndex: PropTypes.number.isRequired,
+};

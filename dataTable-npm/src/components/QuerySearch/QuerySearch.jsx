@@ -40,4 +40,7 @@ export default function QuerySearch({ setQueryInputted, setNeedsFiltering }) {
   );
 }
 
-QuerySearch.propTypes = {};
+QuerySearch.propTypes = {
+  setQueryInputted: PropTypes.func.isRequired,
+  setNeedsFiltering: PropTypes.func.isRequired,
+};

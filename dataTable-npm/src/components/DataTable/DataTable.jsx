@@ -166,9 +166,10 @@ export default function DataTable({
       setPaginationIndex(1);
     }
 
-    //Set the inndex to send them to the <EntriesIndex /> component
+    //Set the indexes to send them to the <EntriesIndex /> component
     setUsefulIndexes({ startingIndex, endingIndex });
 
+    //If the array needs to be sorted
     if (needsSorting) {
       resetSortedData();
 
@@ -465,6 +466,11 @@ export default function DataTable({
 //Adding types to the props of the JS component
 DataTable.propTypes = {
   title: PropTypes.string,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   pagination: PropTypes.bool,
-  data: PropTypes.arrayOf(PropTypes.object),
+  search: PropTypes.bool,
+  sort: PropTypes.bool,
+  filter: PropTypes.bool,
+  scroll: PropTypes.bool,
+  height: PropTypes.number,
 };
