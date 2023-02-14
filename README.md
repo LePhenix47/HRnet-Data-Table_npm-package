@@ -6,7 +6,7 @@
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Features](#features)
-  - [How it was created](#how-it-was-created)
+  - [Creation](#creation)
   - [Installation](#installation)
   - [Usage](#usage)
   - [Props](#props)
@@ -20,20 +20,25 @@ HRnet Data Table is a React NPM library that provides a simple and flexible way 
 
 ## Features
 
-This table has all the features from the [jQuery plugin counter part](https://github.com/DataTables/DataTablesSrc):
+The HRnet Data Table has the following features, matching those of its [jQuery plugin counterpart](https://github.com/DataTables/DataTablesSrc):
 
-* Possible to add as many properties in the table as you want
-* You can disable pagination and enable scrolling on the table
-* You can search for a user in the page by their properties
-* You can sort the table by a property
-* You can select the amount of shown entries
-* You can paginate through the table thanks to the pagination
+* Customizable Properties: You can add as many properties to the table as you need.
+ 
+* Scrolling: You can choose to disable pagination and enable scrolling for an optimized browsing * experience.
+ 
+* Search: You can search for a user based on their properties within the table.
+ 
+* Sorting: The table can be sorted based on a specific property.
+ 
+* Entries: You can select the number of entries shown in the table from an array of options.
+ 
+* Pagination: The table can be paginated, allowing you to easily browse through the data.
 
-## How it was created
+## Creation
 
-This was created with:
-- [React](https://reactjs.org/)
-- [Vite.js](https://vitejs.dev/)
+This HRnet Data Table was developed using:
+- [React](https://reactjs.org/): A JavaScript library for building UIs
+- [Vite.js](https://vitejs.dev/):  A fast, modular, and efficient JavaScript development setup for building modern web applications.
 
 <a href="https://reactjs.org/" rel="nofollow"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/react-colored.svg" width="36" height="36" alt="React" style="max-width: 100%;"></a><a href="https://vitejs.dev/" ><img src="https://vitejs.dev/logo-with-shadow.png" alt="Vite logo" width="36" height="36"/></a>
 
