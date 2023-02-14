@@ -100,17 +100,17 @@ HRnet Data Table supports the following props:
 
 * `search`: (optional) A boolean value that determines whether the table should have a search bar. The default value is `false`.
 
-* `sort`: (optional) A boolean value that determines whether the table should be sortable. The default * value is `false`.
+* `sort`: (optional) A boolean value that determines whether the table should be sortable. The default value is `false`.
 
-* `filter`: (optional) A boolean value that determines whether the table should be filterable. The * default value is `false`.
+* `filter`: (optional) A boolean value that determines whether the table should be filterable. The default value is `false`.
 
-* `scroll`: (optional) A boolean value that determines whether the table should have scrolling. The * default value is `false`.
+* `scroll`: (optional) A boolean value that determines whether the table should have scrolling. The default value is `false`.
 
 * `height`: (required if scroll is set to true) A number value representing the height of the table in pixels.
 
 * `info`: (optional) A boolean value that controls the display of information about the data table, * such as the current page and number of entries displayed. The default value is true.
 
-* `lengthMenu`: (optional) An array of numbers that specifies the entries to be shown in the table, for example: `[10, 25, 50, 100]`. The user can then select how many entries they want to see from a  drop-down menu. The default value is [10, 25, 50, 100].
+* `lengthMenu`: (optional) An array of numbers that specifies the entries to be shown in the table, for example: `[10, 25, 50, 100]`. The user can then select how many entries they want to see from a  drop-down menu. If no props were added it will use the default value which is `[10, 25, 50, 100]`.
 
 * `paging`: (optional) A boolean value that determines whether the table should be paginated. By default, this is set to `true`, but it can be disabled by setting it to `false`. However, if scroll is enabled, paging will be automatically disabled and vice-versa.
 
