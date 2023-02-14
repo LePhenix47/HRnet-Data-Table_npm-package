@@ -93,19 +93,26 @@ By default, DataTable is set to not have scrolling enabled. To enable scrolling,
 
 HRnet Data Table supports the following props:
 
+
 * `data`: (required) An array of objects that contains the data to be displayed in the table.
 
 * `title`: (optional) A string value that adds a caption to the table.
 
 * `search`: (optional) A boolean value that determines whether the table should have a search bar. The default value is `false`.
 
-* `sort`: (optional) A boolean value that determines whether the table should be sortable. The default value is `false`.
-  
-* `filter`: (optional) A boolean value that determines whether the table should be filterable. The default value is `false`.
-  
-* `scroll`: (optional) A boolean value that determines whether the table should have scrolling. The default value is `false`.
+* `sort`: (optional) A boolean value that determines whether the table should be sortable. The default * value is `false`.
+* 
+* `filter`: (optional) A boolean value that determines whether the table should be filterable. The * default value is `false`.
+* 
+* `scroll`: (optional) A boolean value that determines whether the table should have scrolling. The * default value is `false`.
+* 
+* `height`: (required if scroll is set to true) A number value representing the height of the table in pixels.
 
-* `height`: (required if scrollable is set to `true`) A string value representing the height of the table in pixels.
+* `info`: (optional) A boolean value that controls the display of information about the data table, * such as the current page and number of entries displayed. The default value is true.
+
+* `lengthMenu`: (optional) An array of numbers that specifies the entries to be shown in the table, for example: `[10, 25, 50, 100]`. The user can then select how many entries they want to see from a  drop-down menu. The default value is [10, 25, 50, 100].
+
+* `paging`: (optional) A boolean value that determines whether the table should be paginated. By default, this is set to `true`, but it can be disabled by setting it to `false`. However, if scroll is enabled, paging will be automatically disabled and vice-versa.
 
 Each of these props allows you to tailor the HRnet Data Table component to your specific needs and requirements, making it a versatile and powerful tool for working with data in your React projects.
 

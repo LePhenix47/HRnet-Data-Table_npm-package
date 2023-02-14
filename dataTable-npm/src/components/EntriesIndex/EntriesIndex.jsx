@@ -7,15 +7,19 @@ export default function EntriesIndex({
   currentEndIndex,
   totalAmountOfEntries,
   isFiltered,
+  isScrolling,
 }) {
+  let textOfEntriesIndex =
+    isScrolling === false
+      ? `Show ${
+          currentStartIndex + 1
+        } to ${currentEndIndex} of ${totalAmountOfEntries}`
+      : `Showing ${totalAmountOfEntries} entries`;
+
   let textToShow = isFiltered
-    ? `Show ${
-        currentStartIndex + 1
-      } to ${currentEndIndex} of ${totalAmountOfEntries} filtered from ${totalAmountOfEntries} total entries`
-    : `Show ${
-        currentStartIndex + 1
-      } to ${currentEndIndex} of ${totalAmountOfEntries}`;
-  return !isFiltered && <div className="EntriesIndex">{textToShow}</div>;
+    ? `${textOfEntriesIndex} (filtered from ${totalAmountOfEntries} total entries)`
+    : `${textOfEntriesIndex}`;
+  return <div className="EntriesIndex">{textToShow}</div>;
 }
 
 EntriesIndex.propTypes = {

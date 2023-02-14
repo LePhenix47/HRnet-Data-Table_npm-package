@@ -1,0 +1,9 @@
+//SASS variables
+$default-input-bg-color: #c4c4c4;
+$default-reset-bg-color: #949494;
+
+//CSS Variables
+:root {
+    --default-input-bg-color: #{$default-input-bg-color};
+    --default-reset-bg-color: #{$default-reset-bg-color};
+}

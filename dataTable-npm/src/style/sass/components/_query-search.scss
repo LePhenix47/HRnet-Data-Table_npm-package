@@ -2,12 +2,23 @@
 
 .QuerySearch {
 
+    &__inputs-wrapper {
+        position: relative;
+    }
+
     &__label {
         font-size: 16px;
         font-weight: 400;
     }
 
-    &__input {}
+    &__input {
+        background-color: var(--default-input-bg-color);
+    }
 
-    &__reset-button {}
+    &__reset-button {
+        position: absolute;
+        top: 43%;
+        right: 0px;
+        background-color: var(--default-reset-bg-color);
+    }
 }

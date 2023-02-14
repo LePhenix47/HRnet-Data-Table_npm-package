@@ -320,7 +320,7 @@ export default function DataTable({
 
   /**
    *
-   * Function that sorts the table by a property
+   * Function that sorts the table by a property when clicked
    *
    * @param {React.ChangeEvent<HTMLSelectElement>} event React event
    */
@@ -426,6 +426,8 @@ export default function DataTable({
               totalAmountOfEntries={totalEntries}
               currentStartIndex={usefulIndexes.startingIndex}
               currentEndIndex={usefulIndexes.endingIndex}
+              isFiltered={needsFiltering}
+              isScrolling={false}
             />
           </td>
           <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-pagination">
