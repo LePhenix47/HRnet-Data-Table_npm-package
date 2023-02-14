@@ -1,10 +1,10 @@
 {
   "name": "@lephenix47/react-datatable",
   "version": "1.0.0",
-  "description": "This package allows you to create a table of employees with all the features from the jQuery counter part",
-  "main": "dataTable-npm/src/main.jsx",
+  "description": "A React component library for creating feature-rich and customizable data tables. This library provides all the functionality of its jQuery counterpart with the added benefits of using React. Designed to be fast, flexible, and easy to use, this library provides a complete solution for creating and customizing data tables in your React applications.",
+  "main": "dataTable-npm/dist/index.js",
   "files": [
-    "dataTable-npm/src/**/*"
+    "dataTable-npm/dist/**/*"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,12 +15,24 @@
     "url": "git+https://github.com/LePhenix47/HRnet-Data-Table_npm-package.git"
   },
   "keywords": [
+    "react",
+    "datatable",
+    "data table",
+    "jquery datatable",
+    "component library",
+    "React component",
+    "customizable",
+    "feature-rich",
+    "fast",
+    "flexible",
+    "easy to use",
     "Openclassrooms",
     "p14",
     "hrnet",
     "HRnet",
     "js-react",
-    "traineeship"
+    "traineeship",
+    "openclassrooms"
   ],
   "author": "Younes Lahouiti",
   "license": "ISC",
