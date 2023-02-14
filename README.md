@@ -98,8 +98,6 @@ HRnet Data Table supports the following props:
 
 * `title`: (optional) A string value that adds a caption to the table.
 
-* `search`: (optional) A boolean value that determines whether the table should have a search bar. The default value is `false`.
-
 * `sort`: (optional) A boolean value that determines whether the table should be sortable. The default value is `false`.
 
 * `filter`: (optional) A boolean value that determines whether the table should be filterable. The default value is `false`.
