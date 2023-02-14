@@ -96,7 +96,7 @@ The headings for the table will be automatically generated based on the property
 
 **ℹ Note:** It is important to observe that the naming convention for the data properties must be in `camelCase` .
 
-**⚠ Warning:** By default, the `<DataTable />` component is set to not have scrolling enabled. If you want to enable scrolling, you need to pass the scroll prop with a value of true. If you do enable scrolling, it is mandatory to also set the height of the table in pixels using the height prop.
+**⚠ Warning:** By default, the ``<DataTable />`` component is set to not have scrolling enabled. If you want to enable scrolling, you need to pass the scroll prop with a value of true. If you do enable scrolling, it is mandatory to also set the height of the table in pixels using the height prop.
 
 
 ## Props
@@ -151,7 +151,7 @@ const data = [
 ```
 
 ### Example 1: Simple Data Table
-In this example, a simple data table is created using the <DataTable /> component and data prop:
+In this example, a simple data table is created using the `<DataTable />` component and data prop:
 
 ```javascript
 
@@ -168,7 +168,7 @@ export default ExampleComponent;
 ```
 
 ### Example 2: Data Table with Search and Sorting
-In this example, the <DataTable /> component is used to create a data table with search and sorting capabilities:
+In this example, the `<DataTable />` component is used to create a data table with search and sorting capabilities:
 
 ```javascript
 
@@ -184,14 +184,19 @@ export default ExampleComponent;
 ```
 
 ### Example 3: Data Table with Scrolling
-In this example, the <DataTable /> component is used to create a data table with scrolling capabilities:
+In this example, the `<DataTable />` component is used to create a data table with scrolling capabilities with all the features possible:
 ```javascript
 
 import DataTable from '@lephenix47/react-datatable';
 
 function ExampleComponent () {
   return (
-    <DataTable data={data} scroll height={400} />
+    <DataTable data={data}  
+      filter
+      sort
+      scroll
+      info
+      height={400} />
   );
 };
 
@@ -200,7 +205,7 @@ export default ExampleComponent;
 
 ### Example 4: Data Table with all the features
 
-In this example, the <DataTable /> component contains all the features possible:
+In this example, the `<DataTable />` component contains all the features possible:
 
 ```javascript
 
