@@ -16,6 +16,7 @@
     - [Example 3: Data Table with Scrolling](#example-3-data-table-with-scrolling)
     - [Example 4: Data Table with all the features](#example-4-data-table-with-all-the-features)
   - [Conclusion](#conclusion)
+  - [License](#license)
 
 
 ## Introduction
@@ -232,4 +233,6 @@ Its robust features, including sorting, and filtering, make it easy to manage la
 
  Additionally, its various props offer ample customization options to fit the unique requirements of your projects. The table's support for scrolling also ensures that users can work with large data sets with ease.
 
+
+## License
 This project is open source under the ISC license and contributions are welcome. Whether you're looking to add new features, fix bugs, or simply improve the code, the Data Table community would be grateful for your help. Join the project today and help make Data Table the go-to data table solution for React developers.
