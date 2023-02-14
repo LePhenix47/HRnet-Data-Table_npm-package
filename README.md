@@ -113,9 +113,9 @@ Data Table supports the following props:
 
 * `info`: (optional) A *boolean* value that controls the display of information about the data table, such as the current page and number of entries displayed. The default value is `true`.
 
-* `lengthMenu`: (optional) An array of numbers that specifies the entries to be shown in the table, for example: `[5, 15, 30, 45, 75]`. The user can then select how many entries they want to see from a  drop-down menu. If no props were added it will use the default value which is `[10, 25, 50, 100]`.
+* `lengthMenu`: (optional) An *array of numbers* that specifies the entries to be shown in the table, for example: `[5, 15, 30, 45, 75]`. The user can then select how many entries they want to see from a  drop-down menu. If no props were added it will use the default value which is `[10, 25, 50, 100]`.
 
-* `paging`: (optional) A boolean value that determines whether the table should be paginated. By default, this is set to `true`, but it can be disabled by setting it to `false`. However, if scroll is enabled, paging will be automatically disabled and vice-versa.
+* `paging`: (optional) A *boolean* value that determines whether the table should be paginated. By default, this is set to `true`, but it can be disabled by setting it to `false`. However, if scroll is enabled, paging will be automatically disabled and vice-versa.
 
 Each of these props allows you to tailor the Data Table component to your specific needs and requirements, making it a versatile and powerful tool for working with data in your React projects.
 
