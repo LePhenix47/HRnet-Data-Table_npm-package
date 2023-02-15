@@ -143,6 +143,8 @@ export default function DataTable({
   const tpiRef = useRef(Math.ceil(totalEntries / entriesShown));
   log({ renderTPI: tpiRef });
 
+  const totalDataRef = useRef(null);
+
   /**
    *
    */

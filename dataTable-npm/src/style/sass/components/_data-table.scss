@@ -59,10 +59,13 @@
 
     //For the <tfoot>
     &__foot {
+        height: auto;
+
         position: relative;
 
         //For all the <tr> nested inside the <tfoot>
         &-row {
+            height: inherit;
             position: absolute;
             display: flex;
             width: 100%;
