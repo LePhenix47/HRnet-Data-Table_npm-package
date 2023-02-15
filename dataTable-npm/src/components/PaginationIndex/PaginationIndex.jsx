@@ -111,7 +111,9 @@ export default function PaginationIndex({
    */
 
   return (
-    <div className="PaginationIndex">
+    <div
+      className={`PaginationIndex ${!hasPaging || isScrolling ? "hide" : ""}`}
+    >
       <button
         type="button"
         className="PaginationIndex__previous"
@@ -189,6 +191,10 @@ export default function PaginationIndex({
         className={`PaginationIndex__button ${
           currentPaginationIndex === totalPaginationIndexes
             ? "PaginationIndex__button--active"
+            : ""
+        } ${
+          currentPaginationIndex === 1 && totalPaginationIndexes === 1
+            ? "hide"
             : ""
         }`}
         type="button"

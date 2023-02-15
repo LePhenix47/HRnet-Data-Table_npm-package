@@ -25,7 +25,7 @@ export default function ShowEntries({
   }
 
   return (
-    <div className="ShowEntries">
+    <div className={`ShowEntries ${!hasPaging || isScrolling ? "hide" : ""}`}>
       <label htmlFor="show-entries" className="ShowEntries__label">
         Show
         <select

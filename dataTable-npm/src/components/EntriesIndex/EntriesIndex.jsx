@@ -23,7 +23,7 @@ export default function EntriesIndex({
         currentStartIndex + 1
       } to ${currentEndIndex} of ${filteredAmountOfEntries} (filtered from ${totalAmountOfEntries} total entries)`
     : `${textOfEntriesIndex}`;
-  return <div className="EntriesIndex">{textToShow}</div>;
+  return <div className={`EntriesIndex`}>{textToShow}</div>;
 }
 
 EntriesIndex.propTypes = {

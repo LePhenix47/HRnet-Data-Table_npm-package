@@ -8,7 +8,7 @@ function App() {
       data={dataMock}
       sort
       filter
-      info
+      // info
       lengthMenu={[10, 25, 50, 100]}
       paging
       // scroll

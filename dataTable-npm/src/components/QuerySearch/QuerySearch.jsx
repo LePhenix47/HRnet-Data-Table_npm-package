@@ -8,7 +8,7 @@ export default function QuerySearch({
   hasFilter,
 }) {
   return (
-    <form className="QuerySearch">
+    <form className={`QuerySearch ${!hasFilter ? "hide" : ""}`}>
       <div className="QuerySearch__inputs-wrapper">
         <label htmlFor="search" className="QuerySearch__label">
           Search

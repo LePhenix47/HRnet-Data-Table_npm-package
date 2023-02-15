@@ -31,7 +31,7 @@ export default function DataTable({
   filter = false,
   scroll = false,
   height = 500,
-  info = true,
+  info = false,
   lengthMenu = [10, 25, 50, 100],
   paging = true,
 }) {
@@ -389,7 +389,11 @@ export default function DataTable({
                 className="DataTable__cell DataTable__head-cell"
               >
                 {property}
-                <div className="DataTable__buttons-container">
+                <div
+                  className={`DataTable__buttons-container ${
+                    !sort ? "hide" : ""
+                  }`}
+                >
                   <button
                     type="button"
                     className={`DataTable__head-button DataTable__head-button-normal ${
