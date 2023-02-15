@@ -15,6 +15,7 @@
     - [Example 2: Data Table with Search and Sorting](#example-2-data-table-with-search-and-sorting)
     - [Example 3: Data Table with Scrolling](#example-3-data-table-with-scrolling)
     - [Example 4: Data Table with all the features](#example-4-data-table-with-all-the-features)
+  - [Known Bugs and Inconveniences](#known-bugs-and-inconveniences)
   - [Conclusion](#conclusion)
   - [License](#license)
 
@@ -230,6 +231,21 @@ export default ExampleComponent;
 ```
 **ℹ Note**: You can pass a boolean prop (props without a value) as shown the [example 3](#example-3-data-table-with-scrolling) and [example 4](#example-4-data-table-with-all-the-features) to make your code more concise
 
+ 
+## Known Bugs and Inconveniences
+As with any software, this library may have some minor bugs or inconveniences that we are actively working to resolve. 
+
+    Additionally, please note that there are certain CSS properties within the following classes that must not be modified:
+    ```css
+    .DataTable__foot{}
+    ```
+
+    The following CSS properties must not be modified within these classes:
+    ```css
+    position
+    ```
+
+We apologize for any inconvenience these issues may cause and are working hard to resolve them as quickly as possible. In the meantime, if you have any questions or concerns about these issues, please don't hesitate to reach out to our GitHub repository. Thank you for your understanding and patience.
 
 
 ## Conclusion
