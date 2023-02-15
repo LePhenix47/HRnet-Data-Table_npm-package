@@ -33,7 +33,7 @@ export default function DataTable({
   height = 500,
   info = false,
   lengthMenu = [10, 25, 50, 100],
-  paging = true,
+  paging = false,
 }) {
   //We get the amount of total entries
   // log({ title, sort, scroll, height, filter, info, lengthMenu, paging });

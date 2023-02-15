@@ -6,12 +6,12 @@ function App() {
     <DataTable
       title="Current employees"
       data={dataMock}
+      lengthMenu={[10, 25, 50, 100]}
       sort
       filter
-      // info
-      lengthMenu={[10, 25, 50, 100]}
-      paging
-      // scroll
+      info
+      // paging
+      scroll
       // height={500}
     />
   );
