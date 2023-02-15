@@ -9,8 +9,10 @@ function App() {
       sort
       filter
       info
-      lengthMenu={[10, 20, 30]}
+      lengthMenu={[10, 25, 50, 100]}
       paging
+      scroll
+      height={500}
     />
   );
 }

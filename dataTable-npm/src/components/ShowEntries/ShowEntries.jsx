@@ -31,18 +31,18 @@ export default function ShowEntries({ setEntriesShown, lengthMenu }) {
             handleSubmit(e);
           }}
         >
-          <option value="10" className="ShowEntries__option">
-            10
-          </option>
-          <option value="25" className="ShowEntries__option">
-            25
-          </option>
-          <option value="50" className="ShowEntries__option">
-            50
-          </option>
-          <option value="100" className="ShowEntries__option">
-            100
-          </option>
+          {lengthMenu &&
+            lengthMenu.map((number, index) => {
+              return (
+                <option
+                  value={`${number}`}
+                  key={`${number}-${index}`}
+                  className="ShowEntries__option"
+                >
+                  {number}
+                </option>
+              );
+            })}
         </select>
         entries
       </label>
