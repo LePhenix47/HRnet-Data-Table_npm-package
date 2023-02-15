@@ -46,7 +46,7 @@ export default function DataTable({
   /**
    * Entries shown = Number(select.value)
    */
-  const [entriesShown, setEntriesShown] = useState(10);
+  const [entriesShown, setEntriesShown] = useState(lengthMenu[0]);
 
   /**
    * Tuple to save the activation state of the button to sort
@@ -141,9 +141,9 @@ export default function DataTable({
   let totalPaginationIndexes = Math.ceil(totalEntries / entriesShown);
 
   const tpiRef = useRef(Math.ceil(totalEntries / entriesShown));
-  log({ renderTPI: tpiRef });
 
-  const totalDataRef = useRef(null);
+  const totalDataRef = useRef(totalEntries);
+  log({ tpiRef, totalDataRef });
 
   /**
    *
@@ -196,6 +196,7 @@ export default function DataTable({
         // Update the total pagination indexes after filtering the data
       }
       tpiRef.current = Math.ceil(newArrayOfSortedData.length / entriesShown);
+      totalDataRef.current = newArrayOfSortedData.length;
 
       setSortedData(newArrayOfSortedData);
 
@@ -216,6 +217,7 @@ export default function DataTable({
         log({ tpiRef });
       }
       tpiRef.current = Math.ceil(arrayOfData.length / entriesShown);
+      totalDataRef.current = arrayOfData.length;
 
       fillInDataToShow(arrayOfData);
       //We re-render the component with the new values for the body
@@ -367,7 +369,10 @@ export default function DataTable({
       <caption className="DataTable__caption">
         {title}
         <section className="DataTable__entries-query-container">
-          <ShowEntries setEntriesShown={setEntriesShown} />
+          <ShowEntries
+            setEntriesShown={setEntriesShown}
+            lengthMenu={lengthMenu}
+          />
           <QuerySearch
             setQueryInputted={setQueryInputted}
             setNeedsFiltering={setNeedsFiltering}
@@ -439,7 +444,7 @@ export default function DataTable({
               currentStartIndex={usefulIndexes.startingIndex}
               currentEndIndex={usefulIndexes.endingIndex}
               isFiltered={needsFiltering}
-              filteredAmountOfEntries
+              filteredAmountOfEntries={totalDataRef.current}
               isScrolling={false}
             />
           </td>

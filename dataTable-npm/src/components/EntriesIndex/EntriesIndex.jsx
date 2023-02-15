@@ -10,15 +10,16 @@ export default function EntriesIndex({
   isFiltered,
   isScrolling,
 }) {
-  let textOfEntriesIndex =
-    isScrolling === false
-      ? `Show ${
-          currentStartIndex + 1
-        } to ${currentEndIndex} of ${totalAmountOfEntries}`
-      : `Showing ${totalAmountOfEntries} entries`;
+  let textOfEntriesIndex = !isScrolling
+    ? `Show ${
+        currentStartIndex + 1
+      } to ${currentEndIndex} of ${totalAmountOfEntries}`
+    : `Showing ${totalAmountOfEntries} entries`;
 
   let textToShow = isFiltered
-    ? `${textOfEntriesIndex} (filtered from ${totalAmountOfEntries} total entries)`
+    ? `Show ${
+        currentStartIndex + 1
+      } to ${currentEndIndex} of ${filteredAmountOfEntries} (filtered from ${totalAmountOfEntries} total entries)`
     : `${textOfEntriesIndex}`;
   return <div className="EntriesIndex">{textToShow}</div>;
 }
