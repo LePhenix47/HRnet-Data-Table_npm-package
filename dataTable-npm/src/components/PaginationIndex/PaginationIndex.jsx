@@ -19,6 +19,8 @@ export default function PaginationIndex({
   totalPaginationIndexes,
   setCurrentPaginationIndex,
   currentPaginationIndex,
+  isScrolling,
+  hasPaging,
 }) {
   /**
    * Boolean constant to check if the component should render

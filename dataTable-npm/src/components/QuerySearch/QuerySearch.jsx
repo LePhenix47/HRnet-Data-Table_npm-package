@@ -2,7 +2,11 @@ import React from "react";
 //Proptypes
 import * as PropTypes from "prop-types";
 
-export default function QuerySearch({ setQueryInputted, setNeedsFiltering }) {
+export default function QuerySearch({
+  setQueryInputted,
+  setNeedsFiltering,
+  hasFilter,
+}) {
   return (
     <form className="QuerySearch">
       <div className="QuerySearch__inputs-wrapper">

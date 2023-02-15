@@ -7,7 +7,12 @@ import * as PropTypes from "prop-types";
 //Utils
 import { log } from "../../utils/functions/helper-functions";
 
-export default function ShowEntries({ setEntriesShown, lengthMenu }) {
+export default function ShowEntries({
+  setEntriesShown,
+  lengthMenu,
+  isScrolling,
+  hasPaging,
+}) {
   /**
    * Function that gets the value of the `<select>` on change and sends it to its parent component
    *

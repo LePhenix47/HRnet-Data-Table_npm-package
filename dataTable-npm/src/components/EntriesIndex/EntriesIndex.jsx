@@ -9,6 +9,8 @@ export default function EntriesIndex({
   filteredAmountOfEntries,
   isFiltered,
   isScrolling,
+  hasPaging,
+  hasInfo,
 }) {
   let textOfEntriesIndex = !isScrolling
     ? `Show ${

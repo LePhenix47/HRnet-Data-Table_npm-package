@@ -339,11 +339,6 @@ export default function DataTable({
    * @param {React.ChangeEvent<HTMLSelectElement>} event React event
    */
   function handleArraySortingByClick(event) {
-    //We select the table cell inside
-    const propertyInTableHead = event.target.closest("td");
-    let textOfProperty = setTitlecaseToCamelCase(
-      propertyInTableHead.innerText.replaceAll("\n▲\n▼", "")
-    );
     //We get the sorting property
     const sortingProperty = event.target.dataset.dataTableSortingProperty;
     //Look if we need to reverse it
@@ -372,8 +367,11 @@ export default function DataTable({
           <ShowEntries
             setEntriesShown={setEntriesShown}
             lengthMenu={lengthMenu}
+            hasPaging={paging}
+            isScrolling={scroll}
           />
           <QuerySearch
+            hasFilter={filter}
             setQueryInputted={setQueryInputted}
             setNeedsFiltering={setNeedsFiltering}
           />
@@ -445,7 +443,8 @@ export default function DataTable({
               currentEndIndex={usefulIndexes.endingIndex}
               isFiltered={needsFiltering}
               filteredAmountOfEntries={totalDataRef.current}
-              isScrolling={false}
+              isScrolling={scroll}
+              hasInfo={info}
             />
           </td>
           <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-pagination">
@@ -453,6 +452,8 @@ export default function DataTable({
               totalPaginationIndexes={tpiRef.current}
               setCurrentPaginationIndex={setPaginationIndex}
               currentPaginationIndex={paginationIndex}
+              isScrolling={scroll}
+              hasPaging={paging}
             />
           </td>
         </tr>
@@ -478,6 +479,14 @@ export default function DataTable({
               </tr>
             );
           })}
+
+        {/* {!totalDataRef.current && !isFiltered && (
+          <tr className="DataTable__row DataTable__body-row">
+            <td className="DataTable__cell DataTable__body-cell">
+              No data available to display
+            </td>
+          </tr>
+        )} */}
       </tbody>
     </table>
   );

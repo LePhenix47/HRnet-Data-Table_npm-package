@@ -11,8 +11,8 @@ function App() {
       info
       lengthMenu={[10, 25, 50, 100]}
       paging
-      scroll
-      height={500}
+      // scroll
+      // height={500}
     />
   );
 }
