@@ -189,6 +189,8 @@ export default function DataTable({
       );
 
       if (needsFiltering) {
+        paginationIndex !== 1 ? setPaginationIndex(1) : null;
+
         newArrayOfSortedData = filterArrayByString(
           newArrayOfSortedData,
           queryInputted
@@ -212,6 +214,8 @@ export default function DataTable({
       let arrayOfData = copiedData.length ? copiedData : data;
 
       if (needsFiltering) {
+        paginationIndex !== 1 ? setPaginationIndex(1) : null;
+
         arrayOfData = filterArrayByString(arrayOfData, queryInputted);
         // Update the total pagination indexes after filtering the data
         log({ tpiRef });

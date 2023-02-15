@@ -5,6 +5,7 @@ function App() {
   return (
     <DataTable
       title="Current employees"
+      // data={[{ test: "a" }]}
       data={dataMock}
       lengthMenu={[10, 25, 50, 100]}
       sort
