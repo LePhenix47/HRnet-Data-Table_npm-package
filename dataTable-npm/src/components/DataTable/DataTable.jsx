@@ -384,7 +384,7 @@ export default function DataTable({
             let unformattedProperty = setTitlecaseToCamelCase(property);
 
             return (
-              <td
+              <th
                 key={properties + index}
                 className="DataTable__cell DataTable__head-cell"
               >
@@ -433,7 +433,7 @@ export default function DataTable({
                     ▼
                   </button>
                 </div>
-              </td>
+              </th>
             );
           })}
         </tr>

@@ -10,8 +10,8 @@ function App() {
       sort
       filter
       info
-      // paging
-      scroll
+      paging
+      // scroll
       // height={500}
     />
   );
