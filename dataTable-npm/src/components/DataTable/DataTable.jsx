@@ -1,5 +1,5 @@
 //React
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 //Utils
 import {
@@ -36,6 +36,7 @@ export default function DataTable({
   paging = true,
 }) {
   //We get the amount of total entries
+  // log({ title, sort, scroll, height, filter, info, lengthMenu, paging });
 
   /**
    * Pagination Index set by the user, default by one, mathematical interval: [1, totalPagination]
@@ -139,6 +140,9 @@ export default function DataTable({
    */
   let totalPaginationIndexes = Math.ceil(totalEntries / entriesShown);
 
+  const tpiRef = useRef(Math.ceil(totalEntries / entriesShown));
+  log({ renderTPI: tpiRef });
+
   /**
    *
    */
@@ -150,11 +154,13 @@ export default function DataTable({
    * Function that gets the value of the `<select>` element inside the `<ShowEntries />` component
    */
   useEffect(() => {
-    //If the old TPI is different than the new one → update the Page Index
+    //If the old Total Pagination Index is different than the new one → update the Page Index
     correctPaginationIndex();
 
+    //We set the start and ending index depending on the pagination index
     setStartAndEndIndex();
 
+    //We check if foesn't voerflow or underflow
     const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
     if (paginationIndexOverflows) {
       //paginationIndex = totalPaginationIndex
@@ -186,8 +192,8 @@ export default function DataTable({
           queryInputted
         );
         // Update the total pagination indexes after filtering the data
-        totalPaginationIndexes = Math.ceil(filteredData.length / entriesShown);
       }
+      tpiRef.current = Math.ceil(newArrayOfSortedData.length / entriesShown);
 
       setSortedData(newArrayOfSortedData);
 
@@ -204,7 +210,10 @@ export default function DataTable({
 
       if (needsFiltering) {
         arrayOfData = filterArrayByString(arrayOfData, queryInputted);
+        // Update the total pagination indexes after filtering the data
+        log({ tpiRef });
       }
+      tpiRef.current = Math.ceil(arrayOfData.length / entriesShown);
 
       fillInDataToShow(arrayOfData);
       //We re-render the component with the new values for the body
@@ -428,12 +437,13 @@ export default function DataTable({
               currentStartIndex={usefulIndexes.startingIndex}
               currentEndIndex={usefulIndexes.endingIndex}
               isFiltered={needsFiltering}
+              filteredAmountOfEntries
               isScrolling={false}
             />
           </td>
           <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-pagination">
             <PaginationIndex
-              totalPaginationIndexes={totalPaginationIndexes}
+              totalPaginationIndexes={tpiRef.current}
               setCurrentPaginationIndex={setPaginationIndex}
               currentPaginationIndex={paginationIndex}
             />

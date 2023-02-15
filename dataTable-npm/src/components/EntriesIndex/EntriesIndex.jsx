@@ -6,6 +6,7 @@ export default function EntriesIndex({
   currentStartIndex,
   currentEndIndex,
   totalAmountOfEntries,
+  filteredAmountOfEntries,
   isFiltered,
   isScrolling,
 }) {
