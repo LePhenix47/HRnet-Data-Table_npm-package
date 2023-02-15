@@ -59,7 +59,11 @@
 
     //For the <tfoot>
     &__foot {
-        height: auto;
+        height: 50px;
+
+        @include mobile-only {
+            height: 150px;
+        }
 
         position: relative;
 
