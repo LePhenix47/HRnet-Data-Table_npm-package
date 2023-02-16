@@ -42,6 +42,8 @@ The Data Table has the following features, matching those of its [jQuery plugin 
 
 - Pagination: The table can be paginated, allowing you to easily browse through the data.
 
+- Automatic Responsive Design: The table has a simple responsive design that adjusts to smaller screen sizes, making it easier to browse on mobile devices.
+
 ## Creation
 
 This Data Table was developed using:
@@ -240,16 +242,18 @@ export default ExampleComponent;
 
 Here's the full list of classes and their corresponding elements and default styles:
 
- `DataTable__container`:
+ `.DataTable__container`:
 
 - Explanation: This class is applied to the container that wraps the entire data table.
 - Default styling:
 
-```css
-
+```scss
+height: [height]px;
+// If the width is < 768px
+height: [height + 1000]px;
 ```
 
-`DataTable`:
+`.DataTable`:
 
 - Explanation: This class is applied to the root element of a data table component and sets various layout and styling properties for the table.
 - Default styling:
@@ -262,9 +266,9 @@ table-layout:fixed;
 width:100%;
 ```
 
-`DataTable--scroll`:
+`.DataTable--scroll`:
 
-- Explanation: This class is applied to a DataTable element when the table body needs to scroll. It sets some layout and flex properties to achieve a scrollable table.
+- Explanation: This class is applied to a DataTable component when the table body needs to scroll. It sets some layout and flex properties to achieve a scrollable table.
 - Default styling:
 
 ```css
@@ -275,7 +279,7 @@ height:100%;
 width:100%;
 ```
 
-`DataTable__buttons-container`:
+`.DataTable__buttons-container`:
 
 - Explanation: This class is applied to the container element for any buttons associated with the data table, such as the "Show Entries" and pagination buttons.
 - Default styling:
@@ -289,7 +293,7 @@ align-items:center;
 gap:5px;
 ```
 
-`DataTable__entries-query-container`:
+`.DataTable__entries-query-container`:
 
 - Explanation: This class is applied to the container element for the "Show Entries" dropdown and the search field for filtering the table data.
 - Default styling:
@@ -301,7 +305,7 @@ justify-content:space-between;
 align-items:center;
 ```
 
-`DataTable__row`:
+`.DataTable__row`:
 
 - Explanation: This class is applied to each row in the table body and sets a default border for the row.
 - Default styling:
@@ -310,7 +314,7 @@ align-items:center;
 border:1px solid gray;
 ```
 
-`DataTable__head--scroll`:
+`.DataTable__head--scroll`:
 
 - Explanation: This class is applied to the table head when the table body is scrollable. It sets some layout properties to achieve a sticky table head.
 - Default styling:
@@ -323,7 +327,7 @@ flex:0 0 auto;
 width:100%;
 ```
 
-`DataTable__head-button--active`:
+`.DataTable__head-button--active`:
 
 - Explanation: This class is applied to the active sort button in the table head.
 - Default styling:
@@ -333,7 +337,7 @@ width:100%;
 color:red;
 ```
 
-`DataTable__foot`:
+`.DataTable__foot`:
 
 - Explanation: This class is applied to the table foot element and sets some properties to position the foot element at the bottom of the table.
 - Default styling:
@@ -344,7 +348,7 @@ height:50px;
 position:relative;
 ```
 
-`DataTable__foot--scroll`:
+`.DataTable__foot--scroll`:
 
 - Explanation: This class is applied to the table foot when the table body is scrollable. It sets some layout properties to achieve a sticky table foot.
 - Default styling:
@@ -356,7 +360,7 @@ table-layout:fixed;
 order:1;
 ```
 
-`DataTable__foot-row`:
+`.DataTable__foot-row`:
 
 - Explanation: This class is applied to the row within the table foot element.
 - Default styling:
@@ -368,16 +372,16 @@ display:flex;
 width:100%;
 ```
 
-`DataTable__foot-row--scroll`:
+`.DataTable__foot-row--scroll`:
 
-- Explanation: This class is applied to the row within the table foot element when the table body is not scrollable. It removes the position:absolute property from DataTable__foot-row to restore normal document flow.
+- Explanation: This class is applied to the row within the table foot element when the table body is not scrollable. It removes the position:absolute property from .DataTable__foot-row to restore normal document flow.
 - Default styling:
 
 ```css
 position:initial;
 ```
 
-`DataTable__foot-cell`:
+`.DataTable__foot-cell`:
 
 - Explanation: This class is applied to each cell in the table foot.
 - Default styling:
@@ -387,7 +391,7 @@ flex:1;
 display:flex;
 ```
 
-`DataTable__foot-cell-entries`:
+`.DataTable__foot-cell-entries`:
 
 - Explanation: This class is applied to the cell within the table foot that contains the "Show Entries" dropdown.
 - Default styling:
@@ -396,7 +400,7 @@ display:flex;
 justify-content:flex-start;
 ```
 
-`DataTable__foot-cell-pagination`:
+`.DataTable__foot-cell-pagination`:
 
 - Explanation: Represents the pagination cell in the table footer that contains the pagination buttons.
 
@@ -409,7 +413,7 @@ justify-content:flex-start;
 }
 ```
 
-`EntriesIndex`:
+`.EntriesIndex`:
 
 - Explanation This class is applied to a container element for a set of controls that allow the user to change the number of entries displayed per page in a table.
 `Default styling`:
@@ -423,7 +427,7 @@ align-items: center;
 gap: 0px;
 ```
 
-`PaginationIndex`:
+`.PaginationIndex`:
 
 - Explanation This class is applied to a container element for a set of pagination controls that allow the user to navigate between pages of a table.
 - Default styling:
@@ -437,7 +441,7 @@ align-items: center;
 gap: 0px;
 ```
 
-`PaginationIndex__button`:
+`.PaginationIndex__button`:
 
 - Explanation This class is applied to the pagination buttons in the pagination controls.
 - Default styling:
@@ -447,7 +451,7 @@ gap: 0px;
 padding: 15px;
 ```
 
-`PaginationIndex__button--active`:
+`.PaginationIndex__button--active`:
 
 - Explanation This class is applied to the currently active pagination button in the pagination controls.
 - Default styling:
@@ -457,7 +461,7 @@ padding: 15px;
 outline: 1px solid red;
 ```
 
-`QuerySearch__inputs-wrapper`:
+`.QuerySearch__inputs-wrapper`:
 
 - Explanation This class is applied to a container element for the input elements of a search query form.
 - Default styling:
@@ -467,7 +471,7 @@ outline: 1px solid red;
 position: relative;
 ```
 
-`QuerySearch__label`:
+`.QuerySearch__label`:
 
 - Explanation This class is applied to the label element of a search query input field.
 - Default styling:
@@ -478,7 +482,7 @@ font-size: 16px;
 font-weight: 400;
 ```
 
-`QuerySearch__input`:
+`.QuerySearch__input`:
 
 - Explanation This class is applied to a search query input field.
 - Default styling:
@@ -488,7 +492,7 @@ font-weight: 400;
 background-color: var(--default-input-bg-color);
 ```
 
-`QuerySearch__reset-button`:
+`.QuerySearch__reset-button`:
 
 - Explanation This class is applied to the reset button of a search query form.
 - Default styling:
@@ -527,7 +531,7 @@ In addition to the classes used by the library, there are also some classes incl
 
 `.DataTable__caption`: This class targets the caption element that appears at the top of the table, if one is provided. Here's an example of how you could use this class to center the caption and add a background color:
 
-```scss
+```css
 .DataTable__caption {
   text-align: center;
   background-color: #f0f0f0;
@@ -536,7 +540,7 @@ In addition to the classes used by the library, there are also some classes incl
 
 `.DataTable__head-cell`: This class targets all the table header cells in the table. Here's an example of how you could use this class to add a border to the header cells:
 
-```scss
+```css
 .DataTable__head-cell {
   border: 1px solid black;
 }
@@ -544,7 +548,7 @@ In addition to the classes used by the library, there are also some classes incl
 
 `.DataTable__head-row`: This class targets all the rows in the table header. Here's an example of how you could use this class to add a background color to the header row:
 
-```scss
+```css
 .DataTable__head-row {
   background-color: #f0f0f0;
 }
@@ -552,7 +556,7 @@ In addition to the classes used by the library, there are also some classes incl
 
 `.DataTable__foot-components-container`: This class targets the container for the components that appear in the table footer (such as the pagination component and the entries index component). Here's an example of how you could use this class to change the background color of the container:
 
-```scss
+```css
 
 .DataTable__foot-components-container {
   background-color: #f0f0f0;
@@ -562,7 +566,7 @@ In addition to the classes used by the library, there are also some classes incl
 
 `.DataTable__foot-cell-entries--active`: This class targets the "show entries" dropdown in the table footer when it is active (i.e., the user has clicked on it). Here's an example of how you could use this class to change the background color of the dropdown when it's active:
 
-```scss
+```css
 .DataTable__foot-cell-entries--active {
   background-color: #f0f0f0;
 }
@@ -570,7 +574,7 @@ In addition to the classes used by the library, there are also some classes incl
 
 `.DataTable__foot-cell-pagination--active`: This class targets the pagination component in the table footer when it is active (i.e., the user has clicked on one of the page numbers). Here's an example of how you could use this class to change the font size of the active page number:
 
-```scss
+```css
 .DataTable__foot-cell-pagination--active {
   font-size: 16px;
 }
@@ -578,7 +582,7 @@ In addition to the classes used by the library, there are also some classes incl
 
 `.DataTable__cell`: This class targets all the cells in the table body. Here's an example of how you could use this class to change the font color of the cells:
 
-```scss
+```css
 .DataTable__cell {
   color: red;
 }
@@ -593,11 +597,17 @@ There are currently 2 missing features:
 - [ ] The message "No data available to display" if no data is added in props or wasn't added correctly
 - [ ] The message "No matching records found" if the query inputted doesn't have a match with the data
 
-Additionally, please note that there are certain CSS properties within the following classes that must not be modified:
+Additionally, please note that there are certain CSS properties within the following classes that must not be modified to avoid the breaking of the table layout:
 
-```css
-.DataTable__foot{}
-.DataTable__foot-scroll{}
+```scss
+//Normal table classes:
+
+//Scrolling classes:
+.DataTable--scroll{}
+.DataTable__head--scroll{}
+.DataTable__foot--scroll{}
+.DataTable__foot-row--scroll{}
+
 ```
 
 The following CSS properties must not be modified within these classes:
@@ -605,6 +615,8 @@ The following CSS properties must not be modified within these classes:
 ```css
 position
 ```
+
+Moreover it's not possible to set a style as props for the responsive design of the table
 
 We apologize for any inconvenience these issues may cause and are working hard to resolve them as quickly as possible. In the meantime, if you have any questions or concerns about these issues, please don't hesitate to reach out to our GitHub repository. Thank you for your understanding and patience.
 
