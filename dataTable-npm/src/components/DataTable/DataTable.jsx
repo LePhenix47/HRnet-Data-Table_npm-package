@@ -257,9 +257,16 @@ export default function DataTable({
       } else {
         let arrayOfData = copiedData.length ? copiedData : data;
 
+        if (needsFiltering) {
+          arrayOfData = filterArrayByString(arrayOfData, queryInputted);
+          log({ filtered: arrayOfData });
+          // Update the total pagination indexes after filtering the data
+        }
+        totalDataRef.current = arrayOfData.length;
+
         fillInDataToShow(arrayOfData);
 
-        setValues(getArrayObjectValues(dataToShow));
+        setValues(getArrayObjectValues(arrayOfData));
       }
     }
   }, [
@@ -284,26 +291,6 @@ export default function DataTable({
       paging = false;
     }
   }, [scroll, height]);
-
-  // useEffect(() => {
-  //   const mediaQuery = window.matchMedia("(max-width: 768px)"); // Add media query
-  //   const updateStyle = () => {
-  //     const isOnMobile = mediaQuery.matches;
-  //     if (isOnMobile) {
-  //       setScrollStyleHeight((prevStyle) => ({
-  //         ...prevStyle,
-  //         height: `${height + 1000}px`,
-  //       }));
-  //     } else {
-  //       setStyle((prevStyle) => ({ ...prevStyle, height: `${height}px` }));
-  //     }
-  //   };
-  //   updateStyle();
-  //   mediaQuery.addListener(updateStyle);
-
-  //
-  //   return () => mediaQuery.removeListener(updateStyle);
-  // }, [height]);
 
   useEffect(() => {
     const updateContainerStyle = () => {

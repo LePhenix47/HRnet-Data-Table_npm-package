@@ -193,7 +193,7 @@ export default function PaginationIndex({
             ? "PaginationIndex__button--active"
             : ""
         } ${
-          currentPaginationIndex === 1 && totalPaginationIndexes === 1
+          currentPaginationIndex <= 1 && totalPaginationIndexes <= 1
             ? "hide"
             : ""
         }`}
@@ -210,7 +210,7 @@ export default function PaginationIndex({
         onClick={(e) => {
           handleClick(e);
         }}
-        disabled={currentPaginationIndex === totalPaginationIndexes}
+        disabled={currentPaginationIndex <= totalPaginationIndexes}
       >
         Next
       </button>

@@ -12,22 +12,24 @@ export default function EntriesIndex({
   hasPaging,
   hasInfo,
 }) {
-  let textOfEntriesIndex = !isScrolling
-    ? `Show ${
-        currentStartIndex + 1
-      } to ${currentEndIndex} of ${totalAmountOfEntries}`
-    : `Showing ${totalAmountOfEntries} entries`;
+  let textToShow = "";
 
-  let textToShow = isFiltered
-    ? `Show ${
-        currentStartIndex + 1
-      } to ${currentEndIndex} of ${filteredAmountOfEntries} (filtered from ${totalAmountOfEntries} total entries)`
-    : `${textOfEntriesIndex}`;
+  const isNotFiltering = !isFiltered;
 
-  textToShow =
-    isScrolling && isFiltered
-      ? `Showing ${filteredAmountOfEntries} entries (filtered from ${totalAmountOfEntries} total entries)`
-      : `${textOfEntriesIndex}`;
+  if (isNotFiltering) {
+    textToShow = !isScrolling
+      ? `Show ${
+          currentStartIndex + 1
+        } to ${currentEndIndex} of ${totalAmountOfEntries}`
+      : `Showing ${totalAmountOfEntries} entries`;
+  } else {
+    textToShow = !isScrolling
+      ? `Show ${
+          currentStartIndex + 1
+        } to ${currentEndIndex} of ${filteredAmountOfEntries} (filtered from ${totalAmountOfEntries} total entries)`
+      : `Showing ${filteredAmountOfEntries} entries (filtered from ${totalAmountOfEntries} total entries)`;
+  }
+
   return (
     <div className={`EntriesIndex ${!hasInfo ? "hide" : ""}`}>{textToShow}</div>
   );
