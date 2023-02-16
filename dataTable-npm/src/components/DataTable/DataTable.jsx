@@ -521,6 +521,7 @@ export default function DataTable({
                   </th>
                 );
               })}
+            {!data.length && null}
           </tr>
         </thead>
         <tfoot
@@ -583,14 +584,20 @@ export default function DataTable({
                 </tr>
               );
             })}
-
-          {/* {!totalDataRef.current && !isFiltered && (
-          <tr className="DataTable__row DataTable__body-row">
-            <td className="DataTable__cell DataTable__body-cell">
-              No data available to display
-            </td>
-          </tr>
-        )} */}
+          {!data.length && (
+            <tr className="DataTable__row DataTable__body-row">
+              <td className="DataTable__cell DataTable__body-cell">
+                No data available to display
+              </td>
+            </tr>
+          )}
+          {data.length && !values.length && (
+            <tr className="DataTable__row DataTable__body-row">
+              <td className="DataTable__cell DataTable__body-cell">
+                No matching records found
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
