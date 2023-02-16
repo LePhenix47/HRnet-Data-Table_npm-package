@@ -104,7 +104,8 @@ The headings for the table will be automatically generated based on the property
 Data Table supports the following props:
 
 - `data`: (required) An *array of objects* that contains the data to be displayed in the table.
-**ℹ Note:** It is important to observe that the naming convention for the data properties must be in `camelCase` .
+
+**ℹ Note:** It is important that the naming convention for the data properties must be set in `camelCase`.
 
 - `title`: (optional) A *string* value that adds a caption to the table.
 
