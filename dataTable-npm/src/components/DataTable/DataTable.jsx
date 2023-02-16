@@ -36,7 +36,6 @@ export default function DataTable({
   paging = false,
 }) {
   //We get the amount of total entries
-  // log({ title, sort, scroll, height, filter, info, lengthMenu, paging });
 
   /**
    * Pagination Index set by the user, default by one, mathematical interval: [1, totalPagination]
@@ -91,7 +90,7 @@ export default function DataTable({
    * Query inputted by the user
    */
   let [queryInputted, setQueryInputted] = useState("");
-  log({ queryInputted, needsFiltering });
+  // log({ queryInputted, needsFiltering });
 
   /**
    * Data filtered by the query inputted
@@ -118,12 +117,9 @@ export default function DataTable({
    */
   let [sortedData, setSortedData] = useState([]);
 
-  let [scrollStyle, setScrollStyle] = useState({});
+  let [scrollStyleHeight, setScrollStyleHeight] = useState({});
 
-  const developerWantsScrolling = scroll && height;
-  if (developerWantsScrolling) {
-    setScrollStyle({ height: height + "px" });
-  }
+  const developerWantsScrolling = !!scroll && !!height;
 
   //We get the properties of the object inside the data
   let properties = getObjectProperties(data[0]);
@@ -150,7 +146,7 @@ export default function DataTable({
   const tpiRef = useRef(Math.ceil(totalEntries / entriesShown));
 
   const totalDataRef = useRef(totalEntries);
-  log({ tpiRef, totalDataRef });
+  // log({ tpiRef, totalDataRef });
 
   /**
    *
@@ -163,73 +159,80 @@ export default function DataTable({
    * Function that gets the value of the `<select>` element inside the `<ShowEntries />` component
    */
   useEffect(() => {
-    //If the old Total Pagination Index is different than the new one → update the Page Index
-    correctPaginationIndex();
+    if (paging) {
+      //If the old Total Pagination Index is different than the new one → update the Page Index
+      correctPaginationIndex();
 
-    //We set the start and ending index depending on the pagination index
-    setStartAndEndIndex();
+      //We set the start and ending index depending on the pagination index
+      setStartAndEndIndex();
 
-    //We check if foesn't voerflow or underflow
-    const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
-    if (paginationIndexOverflows) {
-      //paginationIndex = totalPaginationIndex
-      setPaginationIndex(totalPaginationIndexes);
-    }
+      //We check if foesn't voerflow or underflow
+      const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
+      if (paginationIndexOverflows) {
+        //paginationIndex = totalPaginationIndex
+        setPaginationIndex(totalPaginationIndexes);
+      }
 
-    const paginationIndexUnderflows = paginationIndex < 1;
-    if (paginationIndexUnderflows) {
-      //paginationIndex = totalPaginationIndex
-      setPaginationIndex(1);
-    }
+      const paginationIndexUnderflows = paginationIndex < 1;
+      if (paginationIndexUnderflows) {
+        //paginationIndex = totalPaginationIndex
+        setPaginationIndex(1);
+      }
 
-    //Set the indexes to send them to the <EntriesIndex /> component
-    setUsefulIndexes({ startingIndex, endingIndex });
+      //Set the indexes to send them to the <EntriesIndex /> component
+      setUsefulIndexes({ startingIndex, endingIndex });
 
-    //If the array needs to be sorted
-    if (needsSorting) {
-      resetSortedData();
+      //If the array needs to be sorted
+      if (needsSorting) {
+        resetSortedData();
 
-      let newArrayOfSortedData = sortArrayOfObjects(
-        copiedData,
-        sortingValue,
-        isReverse
-      );
-
-      if (needsFiltering) {
-        newArrayOfSortedData = filterArrayByString(
-          newArrayOfSortedData,
-          queryInputted
+        let newArrayOfSortedData = sortArrayOfObjects(
+          copiedData,
+          sortingValue,
+          isReverse
         );
-        // Update the total pagination indexes after filtering the data
+
+        if (needsFiltering) {
+          newArrayOfSortedData = filterArrayByString(
+            newArrayOfSortedData,
+            queryInputted
+          );
+          // Update the total pagination indexes after filtering the data
+        }
+        tpiRef.current = Math.ceil(newArrayOfSortedData.length / entriesShown);
+        totalDataRef.current = newArrayOfSortedData.length;
+        paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
+
+        setSortedData(newArrayOfSortedData);
+
+        resetDataToShow();
+        fillInDataToShow(newArrayOfSortedData);
+
+        setValues(getArrayObjectValues(dataToShow));
+      } else {
+        //We reset the data inside the <tbody> to avoid pile-ups
+        resetDataToShow();
+
+        //We create the data that must be shown
+        let arrayOfData = copiedData.length ? copiedData : data;
+
+        if (needsFiltering) {
+          arrayOfData = filterArrayByString(arrayOfData, queryInputted);
+          // Update the total pagination indexes after filtering the data
+          // log({ tpiRef });
+        }
+        tpiRef.current = Math.ceil(arrayOfData.length / entriesShown);
+        paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
+        totalDataRef.current = arrayOfData.length;
+
+        fillInDataToShow(arrayOfData);
+        //We re-render the component with the new values for the body
+        setValues(getArrayObjectValues(dataToShow));
       }
-      tpiRef.current = Math.ceil(newArrayOfSortedData.length / entriesShown);
-      totalDataRef.current = newArrayOfSortedData.length;
-      paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
-
-      setSortedData(newArrayOfSortedData);
-
-      resetDataToShow();
-      fillInDataToShow(newArrayOfSortedData);
-
-      setValues(getArrayObjectValues(dataToShow));
     } else {
-      //We reset the data inside the <tbody> to avoid pile-ups
-      resetDataToShow();
-
-      //We create the data that must be shown
-      let arrayOfData = copiedData.length ? copiedData : data;
-
-      if (needsFiltering) {
-        arrayOfData = filterArrayByString(arrayOfData, queryInputted);
-        // Update the total pagination indexes after filtering the data
-        log({ tpiRef });
-      }
-      tpiRef.current = Math.ceil(arrayOfData.length / entriesShown);
-      paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
-      totalDataRef.current = arrayOfData.length;
-
+      let arrayOfData = copiedData;
       fillInDataToShow(arrayOfData);
-      //We re-render the component with the new values for the body
+
       setValues(getArrayObjectValues(dataToShow));
     }
   }, [
@@ -246,6 +249,14 @@ export default function DataTable({
   useEffect(() => {
     setCopiedData(deepCopy(data));
   }, []);
+
+  useEffect(() => {
+    if (developerWantsScrolling) {
+      const newHeight = { height: height + "px" };
+      setScrollStyleHeight(newHeight);
+      paging = false;
+    }
+  }, [scroll, height]);
 
   /**
    * Function that corrects the pagination index making relative to the previous percentage of the table seen
@@ -369,8 +380,12 @@ export default function DataTable({
   }
 
   return (
-    <div className="DataTable__container" style={scrollStyle}>
-      <table className="DataTable">
+    <div className="DataTable__container" style={scrollStyleHeight}>
+      <table
+        className={`DataTable ${
+          developerWantsScrolling ? "DataTable--scroll" : ""
+        }`}
+      >
         <caption className="DataTable__caption">
           {title}
           <section className="DataTable__entries-query-container">
@@ -387,7 +402,11 @@ export default function DataTable({
             />
           </section>
         </caption>
-        <thead className="DataTable__head">
+        <thead
+          className={`DataTable__head ${
+            developerWantsScrolling ? "DataTable__head--scroll" : ""
+          }`}
+        >
           <tr className="DataTable__row DataTable__head-row">
             {properties.map((property, index) => {
               //We set back the property
@@ -448,8 +467,16 @@ export default function DataTable({
             })}
           </tr>
         </thead>
-        <tfoot className="DataTable__foot">
-          <tr className="DataTable__row DataTable__foot-row">
+        <tfoot
+          className={`DataTable__foot ${
+            developerWantsScrolling ? "DataTable__foot--scroll" : ""
+          }`}
+        >
+          <tr
+            className={`DataTable__row DataTable__foot-row ${
+              developerWantsScrolling ? "DataTable__foot-row--scroll" : ""
+            }`}
+          >
             <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-entries">
               <EntriesIndex
                 totalAmountOfEntries={totalEntries}
@@ -472,12 +499,18 @@ export default function DataTable({
             </td>
           </tr>
         </tfoot>
-        <tbody className="DataTable__body">
+        <tbody
+          className={`DataTable__body ${
+            developerWantsScrolling ? "DataTable__body--scroll" : ""
+          }`}
+        >
           {values &&
             values.map((valueArray, index) => {
               return (
                 <tr
-                  className="DataTable__row DataTable__body-row"
+                  className={`DataTable__row DataTable__body-row ${
+                    developerWantsScrolling ? "DataTable__body-row--scroll" : ""
+                  }`}
                   key={valueArray.toString() + index}
                 >
                   {valueArray.map((value, index) => {

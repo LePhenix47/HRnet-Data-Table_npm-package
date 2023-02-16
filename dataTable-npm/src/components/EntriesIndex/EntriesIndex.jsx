@@ -29,8 +29,8 @@ export default function EntriesIndex({
 }
 
 EntriesIndex.propTypes = {
-  currentStartIndex: PropTypes.number.isRequired,
-  currentEndIndex: PropTypes.number.isRequired,
+  currentStartIndex: PropTypes.number,
+  currentEndIndex: PropTypes.number,
   totalAmountOfEntries: PropTypes.number.isRequired,
   isFiltered: PropTypes.bool.isRequired,
 };

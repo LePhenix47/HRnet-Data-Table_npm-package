@@ -11,9 +11,9 @@ function App() {
       sort
       filter
       info
-      paging
-      // scroll
-      // height={500}
+      // paging
+      scroll
+      height={500}
     />
   );
 }
