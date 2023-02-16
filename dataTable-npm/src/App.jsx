@@ -4,7 +4,7 @@ import { dataMock } from "./assets/mocks/data.mock";
 function App() {
   return (
     <>
-      <DataTable
+      {/* <DataTable
         title="Current employees (paging)"
         data={dataMock}
         lengthMenu={[10, 25, 50, 100]}
@@ -12,7 +12,7 @@ function App() {
         filter
         info
         paging
-      />
+      /> */}
       <DataTable
         title="Current employees (scroll)"
         data={dataMock}

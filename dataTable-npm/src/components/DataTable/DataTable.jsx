@@ -230,10 +230,37 @@ export default function DataTable({
         setValues(getArrayObjectValues(dataToShow));
       }
     } else {
-      let arrayOfData = copiedData;
-      fillInDataToShow(arrayOfData);
+      if (needsSorting) {
+        resetSortedData();
 
-      setValues(getArrayObjectValues(dataToShow));
+        let newArrayOfSortedData = sortArrayOfObjects(
+          copiedData || data,
+          sortingValue,
+          isReverse
+        );
+
+        if (needsFiltering) {
+          newArrayOfSortedData = filterArrayByString(
+            newArrayOfSortedData,
+            queryInputted
+          );
+          log({ filtered: newArrayOfSortedData });
+          // Update the total pagination indexes after filtering the data
+        }
+        totalDataRef.current = newArrayOfSortedData.length;
+
+        setSortedData(newArrayOfSortedData);
+
+        fillInDataToShow(newArrayOfSortedData);
+
+        setValues(getArrayObjectValues(newArrayOfSortedData));
+      } else {
+        let arrayOfData = copiedData.length ? copiedData : data;
+
+        fillInDataToShow(arrayOfData);
+
+        setValues(getArrayObjectValues(dataToShow));
+      }
     }
   }, [
     entriesShown,
@@ -346,10 +373,11 @@ export default function DataTable({
   }
 
   /**
-   *
+   * We reset the sorted data to equal to the original data
    */
   function resetSortedData() {
-    sortedData = [...copiedData];
+    // sortedData = [...copiedData];
+    sortedData = deepCopy(copiedData);
   }
 
   /**
