@@ -118,6 +118,13 @@ export default function DataTable({
    */
   let [sortedData, setSortedData] = useState([]);
 
+  let [scrollStyle, setScrollStyle] = useState({});
+
+  const developerWantsScrolling = scroll && height;
+  if (developerWantsScrolling) {
+    setScrollStyle({ height: height + "px" });
+  }
+
   //We get the properties of the object inside the data
   let properties = getObjectProperties(data[0]);
   //We create the properties for the head
@@ -189,8 +196,6 @@ export default function DataTable({
       );
 
       if (needsFiltering) {
-        paginationIndex !== 1 ? setPaginationIndex(1) : null;
-
         newArrayOfSortedData = filterArrayByString(
           newArrayOfSortedData,
           queryInputted
@@ -199,6 +204,7 @@ export default function DataTable({
       }
       tpiRef.current = Math.ceil(newArrayOfSortedData.length / entriesShown);
       totalDataRef.current = newArrayOfSortedData.length;
+      paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
 
       setSortedData(newArrayOfSortedData);
 
@@ -214,13 +220,12 @@ export default function DataTable({
       let arrayOfData = copiedData.length ? copiedData : data;
 
       if (needsFiltering) {
-        paginationIndex !== 1 ? setPaginationIndex(1) : null;
-
         arrayOfData = filterArrayByString(arrayOfData, queryInputted);
         // Update the total pagination indexes after filtering the data
         log({ tpiRef });
       }
       tpiRef.current = Math.ceil(arrayOfData.length / entriesShown);
+      paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
       totalDataRef.current = arrayOfData.length;
 
       fillInDataToShow(arrayOfData);
@@ -276,7 +281,7 @@ export default function DataTable({
      * Verifies that the user changed the amount of entries and that the Pagination index is over one
      */
     const userChangedShownEntries =
-      oldTotalPaginationIndex !== newTotalPaginationIndex &&
+      oldTotalPaginationIndex > tpiRef.currentewTotalPaginationIndex &&
       newTotalPaginationIndex > 1;
 
     if (userChangedShownEntries) {
@@ -364,139 +369,141 @@ export default function DataTable({
   }
 
   return (
-    <table className="DataTable">
-      <caption className="DataTable__caption">
-        {title}
-        <section className="DataTable__entries-query-container">
-          <ShowEntries
-            setEntriesShown={setEntriesShown}
-            lengthMenu={lengthMenu}
-            hasPaging={paging}
-            isScrolling={scroll}
-          />
-          <QuerySearch
-            hasFilter={filter}
-            setQueryInputted={setQueryInputted}
-            setNeedsFiltering={setNeedsFiltering}
-          />
-        </section>
-      </caption>
-      <thead className="DataTable__head">
-        <tr className="DataTable__row DataTable__head-row">
-          {properties.map((property, index) => {
-            //We set back the property
-            let unformattedProperty = setTitlecaseToCamelCase(property);
-
-            return (
-              <th
-                key={properties + index}
-                className="DataTable__cell DataTable__head-cell"
-              >
-                {property}
-                <div
-                  className={`DataTable__buttons-container ${
-                    !sort ? "hide" : ""
-                  }`}
-                >
-                  <button
-                    type="button"
-                    className={`DataTable__head-button DataTable__head-button-normal ${
-                      !!buttonActive.top &&
-                      !buttonActive.bottom &&
-                      sortingValue === unformattedProperty
-                        ? "DataTable__head-button--active"
-                        : ""
-                    }`}
-                    onClick={(e) => {
-                      handleArraySortingByClick(e);
-                      //Set the sorted array in reverse or not
-                      setReverse("asc");
-                    }}
-                    data-data-table-sorting-property={`${unformattedProperty}`}
-                    data-data-table-sort-to-reverse={false}
-                  >
-                    ▲
-                  </button>
-                  <button
-                    type="button"
-                    className={`DataTable__head-button DataTable__head-button-reverse ${
-                      !buttonActive.top &&
-                      !!buttonActive.bottom &&
-                      sortingValue === unformattedProperty
-                        ? "DataTable__head-button--active"
-                        : ""
-                    }`}
-                    onClick={(e) => {
-                      handleArraySortingByClick(e);
-                      //Set the sorted array in reverse or not
-                      setReverse("desc");
-                    }}
-                    data-data-table-sorting-property={`${unformattedProperty}`}
-                    data-data-table-sort-to-reverse={true}
-                  >
-                    ▼
-                  </button>
-                </div>
-              </th>
-            );
-          })}
-        </tr>
-      </thead>
-      <tfoot className="DataTable__foot">
-        <tr className="DataTable__row DataTable__foot-row">
-          <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-entries">
-            <EntriesIndex
-              totalAmountOfEntries={totalEntries}
-              currentStartIndex={usefulIndexes.startingIndex}
-              currentEndIndex={usefulIndexes.endingIndex}
-              isFiltered={needsFiltering}
-              filteredAmountOfEntries={totalDataRef.current}
-              isScrolling={scroll}
-              hasInfo={info}
-            />
-          </td>
-          <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-pagination">
-            <PaginationIndex
-              totalPaginationIndexes={tpiRef.current}
-              setCurrentPaginationIndex={setPaginationIndex}
-              currentPaginationIndex={paginationIndex}
-              isScrolling={scroll}
+    <div className="DataTable__container" style={scrollStyle}>
+      <table className="DataTable">
+        <caption className="DataTable__caption">
+          {title}
+          <section className="DataTable__entries-query-container">
+            <ShowEntries
+              setEntriesShown={setEntriesShown}
+              lengthMenu={lengthMenu}
               hasPaging={paging}
+              isScrolling={scroll}
             />
-          </td>
-        </tr>
-      </tfoot>
-      <tbody className="DataTable__body">
-        {values &&
-          values.map((valueArray, index) => {
-            return (
-              <tr
-                className="DataTable__row DataTable__body-row"
-                key={valueArray.toString() + index}
-              >
-                {valueArray.map((value, index) => {
-                  return (
-                    <td
-                      key={value + index}
-                      className="DataTable__cell DataTable__body-cell"
-                    >
-                      {value}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+            <QuerySearch
+              hasFilter={filter}
+              setQueryInputted={setQueryInputted}
+              setNeedsFiltering={setNeedsFiltering}
+            />
+          </section>
+        </caption>
+        <thead className="DataTable__head">
+          <tr className="DataTable__row DataTable__head-row">
+            {properties.map((property, index) => {
+              //We set back the property
+              let unformattedProperty = setTitlecaseToCamelCase(property);
 
-        {/* {!totalDataRef.current && !isFiltered && (
+              return (
+                <th
+                  key={properties + index}
+                  className="DataTable__cell DataTable__head-cell"
+                >
+                  {property}
+                  <div
+                    className={`DataTable__buttons-container ${
+                      !sort ? "hide" : ""
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      className={`DataTable__head-button DataTable__head-button-normal ${
+                        !!buttonActive.top &&
+                        !buttonActive.bottom &&
+                        sortingValue === unformattedProperty
+                          ? "DataTable__head-button--active"
+                          : ""
+                      }`}
+                      onClick={(e) => {
+                        handleArraySortingByClick(e);
+                        //Set the sorted array in reverse or not
+                        setReverse("asc");
+                      }}
+                      data-data-table-sorting-property={`${unformattedProperty}`}
+                      data-data-table-sort-to-reverse={false}
+                    >
+                      ▲
+                    </button>
+                    <button
+                      type="button"
+                      className={`DataTable__head-button DataTable__head-button-reverse ${
+                        !buttonActive.top &&
+                        !!buttonActive.bottom &&
+                        sortingValue === unformattedProperty
+                          ? "DataTable__head-button--active"
+                          : ""
+                      }`}
+                      onClick={(e) => {
+                        handleArraySortingByClick(e);
+                        //Set the sorted array in reverse or not
+                        setReverse("desc");
+                      }}
+                      data-data-table-sorting-property={`${unformattedProperty}`}
+                      data-data-table-sort-to-reverse={true}
+                    >
+                      ▼
+                    </button>
+                  </div>
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tfoot className="DataTable__foot">
+          <tr className="DataTable__row DataTable__foot-row">
+            <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-entries">
+              <EntriesIndex
+                totalAmountOfEntries={totalEntries}
+                currentStartIndex={usefulIndexes.startingIndex}
+                currentEndIndex={usefulIndexes.endingIndex}
+                isFiltered={needsFiltering}
+                filteredAmountOfEntries={totalDataRef.current}
+                isScrolling={scroll}
+                hasInfo={info}
+              />
+            </td>
+            <td className="DataTable__cell DataTable__foot-cell DataTable__foot-cell-pagination">
+              <PaginationIndex
+                totalPaginationIndexes={tpiRef.current}
+                setCurrentPaginationIndex={setPaginationIndex}
+                currentPaginationIndex={paginationIndex}
+                isScrolling={scroll}
+                hasPaging={paging}
+              />
+            </td>
+          </tr>
+        </tfoot>
+        <tbody className="DataTable__body">
+          {values &&
+            values.map((valueArray, index) => {
+              return (
+                <tr
+                  className="DataTable__row DataTable__body-row"
+                  key={valueArray.toString() + index}
+                >
+                  {valueArray.map((value, index) => {
+                    return (
+                      <td
+                        key={value + index}
+                        className="DataTable__cell DataTable__body-cell"
+                      >
+                        {value}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+
+          {/* {!totalDataRef.current && !isFiltered && (
           <tr className="DataTable__row DataTable__body-row">
             <td className="DataTable__cell DataTable__body-cell">
               No data available to display
             </td>
           </tr>
         )} */}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   );
 }
 
