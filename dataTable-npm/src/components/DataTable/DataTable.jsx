@@ -463,63 +463,64 @@ export default function DataTable({
           }`}
         >
           <tr className="DataTable__row DataTable__head-row">
-            {properties.map((property, index) => {
-              //We set back the property
-              let unformattedProperty = setTitlecaseToCamelCase(property);
+            {data.length &&
+              properties.map((property, index) => {
+                //We set back the property
+                let unformattedProperty = setTitlecaseToCamelCase(property);
 
-              return (
-                <th
-                  key={properties + index}
-                  className="DataTable__cell DataTable__head-cell"
-                >
-                  {property}
-                  <div
-                    className={`DataTable__buttons-container ${
-                      !sort ? "hide" : ""
-                    }`}
+                return (
+                  <th
+                    key={properties + index}
+                    className="DataTable__cell DataTable__head-cell"
                   >
-                    <button
-                      type="button"
-                      className={`DataTable__head-button DataTable__head-button-normal ${
-                        !!buttonActive.top &&
-                        !buttonActive.bottom &&
-                        sortingValue === unformattedProperty
-                          ? "DataTable__head-button--active"
-                          : ""
+                    {property}
+                    <div
+                      className={`DataTable__buttons-container ${
+                        !sort ? "hide" : ""
                       }`}
-                      onClick={(e) => {
-                        handleArraySortingByClick(e);
-                        //Set the sorted array in reverse or not
-                        setReverse("asc");
-                      }}
-                      data-data-table-sorting-property={`${unformattedProperty}`}
-                      data-data-table-sort-to-reverse={false}
                     >
-                      ▲
-                    </button>
-                    <button
-                      type="button"
-                      className={`DataTable__head-button DataTable__head-button-reverse ${
-                        !buttonActive.top &&
-                        !!buttonActive.bottom &&
-                        sortingValue === unformattedProperty
-                          ? "DataTable__head-button--active"
-                          : ""
-                      }`}
-                      onClick={(e) => {
-                        handleArraySortingByClick(e);
-                        //Set the sorted array in reverse or not
-                        setReverse("desc");
-                      }}
-                      data-data-table-sorting-property={`${unformattedProperty}`}
-                      data-data-table-sort-to-reverse={true}
-                    >
-                      ▼
-                    </button>
-                  </div>
-                </th>
-              );
-            })}
+                      <button
+                        type="button"
+                        className={`DataTable__head-button DataTable__head-button-normal ${
+                          !!buttonActive.top &&
+                          !buttonActive.bottom &&
+                          sortingValue === unformattedProperty
+                            ? "DataTable__head-button--active"
+                            : ""
+                        }`}
+                        onClick={(e) => {
+                          handleArraySortingByClick(e);
+                          //Set the sorted array in reverse or not
+                          setReverse("asc");
+                        }}
+                        data-data-table-sorting-property={`${unformattedProperty}`}
+                        data-data-table-sort-to-reverse={false}
+                      >
+                        ▲
+                      </button>
+                      <button
+                        type="button"
+                        className={`DataTable__head-button DataTable__head-button-reverse ${
+                          !buttonActive.top &&
+                          !!buttonActive.bottom &&
+                          sortingValue === unformattedProperty
+                            ? "DataTable__head-button--active"
+                            : ""
+                        }`}
+                        onClick={(e) => {
+                          handleArraySortingByClick(e);
+                          //Set the sorted array in reverse or not
+                          setReverse("desc");
+                        }}
+                        data-data-table-sorting-property={`${unformattedProperty}`}
+                        data-data-table-sort-to-reverse={true}
+                      >
+                        ▼
+                      </button>
+                    </div>
+                  </th>
+                );
+              })}
           </tr>
         </thead>
         <tfoot
@@ -559,7 +560,8 @@ export default function DataTable({
             developerWantsScrolling ? "DataTable__body--scroll" : ""
           }`}
         >
-          {values &&
+          {data.length &&
+            values &&
             values.map((valueArray, index) => {
               return (
                 <tr
