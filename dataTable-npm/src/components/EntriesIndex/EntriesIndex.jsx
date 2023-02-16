@@ -23,6 +23,11 @@ export default function EntriesIndex({
         currentStartIndex + 1
       } to ${currentEndIndex} of ${filteredAmountOfEntries} (filtered from ${totalAmountOfEntries} total entries)`
     : `${textOfEntriesIndex}`;
+
+  textToShow =
+    isScrolling && isFiltered
+      ? `Showing ${filteredAmountOfEntries} entries (filtered from ${totalAmountOfEntries} total entries)`
+      : `${textOfEntriesIndex}`;
   return (
     <div className={`EntriesIndex ${!hasInfo ? "hide" : ""}`}>{textToShow}</div>
   );

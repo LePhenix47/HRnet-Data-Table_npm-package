@@ -285,6 +285,46 @@ export default function DataTable({
     }
   }, [scroll, height]);
 
+  // useEffect(() => {
+  //   const mediaQuery = window.matchMedia("(max-width: 768px)"); // Add media query
+  //   const updateStyle = () => {
+  //     const isOnMobile = mediaQuery.matches;
+  //     if (isOnMobile) {
+  //       setScrollStyleHeight((prevStyle) => ({
+  //         ...prevStyle,
+  //         height: `${height + 1000}px`,
+  //       }));
+  //     } else {
+  //       setStyle((prevStyle) => ({ ...prevStyle, height: `${height}px` }));
+  //     }
+  //   };
+  //   updateStyle();
+  //   mediaQuery.addListener(updateStyle);
+
+  //
+  //   return () => mediaQuery.removeListener(updateStyle);
+  // }, [height]);
+
+  useEffect(() => {
+    const updateContainerStyle = () => {
+      const isOnMobile = window.matchMedia("(max-width: 768px)").matches;
+      if (developerWantsScrolling) {
+        setScrollStyleHeight({
+          height: `${height + (isOnMobile ? 1000 : 0)}px`,
+        });
+      }
+    };
+
+    updateContainerStyle();
+    // Add listener to update the style on media query change
+    window.addEventListener("resize", updateContainerStyle);
+
+    return () => {
+      // Remove listener on component unmount
+      window.removeEventListener("resize", updateContainerStyle);
+    };
+  }, [height, scroll]);
+
   /**
    * Function that corrects the pagination index making relative to the previous percentage of the table seen
    */
