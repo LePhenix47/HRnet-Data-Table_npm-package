@@ -60,13 +60,9 @@
                 color: red;
             }
         }
-    }
 
-    //For all the <td> nested inside the <thead>
-    &-cell {}
-
-    &-button {
-        &--active {}
+        //For all the <td> nested inside the <thead>
+        &-cell {}
     }
 
 
