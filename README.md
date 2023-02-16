@@ -96,7 +96,6 @@ In this example, the data prop holds the data that will be displayed in the tabl
 
 The headings for the table will be automatically generated based on the property names of the data objects.
 
-**ℹ Note:** It is important to observe that the naming convention for the data properties must be in `camelCase` .
 
 **⚠ Warning:** By default, the ``<DataTable />`` component is set to not have scrolling enabled. If you want to enable scrolling, you need to pass the scroll prop with a value of true. If you do enable scrolling, it is mandatory to also set the height of the table in pixels using the height prop.
 
@@ -105,6 +104,7 @@ The headings for the table will be automatically generated based on the property
 Data Table supports the following props:
 
 - `data`: (required) An *array of objects* that contains the data to be displayed in the table.
+**ℹ Note:** It is important to observe that the naming convention for the data properties must be in `camelCase` .
 
 - `title`: (optional) A *string* value that adds a caption to the table.
 
