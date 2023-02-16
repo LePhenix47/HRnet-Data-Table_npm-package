@@ -343,7 +343,6 @@ color:red;
 - Default styling:
 
 ```css
-
 height:50px;
 position:relative;
 ```
@@ -505,7 +504,7 @@ right: 0px;
 background-color: var(--default-reset-bg-color);
 ```
 
-`ShowEntries__label`:
+`.ShowEntries__label`:
 
 - Explanation This class is applied to the label element of a "show entries" control in a table.
 - Default styling:
@@ -515,9 +514,9 @@ font-size: 16px;
 font-weight: 400;
 ```
 
-hide:
+`.hide`:
 
-`- Explanation` This class is used to hide an element.
+- Explanation This class is used to hide an element.
 
 - Default styling:
 
@@ -552,6 +551,17 @@ In addition to the classes used by the library, there are also some classes incl
 .DataTable__head-row {
   background-color: #f0f0f0;
 }
+```
+
+
+`.DataTable__foot`:
+
+This class is applied to the table foot element and sets some properties to position the foot element at the bottom of the table, it's highly recommended to change the height in pixels.
+- Default styling:
+
+```css
+height: 100px;
+position: relative;
 ```
 
 `.DataTable__foot-components-container`: This class targets the container for the components that appear in the table footer (such as the pagination component and the entries index component). Here's an example of how you could use this class to change the background color of the container:
@@ -594,13 +604,16 @@ As with any software, this library may have some minor bugs or inconveniences th
 
 There are currently 2 missing features:
 
-- [ ] The message "No data available to display" if no data is added in props or wasn't added correctly
-- [ ] The message "No matching records found" if the query inputted doesn't have a match with the data
+- The message "No data available to display" if no data is added in props or wasn't added correctly
+- The message "No matching records found" if the query inputted doesn't have a match with the data
 
 Additionally, please note that there are certain CSS properties within the following classes that must not be modified to avoid the breaking of the table layout:
 
 ```scss
 //Normal table classes:
+.DataTable__row{}
+.DataTable__foot{}
+
 
 //Scrolling classes:
 .DataTable--scroll{}
@@ -612,8 +625,24 @@ Additionally, please note that there are certain CSS properties within the follo
 
 The following CSS properties must not be modified within these classes:
 
-```css
+```scss
+//Normal table classes
 position
+
+//Normal table: for the media queries with a screen width < 768px
+display
+flex-direction
+justify-content
+
+//Scrolling classes
+position
+display
+flex-direction
+flex
+width
+height
+table-layout
+order
 ```
 
 Moreover it's not possible to set a style as props for the responsive design of the table
