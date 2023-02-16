@@ -26,7 +26,7 @@ import * as PropTypes from "prop-types";
 
 export default function DataTable({
   title = "",
-  data,
+  data = null,
   sort = false,
   filter = false,
   scroll = false,
