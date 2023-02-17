@@ -4,4 +4,4 @@ import DataTable from "./components/DataTable/DataTable";
 //Component stylesheet
 import "./style/css/style.css";
 
-export { DataTable };
+export default DataTable;

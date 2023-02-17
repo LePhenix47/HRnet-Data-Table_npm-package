@@ -7,7 +7,9 @@
   - [Introduction](#introduction)
   - [Features](#features)
   - [Creation](#creation)
-  - [Installation](#installation)
+  - [Installing the library](#installing-the-library)
+    - [Requirements](#requirements)
+    - [Installation](#installation)
   - [Usage](#usage)
   - [Props](#props)
   - [Examples](#examples)
@@ -19,6 +21,7 @@
     - [Default styles](#default-styles)
     - [Unused classes for customization](#unused-classes-for-customization)
   - [Known Bugs and Inconveniences](#known-bugs-and-inconveniences)
+    - [Uncustomizable CSS classes](#uncustomizable-css-classes)
   - [Conclusion](#conclusion)
   - [License](#license)
 
@@ -53,7 +56,36 @@ This Data Table was developed using:
 
 <a href="https://reactjs.org/" rel="nofollow"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/react-colored.svg" width="36" height="36" alt="React" style="max-width: 100%;"></a><a href="https://vitejs.dev/" ><img src="https://vitejs.dev/logo-with-shadow.png" alt="Vite logo" width="36" height="36"/></a>
 
-## Installation
+## Installing the library
+
+### Requirements
+
+This library requires you to have the following versions or above of Node.js and `npm` installed:
+
+Node.js: 16.14.0
+
+`npm`: 8.13.2
+
+You can check the versions of these two by running the commands:
+
+```bash
+node -v
+
+npm -v
+```
+
+If you need to update them then you can run these commands:
+
+```bash
+#  Install the latest version of Node.js
+sudo n latest
+
+# Update your npm to the latest version available
+sudo npm install -g npm@latest
+
+```
+
+### Installation
 
 To install Data Table, run the following command in your project's root directory:
 
@@ -104,7 +136,7 @@ Data Table supports the following props:
 
 - `data`: (required) An *array of objects* that contains the data to be displayed in the table.
 
-**ℹ Note:** It is important that the naming convention for the data properties are in `camelCase`.
+**ℹ Note:** It is important that the   naming convention for the data properties are in `camelCase`.
 
 - `title`: (optional) A *string* value that adds a caption to the table.
 
@@ -153,7 +185,7 @@ const data = [
 
 ### Example 1: Simple Data Table
 
-In this example, a simple data table is created using the `<DataTable />` component and data prop:
+In this example, a simple data table is created using the `<DataTable />` component with the 3 props for the table:
 
 ```javascript
 
@@ -162,7 +194,7 @@ import DataTable from '@lephenix47/react-datatable';
 
 function ExampleComponent () {
   return (
-    <DataTable data={data} title={"US developers"}/>
+    <DataTable data={data} title={"US developers"} paging={true}/>
   );
 };
 
@@ -179,7 +211,7 @@ import DataTable from '@lephenix47/react-datatable';
 
 function ExampleComponent () {
   return (
-    <DataTable data={data} sort={true} filter={true} />
+    <DataTable data={data} sort={true} filter={true} paging={true}/>
   );
 };
 
@@ -715,6 +747,8 @@ You can use this class to customize the appearance of the "Next" button:
 ## Known Bugs and Inconveniences
 
 As with any software, this library may have some minor bugs or inconveniences that we are actively working to resolve.
+
+### Uncustomizable CSS classes
 
 There are certain CSS properties within the following classes that *should* not be modified to avoid the breaking of the table layout:
 
