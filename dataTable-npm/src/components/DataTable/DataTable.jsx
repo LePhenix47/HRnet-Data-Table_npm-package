@@ -325,6 +325,8 @@ export default function DataTable({
 
     const historyPaginationsExceededTwo =
       historyTotalPaginationsArray.length + 1 > 2;
+
+    log({ historyPaginationsExceededTwo });
     if (historyPaginationsExceededTwo) {
       /**
        * ```powershell
@@ -337,19 +339,33 @@ export default function DataTable({
       setHistoryPaginationsArray((values) => {
         return values.slice(1);
       });
+
+      log({ historyPaginationsArray, historyTotalPaginationsArray });
     }
     let oldTotalPaginationIndex = historyTotalPaginationsArray?.[0];
     let newTotalPaginationIndex = totalPaginationIndexes;
     let oldPaginationIndex = Number(historyPaginationsArray?.[0]);
 
+    log(
+      {
+        oldTotalPaginationIndex,
+        oldPaginationIndex,
+        newTotalPaginationIndex,
+      },
+      { tpiRef }
+    );
+
     /**
      * Verifies that the user changed the amount of entries and that the Pagination index is over one
      */
     const userChangedShownEntries =
-      oldTotalPaginationIndex > tpiRef.currentewTotalPaginationIndex &&
+      oldTotalPaginationIndex !== newTotalPaginationIndex &&
       newTotalPaginationIndex > 1;
 
+    log({ userChangedShownEntries });
+
     if (userChangedShownEntries) {
+      log("test");
       let computedPaginationArray =
         Number(
           (
@@ -358,6 +374,7 @@ export default function DataTable({
           ).toFixed(0)
         ) || 1;
 
+      log({ computedPaginationArray });
       setPaginationIndex(computedPaginationArray);
     }
   }
@@ -432,6 +449,33 @@ export default function DataTable({
     setSortingValue(sortingProperty);
     //Sends the user to the pagination index of 1
     setPaginationIndex(1);
+  }
+
+  if (!data.length) {
+    return (
+      <table className="DataTable">
+        <caption className="DataTable__caption">{title}</caption>
+        <thead className="DataTable__head">
+          <tr className="DataTable__row DataTable__head-row">
+            <th className="DataTable__head-cell">
+              No data available to display
+            </th>
+          </tr>
+        </thead>
+        <tfoot className="DataTable__foot">
+          <tr className="DataTable__row DataTable__head-row">
+            <td className="DataTable__cell">No entries to show</td>
+          </tr>
+        </tfoot>
+        <tbody className="DataTable__body">
+          <tr className="DataTable__row DataTable__body-row">
+            <td className="DataTable__cell DataTable__body-cell">
+              Please add data to the table for it to function properly
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    );
   }
 
   return (
@@ -521,7 +565,7 @@ export default function DataTable({
                   </th>
                 );
               })}
-            {!data.length && null}
+            {/* {!data.length && null} */}
           </tr>
         </thead>
         <tfoot

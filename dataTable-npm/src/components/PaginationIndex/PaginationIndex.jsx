@@ -210,7 +210,10 @@ export default function PaginationIndex({
         onClick={(e) => {
           handleClick(e);
         }}
-        disabled={currentPaginationIndex <= totalPaginationIndexes}
+        disabled={
+          currentPaginationIndex === totalPaginationIndexes ||
+          (currentPaginationIndex === 1 && totalPaginationIndexes === 1)
+        }
       >
         Next
       </button>
