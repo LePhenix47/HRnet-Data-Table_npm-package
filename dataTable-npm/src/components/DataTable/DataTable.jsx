@@ -1,5 +1,5 @@
 //React
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 
 //Utils
 import {
@@ -8,10 +8,7 @@ import {
   sortArrayOfObjects,
   splitArrayStringOnUpperCase,
   setTitlecaseToCamelCase,
-  log,
   deepCopy,
-  splitString,
-  formatText,
   filterArrayByString,
 } from "../../utils/functions/helper-functions";
 
@@ -90,12 +87,6 @@ export default function DataTable({
    * Query inputted by the user
    */
   let [queryInputted, setQueryInputted] = useState("");
-  // log({ queryInputted, needsFiltering });
-
-  /**
-   * Data filtered by the query inputted
-   */
-  let [filteredData, setFilteredData] = useState([]);
 
   /**
    * Property value to to which it needs to sort the array by
@@ -115,7 +106,6 @@ export default function DataTable({
   /**
    * Data that has been sorted
    */
-  let [sortedData, setSortedData] = useState([]);
 
   let [scrollStyleHeight, setScrollStyleHeight] = useState({});
 
@@ -146,7 +136,6 @@ export default function DataTable({
   const tpiRef = useRef(Math.ceil(totalEntries / entriesShown));
 
   const totalDataRef = useRef(totalEntries);
-  // log({ tpiRef, totalDataRef });
 
   /**
    *
@@ -154,6 +143,46 @@ export default function DataTable({
   let dataToShow = [...data];
   let startingIndex = 0;
   let endingIndex = 0;
+
+  /**
+   * Memoizing the value of the sorted data to avoid making pointless recalculations
+   */
+  let memoizedSortedData = useMemo(() => {
+    let newArrayOfSortedData = null;
+    if (needsSorting) {
+      newArrayOfSortedData = sortArrayOfObjects(
+        copiedData || data,
+        sortingValue,
+        isReverse
+      );
+
+      if (needsFiltering) {
+        newArrayOfSortedData = filterArrayByString(
+          newArrayOfSortedData,
+          queryInputted
+        );
+        // Update the total pagination indexes after filtering the data
+      }
+    } else {
+      newArrayOfSortedData = copiedData.length ? copiedData : data;
+      if (needsFiltering) {
+        newArrayOfSortedData = filterArrayByString(
+          newArrayOfSortedData,
+          queryInputted
+        );
+        // Update the total pagination indexes after filtering the data
+      }
+    }
+    return newArrayOfSortedData;
+  }, [
+    copiedData,
+    data,
+    needsFiltering,
+    needsSorting,
+    queryInputted,
+    sortingValue,
+    isReverse,
+  ]);
 
   /**
    * Function that gets the value of the `<select>` element inside the `<ShowEntries />` component
@@ -166,7 +195,7 @@ export default function DataTable({
       //We set the start and ending index depending on the pagination index
       setStartAndEndIndex();
 
-      //We check if foesn't voerflow or underflow
+      //We check if doesn't overflow or underflow
       const paginationIndexOverflows = paginationIndex > totalPaginationIndexes;
       if (paginationIndexOverflows) {
         //paginationIndex = totalPaginationIndex
@@ -182,92 +211,18 @@ export default function DataTable({
       //Set the indexes to send them to the <EntriesIndex /> component
       setUsefulIndexes({ startingIndex, endingIndex });
 
-      //If the array needs to be sorted
-      if (needsSorting) {
-        resetSortedData();
+      tpiRef.current = Math.ceil(memoizedSortedData.length / entriesShown);
+      totalDataRef.current = memoizedSortedData.length;
+      paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
 
-        let newArrayOfSortedData = sortArrayOfObjects(
-          copiedData,
-          sortingValue,
-          isReverse
-        );
+      resetDataToShow();
+      fillInDataToShow(memoizedSortedData);
 
-        if (needsFiltering) {
-          newArrayOfSortedData = filterArrayByString(
-            newArrayOfSortedData,
-            queryInputted
-          );
-          // Update the total pagination indexes after filtering the data
-        }
-        tpiRef.current = Math.ceil(newArrayOfSortedData.length / entriesShown);
-        totalDataRef.current = newArrayOfSortedData.length;
-        paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
-
-        setSortedData(newArrayOfSortedData);
-
-        resetDataToShow();
-        fillInDataToShow(newArrayOfSortedData);
-
-        setValues(getArrayObjectValues(dataToShow));
-      } else {
-        //We reset the data inside the <tbody> to avoid pile-ups
-        resetDataToShow();
-
-        //We create the data that must be shown
-        let arrayOfData = copiedData.length ? copiedData : data;
-
-        if (needsFiltering) {
-          arrayOfData = filterArrayByString(arrayOfData, queryInputted);
-          // Update the total pagination indexes after filtering the data
-          // log({ tpiRef });
-        }
-        tpiRef.current = Math.ceil(arrayOfData.length / entriesShown);
-        paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
-        totalDataRef.current = arrayOfData.length;
-
-        fillInDataToShow(arrayOfData);
-        //We re-render the component with the new values for the body
-        setValues(getArrayObjectValues(dataToShow));
-      }
+      setValues(getArrayObjectValues(dataToShow));
     } else {
-      if (needsSorting) {
-        resetSortedData();
-
-        let newArrayOfSortedData = sortArrayOfObjects(
-          copiedData || data,
-          sortingValue,
-          isReverse
-        );
-
-        if (needsFiltering) {
-          newArrayOfSortedData = filterArrayByString(
-            newArrayOfSortedData,
-            queryInputted
-          );
-          log({ filtered: newArrayOfSortedData });
-          // Update the total pagination indexes after filtering the data
-        }
-        totalDataRef.current = newArrayOfSortedData.length;
-
-        setSortedData(newArrayOfSortedData);
-
-        fillInDataToShow(newArrayOfSortedData);
-
-        setValues(getArrayObjectValues(newArrayOfSortedData));
-      } else {
-        let arrayOfData = copiedData.length ? copiedData : data;
-
-        if (needsFiltering) {
-          arrayOfData = filterArrayByString(arrayOfData, queryInputted);
-          log({ filtered: arrayOfData });
-          // Update the total pagination indexes after filtering the data
-        }
-        totalDataRef.current = arrayOfData.length;
-
-        fillInDataToShow(arrayOfData);
-
-        setValues(getArrayObjectValues(arrayOfData));
-      }
+      totalDataRef.current = memoizedSortedData.length;
+      fillInDataToShow(memoizedSortedData);
+      setValues(getArrayObjectValues(memoizedSortedData));
     }
   }, [
     entriesShown,
@@ -277,6 +232,7 @@ export default function DataTable({
     queryInputted,
     needsFiltering,
     totalPaginationIndexes,
+    memoizedSortedData,
   ]);
 
   //Get the data the developer added in props
@@ -326,7 +282,6 @@ export default function DataTable({
     const historyPaginationsExceededTwo =
       historyTotalPaginationsArray.length + 1 > 2;
 
-    log({ historyPaginationsExceededTwo });
     if (historyPaginationsExceededTwo) {
       /**
        * ```powershell
@@ -339,21 +294,10 @@ export default function DataTable({
       setHistoryPaginationsArray((values) => {
         return values.slice(1);
       });
-
-      log({ historyPaginationsArray, historyTotalPaginationsArray });
     }
     let oldTotalPaginationIndex = historyTotalPaginationsArray?.[0];
     let newTotalPaginationIndex = totalPaginationIndexes;
     let oldPaginationIndex = Number(historyPaginationsArray?.[0]);
-
-    log(
-      {
-        oldTotalPaginationIndex,
-        oldPaginationIndex,
-        newTotalPaginationIndex,
-      },
-      { tpiRef }
-    );
 
     /**
      * Verifies that the user changed the amount of entries and that the Pagination index is over one
@@ -362,10 +306,7 @@ export default function DataTable({
       oldTotalPaginationIndex !== newTotalPaginationIndex &&
       newTotalPaginationIndex > 1;
 
-    log({ userChangedShownEntries });
-
     if (userChangedShownEntries) {
-      log("test");
       let computedPaginationArray =
         Number(
           (
@@ -374,7 +315,6 @@ export default function DataTable({
           ).toFixed(0)
         ) || 1;
 
-      log({ computedPaginationArray });
       setPaginationIndex(computedPaginationArray);
     }
   }
@@ -414,14 +354,6 @@ export default function DataTable({
       const item = array[i];
       dataToShow.push(item);
     }
-  }
-
-  /**
-   * We reset the sorted data to equal to the original data
-   */
-  function resetSortedData() {
-    // sortedData = [...copiedData];
-    sortedData = deepCopy(copiedData);
   }
 
   /**

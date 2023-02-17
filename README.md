@@ -96,7 +96,6 @@ In this example, the data prop holds the data that will be displayed in the tabl
 
 The headings for the table will be automatically generated based on the property names of the data objects.
 
-
 **⚠ Warning:** By default, the ``<DataTable />`` component is set to not have scrolling enabled. If you want to enable scrolling, you need to pass the scroll prop with a value of true. If you do enable scrolling, it is mandatory to also set the height of the table in pixels using the height prop.
 
 ## Props
@@ -105,7 +104,7 @@ Data Table supports the following props:
 
 - `data`: (required) An *array of objects* that contains the data to be displayed in the table.
 
-**ℹ Note:** It is important that the naming convention for the data properties must be set in `camelCase`.
+**ℹ Note:** It is important that the naming convention for the data properties are in `camelCase`.
 
 - `title`: (optional) A *string* value that adds a caption to the table.
 
@@ -458,7 +457,7 @@ padding: 15px;
 
 ```css
 
-outline: 1px solid red;
+border: 1px solid red;
 ```
 
 `.QuerySearch__inputs-wrapper`:
@@ -538,6 +537,14 @@ In addition to the classes used by the library, there are also some classes incl
 }
 ```
 
+`.DataTable__head`: This class targets all the table header cells in the table. Here's an example of how you could use this class to add a border to the header cells:
+
+```css
+.DataTable__head {
+  background-color: grey;
+}
+```
+
 `.DataTable__head-cell`: This class targets all the table header cells in the table. Here's an example of how you could use this class to add a border to the header cells:
 
 ```css
@@ -554,10 +561,10 @@ In addition to the classes used by the library, there are also some classes incl
 }
 ```
 
-
 `.DataTable__foot`:
 
 This class is applied to the table foot element and sets some properties to position the foot element at the bottom of the table, it's highly recommended to change the height in pixels.
+
 - Default styling:
 
 ```css
@@ -599,6 +606,88 @@ position: relative;
 }
 ```
 
+`.DataTable__body`: This class targets the body of the table, which contains the rows of data. You can use this class to customize the appearance of the table body.
+You can use this class to style the body of the table:
+
+```css
+.DataTable__body {
+  font-weight: normal;
+  font-size: 14px;
+}
+```
+
+`.DataTable__head`: This class targets the header of the table, which contains the column labels. You can use this class to customize the appearance of the table header.
+This class targets the table head element in the table.
+You can use this class to style the header of the table:
+
+```css
+.DataTable__head {
+  background-color: #f5f5f5;
+}
+```
+
+`.QuerySearch`: This class targets the search input field in the table. You can use this class to customize the appearance of the form nest the input field.
+You can use this class to style the form:
+
+```css
+.QuerySearch {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+```
+
+`.ShowEntries`: This class targets the section of the table that displays the "Show Entries" dropdown menu. You can use this class to customize the appearance of this section.
+You can use this class to style the "Show entries" section:
+
+```css
+.ShowEntries {
+  font-size: 14px;
+  color: #777;
+}
+```
+
+`.ShowEntries__select`: This class targets the "Show Entries" dropdown select element in the table. You can use this class to customize the appearance of the select element.
+You can use this class to style the select input:
+
+```css
+.ShowEntries__select {
+  --bg-select-options: #f5f5f5;
+  background-color: var(--bg-select-options);
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+```
+
+`.ShowEntries__options`: This class targets the options in the "Show Entries" dropdown menu. You can use this class to customize the appearance of the dropdown options.
+You can use this class to style the options:
+
+```css
+.ShowEntries__options {
+  background-color: var(--bg-select-options);
+  color: #333;
+}
+```
+
+`.PaginationIndex__previous`: This class targets the "Previous" button in the pagination section of the table. You can use this class to customize the appearance of the "Previous" button.
+You can use this class to customize the appearance of the "Previous" button:
+
+```css
+.PaginationIndex__previous{
+ background-color: blue;
+ color: white;
+}
+```
+
+`.PaginationIndex__next`: This class targets the "Next" button in the pagination section of the table. You can use this class to customize the appearance of the "Next" button.
+You can use this class to customize the appearance of the "Next" button.
+
+```css
+.PaginationIndex__next{
+ background-color: red;
+ color: white;
+}
+```
+
 ## Known Bugs and Inconveniences
 
 As with any software, this library may have some minor bugs or inconveniences that we are actively working to resolve.
@@ -608,45 +697,70 @@ There are currently 2 missing features:
 - The message "No data available to display" if no data is added in props or wasn't added correctly
 - The message "No matching records found" if the query inputted doesn't have a match with the data
 
-Additionally, please note that there are certain CSS properties within the following classes that must not be modified to avoid the breaking of the table layout:
+Additionally, please note that there are certain CSS properties within the following classes that *should* not be modified to avoid the breaking of the table layout:
 
 ```scss
 //Normal table classes:
-.DataTable__row{}
-.DataTable__foot{}
+@media screen and (width <=768px) {
+  .DataTable__row{
+    display: flex;
+    flex-direction: space-between;
+    justify-content: center;
+    text-align: center;
+  }
+}
 
+.DataTable__foot{
+   position: relative;
+}
+
+.DataTable__foot-row{
+  //Inherits the height from the class above ↑
+  height: inherit;
+  position: absolute;
+  display: flex;
+  width: 100%;
+}
 
 //Scrolling classes:
-.DataTable--scroll{}
-.DataTable__head--scroll{}
-.DataTable__foot--scroll{}
-.DataTable__foot-row--scroll{}
+.DataTable--scroll{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
 
-```
+.DataTable__head--scroll{
+  display: table;
+  table-layout: fixed;
+  flex: 0 0 auto;
+  width: 100%;
+}
 
-The following CSS properties must not be modified within these classes:
+.DataTable__foot--scroll{
+  display: table;
+  table-layout: fixed;
+  order: 1;
+}
 
-```scss
-//Normal table classes
-position
+.DataTable__foot-row--scroll{
+  position: initial;
+}
 
-//Normal table: for the media queries with a screen width < 768px
-display
-flex-direction
-justify-content
+//For desktops, laptops and tablets only
+@media screen and (width >= 768px) {
+  .DataTable__body-row--scroll{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+}
 
-//Scrolling classes
-position
-display
-flex-direction
-flex
-width
-height
-table-layout
-order
 ```
 
 Moreover it's not possible to set a style as props for the responsive design of the table
+
+Though I highly recommend the use of the `@container` media query to change the layout of the `<table>`
 
 We apologize for any inconvenience these issues may cause and are working hard to resolve them as quickly as possible. In the meantime, if you have any questions or concerns about these issues, please don't hesitate to reach out to our GitHub repository. Thank you for your understanding and patience.
 

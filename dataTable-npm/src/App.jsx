@@ -13,6 +13,9 @@ function App() {
         info
         paging
       />
+      <br />
+      <hr />
+      <br />
       <DataTable
         title="Current employees (scroll)"
         data={dataMock}

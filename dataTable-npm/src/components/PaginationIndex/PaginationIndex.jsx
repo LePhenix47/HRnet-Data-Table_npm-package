@@ -1,14 +1,11 @@
 //React
-import React, { useState } from "react";
+import React from "react";
 
 //Proptypes
 import * as PropTypes from "prop-types";
 
 //Utils
-import {
-  log,
-  createArrayOfNumbers,
-} from "../../utils/functions/helper-functions";
+import { createArrayOfNumbers } from "../../utils/functions/helper-functions";
 
 //Components
 import FirstRow from "../FirstRow/FirstRow";

@@ -9,7 +9,6 @@ export default function EntriesIndex({
   filteredAmountOfEntries,
   isFiltered,
   isScrolling,
-  hasPaging,
   hasInfo,
 }) {
   let textToShow = "";

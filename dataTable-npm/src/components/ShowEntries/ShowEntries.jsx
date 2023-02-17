@@ -1,11 +1,8 @@
 //React
-import React, { useRef, useState } from "react";
+import React from "react";
 
 //Proptypes
 import * as PropTypes from "prop-types";
-
-//Utils
-import { log } from "../../utils/functions/helper-functions";
 
 export default function ShowEntries({
   setEntriesShown,
