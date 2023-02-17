@@ -6,7 +6,7 @@ export default function MiddleRow({
   handleClick,
 }) {
   return (
-    <div>
+    <div className="PaginationIndex__mid-buttons-container">
       <button
         className={`PaginationIndex__button `}
         type="button"

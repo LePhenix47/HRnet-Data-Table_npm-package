@@ -447,7 +447,7 @@ gap: 0px;
 
 ```css
 
-padding: 15px;
+padding: 10px;
 ```
 
 `.PaginationIndex__button--active`:
@@ -685,6 +685,30 @@ You can use this class to customize the appearance of the "Next" button:
 .PaginationIndex__next{
  background-color: red;
  color: white;
+}
+```
+
+`PaginationIndex__first-row-buttons-container`: This class targets the container element for the first row of buttons in the pagination section of the table. You can use this class to customize the appearance of the first row of buttons. Here's an example of how you could use this class to add a margin to the top of the first row of buttons:
+
+```css
+.PaginationIndex__first-row-buttons-container {
+  margin-top: 10px;
+}
+```
+
+`PaginationIndex__mid-buttons-container`: This class targets the container element for the middle row of buttons in the pagination section of the table. You can use this class to customize the appearance of the middle row of buttons. Here's an example of how you could use this class to change the background color of the middle row of buttons:
+
+```css
+.PaginationIndex__mid-buttons-container {
+  background-color: #e6e6e6;
+}
+```
+
+`PaginationIndex__last-row-buttons-container`: This class targets the container element for the last row of buttons in the pagination section of the table. You can use this class to customize the appearance of the last row of buttons. Here's an example of how you could use this class to add a border to the last row of buttons:
+
+```css
+.PaginationIndex__last-row-buttons-container {
+  border: 1px solid #999999;
 }
 ```
 

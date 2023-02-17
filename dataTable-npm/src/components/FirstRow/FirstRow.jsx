@@ -6,7 +6,7 @@ export default function FirstRow({
   handleClick,
 }) {
   return (
-    <div>
+    <div className="PaginationIndex__first-row-buttons-container">
       <button
         className={`PaginationIndex__button ${
           paginationIndex === 2 ? "PaginationIndex__button--active" : ""

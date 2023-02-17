@@ -6,12 +6,18 @@
     &__previous {}
 
     &__button {
-        padding: 15px;
+        padding: 10px;
 
         &--active {
             border: 1px solid red;
         }
     }
+
+    &__first-row-buttons-container {}
+
+    &__mid-buttons-container {}
+
+    &__last-row-buttons-container {}
 
     &__next {}
 }

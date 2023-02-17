@@ -6,7 +6,7 @@ export default function LastRow({
   handleClick,
 }) {
   return (
-    <div>
+    <div className="PaginationIndex__first-row-buttons-container">
       <button
         className={`PaginationIndex__button `}
         type="button"
