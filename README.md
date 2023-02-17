@@ -99,7 +99,7 @@ Here's an example of how to use Data Table in your React components:
 
 ```javascript
 //DataTable
-import DataTable from '@lephenix47/react-datatable';
+import { DataTable } from '@lephenix47/react-datatable';
 
 const data = [
   {
@@ -189,7 +189,7 @@ In this example, a simple data table is created using the `<DataTable />` compon
 
 ```javascript
 
-import DataTable from '@lephenix47/react-datatable';
+import { DataTable } from '@lephenix47/react-datatable';
 
 
 function ExampleComponent () {
@@ -207,7 +207,7 @@ In this example, the `<DataTable />` component is used to create a data table wi
 
 ```javascript
 
-import DataTable from '@lephenix47/react-datatable';
+import { DataTable } from '@lephenix47/react-datatable';
 
 function ExampleComponent () {
   return (
@@ -224,7 +224,7 @@ In this example, the `<DataTable />` component is used to create a data table wi
 
 ```javascript
 
-import DataTable from '@lephenix47/react-datatable';
+import { DataTable } from '@lephenix47/react-datatable';
 
 function ExampleComponent () {
   return (
@@ -246,7 +246,7 @@ In this example, the `<DataTable />` component contains all the features possibl
 
 ```javascript
 
-import DataTable from '@lephenix47/react-datatable';
+import { DataTable } from '@lephenix47/react-datatable';
 
 
 function ExampleComponent () {

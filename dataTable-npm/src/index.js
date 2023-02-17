@@ -1,7 +1,9 @@
 //Library component
-import DataTable from "./components/DataTable/DataTable";
+const DataTable = require("./components/DataTable/DataTable");
 
 //Component stylesheet
-import "./style/css/style.css";
+require("./style/css/style.css");
 
-export default DataTable;
+module.exports = {
+  DataTable,
+};
