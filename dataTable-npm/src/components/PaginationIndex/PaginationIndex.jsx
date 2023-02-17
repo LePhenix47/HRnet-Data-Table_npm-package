@@ -209,7 +209,7 @@ export default function PaginationIndex({
         }}
         disabled={
           currentPaginationIndex === totalPaginationIndexes ||
-          (currentPaginationIndex === 1 && totalPaginationIndexes === 1)
+          (currentPaginationIndex === 1 && totalPaginationIndexes <= 1)
         }
       >
         Next

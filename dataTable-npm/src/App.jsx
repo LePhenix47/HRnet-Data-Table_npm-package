@@ -7,7 +7,7 @@ function App() {
       <DataTable
         title="Current employees (paging)"
         data={dataMock}
-        lengthMenu={[10, 25, 50, 100]}
+        // lengthMenu={[5, 15, 30]}
         sort
         filter
         info

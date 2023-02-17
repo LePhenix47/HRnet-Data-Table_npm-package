@@ -679,7 +679,7 @@ You can use this class to customize the appearance of the "Previous" button:
 ```
 
 `.PaginationIndex__next`: This class targets the "Next" button in the pagination section of the table. You can use this class to customize the appearance of the "Next" button.
-You can use this class to customize the appearance of the "Next" button.
+You can use this class to customize the appearance of the "Next" button:
 
 ```css
 .PaginationIndex__next{
@@ -692,12 +692,7 @@ You can use this class to customize the appearance of the "Next" button.
 
 As with any software, this library may have some minor bugs or inconveniences that we are actively working to resolve.
 
-There are currently 2 missing features:
-
-- The message "No data available to display" if no data is added in props or wasn't added correctly
-- The message "No matching records found" if the query inputted doesn't have a match with the data
-
-Additionally, please note that there are certain CSS properties within the following classes that *should* not be modified to avoid the breaking of the table layout:
+There are certain CSS properties within the following classes that *should* not be modified to avoid the breaking of the table layout:
 
 ```scss
 //Normal table classes:

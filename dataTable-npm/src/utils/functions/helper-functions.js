@@ -352,7 +352,6 @@ export function invertDayAndMonth(dateString) {
  * @returns A new sorted array
  */
 export function sortArrayOfObjects(array, prop, reverse = "asc") {
-  log({ array, prop, reverse });
   //To make it easier on the developer we remove any whitespace
   prop = prop.trim();
 
@@ -412,7 +411,6 @@ export function sortArrayOfObjects(array, prop, reverse = "asc") {
     return newSortedArray.reverse();
   }
 
-  console.log("New array");
   return newSortedArray;
 }
 
