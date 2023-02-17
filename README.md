@@ -21,7 +21,7 @@
     - [Default styles](#default-styles)
     - [Unused classes for customization](#unused-classes-for-customization)
   - [Known Bugs and Inconveniences](#known-bugs-and-inconveniences)
-    - [Uncustomizable CSS classes](#uncustomizable-css-classes)
+    - [Uncustomizable CSS class properties](#uncustomizable-css-class-properties)
   - [Conclusion](#conclusion)
   - [License](#license)
 
@@ -748,7 +748,7 @@ You can use this class to customize the appearance of the "Next" button:
 
 As with any software, this library may have some minor bugs or inconveniences that we are actively working to resolve.
 
-### Uncustomizable CSS classes
+### Uncustomizable CSS class properties
 
 There are certain CSS properties within the following classes that *should* not be modified to avoid the breaking of the table layout:
 
@@ -813,7 +813,7 @@ There are certain CSS properties within the following classes that *should* not 
 
 Moreover it's not possible to set a style as props for the responsive design of the table
 
-Though I highly recommend the use of the `@container` media query to change the layout of the `<table>`
+Though I highly recommend the use of the @container media query to change the layout of the `<table>` (once it's fully standardized and supported by browsers in the future).
 
 We apologize for any inconvenience these issues may cause and are working hard to resolve them as quickly as possible. In the meantime, if you have any questions or concerns about these issues, please don't hesitate to reach out to our GitHub repository. Thank you for your understanding and patience.
 
