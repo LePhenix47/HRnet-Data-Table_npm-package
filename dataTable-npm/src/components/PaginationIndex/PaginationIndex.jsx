@@ -67,6 +67,8 @@ export default function PaginationIndex({
     totalPaginationIndexes
   );
 
+  let fivePaginationPage = createArrayOfNumbers(2, 6);
+
   if (showAllPaginationButtons) {
     // log("Is under 7");
   }

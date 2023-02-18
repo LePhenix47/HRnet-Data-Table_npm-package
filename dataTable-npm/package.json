@@ -1,0 +1,25 @@
+{
+  "name": "@lephenix47/react-datatable",
+  "private": false,
+  "version": "1.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "sass": "sass --watch ./src/style/sass/main.scss:./src/style/css/style.css --style compressed"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^3.1.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "sass": "^1.58.0",
+    "vite": "^4.1.0"
+  }
+}
