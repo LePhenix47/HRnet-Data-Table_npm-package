@@ -2,14 +2,14 @@
   "name": "@lephenix47/react-datatable",
   "version": "1.0.13",
   "description": "A React component library for creating feature-rich and customizable data tables. This library provides all the functionality of its jQuery counterpart with the added benefits of using React. Designed to be fast, flexible, and easy to use, this library provides a complete solution for creating and customizing data tables in your React applications.",
-  "main": "dataTable-npm/src/index.js",
+  "main": "data-table-library/src/main.js",
   "files": [
-    "dataTable-npm/src/components/**/*",
-    "dataTable-npm/src/style/css/**/*",
-    "dataTable-npm/src/utils/**/*",
-    "dataTable-npm/src/index.js",
-    "dataTable-npm/package.json",
-    "dataTable-npm/.npmrc"
+    "data-table-library/src/components/**/*",
+    "data-table-library/src/style/css/**/*",
+    "data-table-library/src/utils/**/*",
+    "data-table-library/src/main.js",
+    "data-table-library/package.json",
+    "data-table-library/.npmrc"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

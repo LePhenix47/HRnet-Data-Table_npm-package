@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 //React
 import React, { useEffect, useState, useRef, useMemo } from "react";
 
@@ -213,6 +214,7 @@ export default function DataTable({
 
       tpiRef.current = Math.ceil(memoizedSortedData.length / entriesShown);
       totalDataRef.current = memoizedSortedData.length;
+      // eslint-disable-next-line no-unused-expressions
       paginationIndex > tpiRef.current ? setPaginationIndex(1) : null;
 
       resetDataToShow();
