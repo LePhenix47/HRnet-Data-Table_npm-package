@@ -10,7 +10,7 @@ declare module "@lephenix47/react-datatable" {
     height?: string | number;
     info?: boolean;
     lengthMenu?: Array<number>;
-    paging?: boolean;
+    paging: boolean;
   }
 
   export default function DataTable(props: DataTableProps): React.ReactElement;
