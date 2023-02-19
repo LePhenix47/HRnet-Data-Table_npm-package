@@ -11,6 +11,9 @@
     - [Requirements](#requirements)
     - [Installation](#installation)
   - [Usage](#usage)
+  - [App rendering](#app-rendering)
+    - [Client-Side Rendering (CSR)](#client-side-rendering-csr)
+    - [Server-Side Rendering (SSR)](#server-side-rendering-ssr)
   - [Props](#props)
   - [Examples](#examples)
     - [Example 1: Simple Data Table](#example-1-simple-data-table)
@@ -69,8 +72,10 @@ Node.js: 16.14.0
 You can check the versions of these two by running the commands:
 
 ```bash
+# Check the version of Node.js
 node -v
 
+# Check the version of npm
 npm -v
 ```
 
@@ -80,7 +85,7 @@ If you need to update them then you can run these commands:
 #  Install the latest version of Node.js
 sudo n latest
 
-# Update your npm to the latest version available
+# Update npm to the latest version available
 sudo npm install -g npm@latest
 
 ```
@@ -128,7 +133,79 @@ In this example, the data prop holds the data that will be displayed in the tabl
 
 The headings for the table will be automatically generated based on the property names of the data objects.
 
-**⚠ Warning:** By default, the ``<DataTable />`` component is set to not have scrolling enabled. If you want to enable scrolling, you need to pass the scroll prop with a value of true. If you do enable scrolling, it is mandatory to also set the height of the table in pixels using the height prop.
+**⚠ Warning:** By default, the `<DataTable />` component is set to not have scrolling enabled. If you want to enable scrolling, you need to pass the scroll prop with a value of true. If you do enable scrolling, it is mandatory to also set the height of the table in pixels using the height prop.
+
+## App rendering
+
+### Client-Side Rendering (CSR)
+
+If you are using client-side rendering, you can directly use the library in your app. Here's an example:
+
+```js
+import { DataTable } from '@lephenix47/react-datatable';
+
+const data = [
+  {
+    name: 'John Doe',
+    job: 'Developer',
+    location: 'San Francisco',
+  },
+  {
+    name: 'Jane Doe',
+    job: 'Designer',
+    location: 'Los Angeles',
+  },
+];
+
+function App() {
+  return (
+    <div>
+      <DataTable data={data} paging info />
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+### Server-Side Rendering (SSR)
+
+If you are using server-side rendering, you will need to load the library dynamically to prevent errors that can occur during the rendering process. Here's an example of how to use the library with Next.js:
+
+```js
+import dynamic from 'next/dynamic';
+
+const DynamicDataTable = dynamic(
+  () => import('@lephenix47/react-datatable').then((module) => module.DataTable),
+  { ssr: false }
+);
+
+const data = [
+  {
+    name: 'John Doe',
+    job: 'Developer',
+    location: 'San Francisco',
+  },
+  {
+    name: 'Jane Doe',
+    job: 'Designer',
+    location: 'Los Angeles',
+  },
+];
+
+function App() {
+  return (
+    <div>
+      <DynamicDataTable data={data} paging info />
+    </div>
+  );
+}
+
+export default App;
+```
+
+If you are using Gatsby or Astro, you can follow a similar approach to load the library dynamically.
 
 ## Props
 
@@ -152,7 +229,7 @@ Data Table supports the following props:
 
 - `lengthMenu`: (optional) An *array of numbers* that specifies the entries to be shown in the table, for example: `[5, 15, 30, 45, 75]`. The user can then select how many entries they want to see from a  drop-down menu. If no props were added it will use the default value which is `[10, 25, 50, 100]`.
 
-- `paging`: (optional) A *boolean* value that determines whether the table should be paginated. By default, this is set to `true`, but it can be disabled by setting it to `false`. However, if scroll is enabled, paging will be automatically disabled and vice-versa.
+- `paging`: (required) A *boolean* value that determines whether the table should be paginated. By default, this is set to `true`, but it can be disabled by setting it to `false`.
 
 Each of these props allows you to tailor the Data Table component to your specific needs and requirements, making it a versatile and powerful tool for working with data in your React projects.
 
