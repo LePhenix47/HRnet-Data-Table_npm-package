@@ -2,6 +2,9 @@ import React from "react";
 //Proptypes
 import * as PropTypes from "prop-types";
 
+//Utils
+import {} from "../../utils/functions/helper-functions";
+
 export default function EntriesIndex({
   currentStartIndex,
   currentEndIndex,

@@ -238,7 +238,7 @@ export default function DataTable({
   //Get the data the developer added in props
   useEffect(() => {
     setCopiedData(deepCopy(data));
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     if (developerWantsScrolling) {
