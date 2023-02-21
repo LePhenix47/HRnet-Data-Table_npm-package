@@ -454,7 +454,7 @@ export function filterArrayByString(arrayToFilter, string) {
       for (let property in object) {
         let valueOfObject = object[property].toString().toLowerCase();
 
-        const stringHasSpaces = string.includes(" ");
+        const stringHasSpaces = string.trim().includes(" ");
 
         if (stringHasSpaces) {
           const arrayOfStrings = splitString(string, " ");
