@@ -441,7 +441,6 @@ export function setTitlecaseToCamelCase(string) {
  * @returns
  */
 export function filterArrayByString(arrayToFilter, string) {
-  let newArray = [];
   let typeofArray = typeof arrayToFilter;
   const isArrayOfObjects = typeofArray === "object";
 
@@ -492,6 +491,5 @@ export function filterArrayByString(arrayToFilter, string) {
     }
   }
 
-  newArray = Array.from(filteredSet);
-  return newArray;
+  return Array.from(filteredSet);
 }
