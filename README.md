@@ -637,7 +637,7 @@ display: none;
 
 In addition to the classes used by the library, there are also some classes included that are not currently used but can be utilized by developers for their own styling.
 
-⚠ If you intend to change the value of the default properties, you must use the `!important` keyword
+⚠ Warning: that if you want to modify the default values of properties associated with unused classes, you need to use the `!important` keyword.
 
 These unused classes include:
 
