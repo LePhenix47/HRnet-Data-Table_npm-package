@@ -3,6 +3,7 @@ import React from "react";
 import * as PropTypes from "prop-types";
 
 export default function QuerySearch({
+  queryInputted,
   setQueryInputted,
   setNeedsFiltering,
   hasFilter,
@@ -34,7 +35,9 @@ export default function QuerySearch({
         </label>
         <input
           type="reset"
-          className="QuerySearch__reset-button"
+          className={`QuerySearch__reset-button ${
+            !queryInputted.length ? "hide" : ""
+          }`}
           value="×"
           onClick={() => {
             setQueryInputted("");

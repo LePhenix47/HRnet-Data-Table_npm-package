@@ -428,6 +428,7 @@ export default function DataTable({
             />
             <QuerySearch
               hasFilter={filter}
+              queryInputted={queryInputted}
               setQueryInputted={setQueryInputted}
               setNeedsFiltering={setNeedsFiltering}
             />
