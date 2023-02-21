@@ -133,7 +133,7 @@ export default function DataTable({
    */
   let totalPaginationIndexes = Math.ceil(totalEntries / entriesShown);
 
-  const tpiRef = useRef(Math.ceil(totalEntries / entriesShown));
+  const tpiRef = useRef(totalPaginationIndexes);
 
   const totalDataRef = useRef(totalEntries);
 

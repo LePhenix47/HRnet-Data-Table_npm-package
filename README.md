@@ -635,7 +635,11 @@ display: none;
 
 ### Unused classes for customization
 
-In addition to the classes used by the library, there are also some classes included that are not currently used but can be utilized by developers for their own styling. These unused classes include:
+In addition to the classes used by the library, there are also some classes included that are not currently used but can be utilized by developers for their own styling.
+
+⚠ If you intend to change the value of the default properties, you must use the `!important` keyword
+
+These unused classes include:
 
 `.DataTable__caption`: This class targets the caption element that appears at the top of the table, if one is provided. Here's an example of how you could use this class to center the caption and add a background color:
 

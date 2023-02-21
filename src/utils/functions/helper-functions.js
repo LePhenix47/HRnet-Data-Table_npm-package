@@ -452,7 +452,9 @@ export function filterArrayByString(arrayToFilter, string) {
     for (let object of arrayToFilter) {
       for (let property in object) {
         let valueOfObject = object[property].toString();
-        let includesQuery = valueOfObject.toLowerCase().includes(string);
+        let includesQuery = valueOfObject
+          .toLowerCase()
+          .includes(string.toLowerCase());
 
         if (includesQuery) {
           filteredSet.add(object);
@@ -461,7 +463,10 @@ export function filterArrayByString(arrayToFilter, string) {
     }
   } else {
     for (let word of arrayToFilter) {
-      let includesQuery = word.toString().toLowerCase().includes(string);
+      let includesQuery = word
+        .toString()
+        .toLowerCase()
+        .includes(string.toLowerCase());
       if (includesQuery) {
         filteredSet.add(word);
       }
