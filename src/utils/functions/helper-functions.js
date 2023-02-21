@@ -449,15 +449,34 @@ export function filterArrayByString(arrayToFilter, string) {
   let filteredSet = new Set();
 
   if (isArrayOfObjects) {
+    //We iterate through every object in the array
     for (let object of arrayToFilter) {
+      //We iterate through every property in each object
       for (let property in object) {
-        let valueOfObject = object[property].toString();
-        let includesQuery = valueOfObject
-          .toLowerCase()
-          .includes(string.toLowerCase());
+        let valueOfObject = object[property].toString().toLowerCase();
 
-        if (includesQuery) {
-          filteredSet.add(object);
+        const stringHasSpaces = string.includes(" ");
+
+        if (stringHasSpaces) {
+          const arrayOfStrings = splitString(string, " ");
+
+          //If the query contains multiple words, we iterate through each word
+          for (const word of arrayOfStrings) {
+            let includesQuery = valueOfObject.includes(
+              word.toLocaleLowerCase()
+            );
+
+            if (includesQuery) {
+              filteredSet.add(object);
+              continue;
+            }
+          }
+        } else {
+          let includesQuery = valueOfObject.includes(string.toLowerCase());
+
+          if (includesQuery) {
+            filteredSet.add(object);
+          }
         }
       }
     }
