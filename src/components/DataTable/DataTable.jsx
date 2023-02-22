@@ -447,10 +447,10 @@ export default function DataTable({
 
                 return (
                   <th
-                    key={properties + index}
+                    key={`${properties}-${index}-${Math.random().toFixed(5)} `}
                     className="DataTable__cell DataTable__head-cell"
                   >
-                    {property.toString()}
+                    {property}
                     <div
                       className={`DataTable__buttons-container ${
                         !sort ? "hide" : ""
@@ -546,15 +546,17 @@ export default function DataTable({
                   className={`DataTable__row DataTable__body-row ${
                     developerWantsScrolling ? "DataTable__body-row--scroll" : ""
                   }`}
-                  key={valueArray.toString() + index}
+                  key={`${valueArray}-${index}-${Math.random().toFixed(5)} `}
                 >
                   {valueArray.map((value, index) => {
                     return (
                       <td
-                        key={value + index}
+                        key={`${valueArray}-${value}-${index}-${Math.random().toFixed(
+                          5
+                        )} `}
                         className="DataTable__cell DataTable__body-cell"
                       >
-                        {value}
+                        {value.toString()}
                       </td>
                     );
                   })}
