@@ -20,6 +20,9 @@
     - [Example 2: Data Table with Search and Sorting](#example-2-data-table-with-search-and-sorting)
     - [Example 3: Data Table with Scrolling](#example-3-data-table-with-scrolling)
     - [Example 4: Data Table with all the features](#example-4-data-table-with-all-the-features)
+  - [Practical Demos](#practical-demos)
+    - [Without style](#without-style)
+    - [With style](#with-style)
   - [Styling](#styling)
     - [Default styles](#default-styles)
     - [Unused classes for customization](#unused-classes-for-customization)
@@ -344,6 +347,18 @@ export default ExampleComponent;
 ```
 
 **ℹ Note**: You can pass a boolean prop (props without a value) as shown the [example 3](#example-3-data-table-with-scrolling) and [example 4](#example-4-data-table-with-all-the-features) to make your code more concise
+
+## Practical Demos
+
+To view how to the datatable will work in your React application, view this website:
+
+### Without style
+
+- <https://lephenix47-react-datatable-demo.vercel.app/>
+
+### With style
+
+- <https://hrnet-p14.vercel.app/employees>
 
 ## Styling
 
