@@ -450,7 +450,7 @@ export default function DataTable({
                     key={properties + index}
                     className="DataTable__cell DataTable__head-cell"
                   >
-                    {property}
+                    {property.toString()}
                     <div
                       className={`DataTable__buttons-container ${
                         !sort ? "hide" : ""

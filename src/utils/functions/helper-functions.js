@@ -367,8 +367,8 @@ export function sortArrayOfObjects(array, prop, reverse = "asc") {
 
     let dateStringREGEX =
       /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
-    let isDateAsString =
-      dateStringREGEX.test(obj1[prop]) || obj1[prop] instanceof Date;
+
+    let isDateAsString = dateStringREGEX.test(obj1[prop]);
 
     if (isDateAsString) {
       propOfObj1 = invertDayAndMonth(propOfObj1);
@@ -385,16 +385,16 @@ export function sortArrayOfObjects(array, prop, reverse = "asc") {
         return propOfObj1.localeCompare(propOfObj2);
       }
       case "number": {
-        //ex:  10 → "10"
+        //ex: "10" → 10 in case one of them is a string
         propOfObj1 = Number(propOfObj1);
         propOfObj2 = Number(propOfObj2);
         return propOfObj1 - propOfObj2;
       }
       case "boolean": {
-        //If true → "a", if false → "z"
+        //If true → 1, if false → 0
         propOfObj1 = propOfObj1 ? 1 : 0;
         propOfObj1 = propOfObj1 ? 1 : 0;
-        return propOfObj1 - propOfObj2;
+        return propOfObj2 - propOfObj1;
       }
       default: {
         throw console.error(
